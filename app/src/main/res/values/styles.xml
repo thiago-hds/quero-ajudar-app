@@ -17,4 +17,12 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="big_button_style">
+        <item name="android:layout_height">50dp</item>
+        <item name="android:background">@drawable/btn_round</item>
+        <item name="android:fontFamily">@font/raleway</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/btn_text_size_16sp</item>
+    </style>
+
 </resources>

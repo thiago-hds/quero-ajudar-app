@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Quero Ajudar!</string>
-    <string name="splash_register_button">COMEÇAR A AJUDAR</string>
-    <string name="splash_login_button">JÁ TENHO UMA CONTA</string>
+    <string name="main_btn_register_text">COMEÇAR A AJUDAR</string>
+    <string name="main_btn_login_text">JÁ TENHO UMA CONTA</string>
     <string name="title_activity_register">RegisterActivity</string>
+    <string name="login_info">Insira seus dados de login</string>
+    <string name="login_btn_enter_text">ENTRAR</string>
 </resources>
