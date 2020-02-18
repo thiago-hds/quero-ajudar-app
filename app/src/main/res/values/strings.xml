@@ -8,4 +8,7 @@
     <string name="login_edittext_password_hint">Senha</string>
     <string name="login_edittext_email_hint">E-mail</string>
     <string name="login_btn_forgotpassword_text">Esqueci minha senha</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
