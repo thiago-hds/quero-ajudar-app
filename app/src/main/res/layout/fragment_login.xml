@@ -12,14 +12,10 @@
             android:id="@+id/textview_login_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:fontFamily="@font/raleway"
-            android:text="@string/login_info"
-            android:textColor="@color/colorPrimary"
-            android:textSize="20sp"
+            android:text="@string/login_hint"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/layout_textview_hint" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textinputlayout_login_email"
@@ -27,9 +23,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
-            android:hint="@string/login_edittext_email_hint"
+            android:hint="@string/login_email"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -52,11 +48,12 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:hint="@string/login_edittext_password_hint"
+            android:hint="@string/login_password"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textinputlayout_login_email">
+            app:layout_constraintTop_toBottomOf="@id/textinputlayout_login_email"
+            app:endIconMode="password_toggle">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edittext_login_password"
@@ -74,7 +71,7 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
-            android:text="@string/login_btn_enter_text"
+            android:text="@string/login_enter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textinputlayout_login_password" />
@@ -85,7 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="@string/login_btn_forgotpassword_text"
+            android:text="@string/login_forgot_password"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button_login_enter" />

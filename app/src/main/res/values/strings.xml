@@ -1,14 +1,24 @@
 <resources>
     <string name="app_name">Quero Ajudar!</string>
-    <string name="main_btn_register_text">Começar a ajudar</string>
-    <string name="main_btn_login_text">Já tenho uma conta</string>
-    <string name="title_activity_register">RegisterActivity</string>
-    <string name="login_info">Insira seus dados de login</string>
-    <string name="login_btn_enter_text">Entrar</string>
-    <string name="login_edittext_password_hint">Senha</string>
-    <string name="login_edittext_email_hint">E-mail</string>
-    <string name="login_btn_forgotpassword_text">Esqueci minha senha</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- StartFragment -->
+    <string name="start_register">Começar a ajudar</string>
+    <string name="start_login">Já tenho uma conta</string>
+
+    <!-- LoginFragment -->
+    <string name="login_hint">Insira seus dados de login</string>
+    <string name="login_enter">Entrar</string>
+    <string name="login_password">Senha</string>
+    <string name="login_email">E-mail</string>
+    <string name="login_forgot_password">Esqueci minha senha</string>
+
+    <!-- RegisterDataFragment -->
+    <string name="register_data_hint">Insira seus dados</string>
+    <string name="register_data_name">Nome</string>
+    <string name="register_data_last_name">Sobrenome</string>
+    <string name="register_data_date_of_birth">Data de nascimento</string>
+    <string name="register_data_email">E-mail</string>
+    <string name="register_data_password">Senha</string>
+    <string name="register_data_confirm_password">Confime a senha</string>
+    <string name="register_data_advance">Avançar</string>
 </resources>
