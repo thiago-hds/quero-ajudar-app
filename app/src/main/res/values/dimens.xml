@@ -3,5 +3,6 @@
     <dimen name="btn_text_size_16sp">16sp</dimen>
     <dimen name="btn_height_60dp">60dp</dimen>
     <dimen name="layout_margin_16dp">16dp</dimen>
+    <dimen name="layout_margin_8dp">8dp</dimen>
 
 </resources>

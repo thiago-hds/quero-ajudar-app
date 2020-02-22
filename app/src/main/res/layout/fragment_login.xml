@@ -2,37 +2,37 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.br.queroajudar.fragments.LoginFragment">
+    tools:context=".view.fragments.LoginFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/textview_login_info"
+            android:id="@+id/login_tv_hint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/login_hint"
+            android:text="@string/login_tv_hint"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             style="@style/layout_textview_hint" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textinputlayout_login_email"
+            android:id="@+id/login_til_email"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
-            android:hint="@string/login_email"
+            android:hint="@string/login_et_email"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textview_login_info">
+            app:layout_constraintTop_toBottomOf="@+id/login_tv_hint">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edittext_login_email"
+                android:id="@+id/login_et_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress" />
@@ -42,21 +42,21 @@
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:id="@+id/textinputlayout_login_password"
+            android:id="@+id/login__til_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:hint="@string/login_password"
+            android:hint="@string/login_et_password"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textinputlayout_login_email"
+            app:layout_constraintTop_toBottomOf="@id/login_til_email"
             app:endIconMode="password_toggle">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edittext_login_password"
+                android:id="@+id/login_et_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"/>
@@ -64,29 +64,28 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_login_enter"
+            android:id="@+id/login_btn_enter"
             style="@style/filled_button_style"
             android:layout_width="0dp"
             android:layout_height="@dimen/btn_height_60dp"
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
-            android:text="@string/login_enter"
+            android:text="@string/login_btn_enter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textinputlayout_login_password" />
+            app:layout_constraintTop_toBottomOf="@+id/login__til_password" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_login_forgot_password"
+            android:id="@+id/login_btn_forgotPassword"
             style="@style/text_button_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="@string/login_forgot_password"
+            android:text="@string/login_btn_forgotPassword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_login_enter" />
-
+            app:layout_constraintTop_toBottomOf="@+id/login_btn_enter" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,4 +1,4 @@
-package com.br.queroajudar.fragments
+package com.br.queroajudar.view.fragments
 
 
 import android.os.Bundle

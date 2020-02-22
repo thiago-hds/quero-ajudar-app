@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.br.queroajudar.fragments.StartFragment">
+    tools:context=".view.fragments.StartFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint_layout_fragment_start"
@@ -10,7 +10,7 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/textview_main_appname"
+            android:id="@+id/start_tv_appname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/raleway"
@@ -19,35 +19,35 @@
             android:textColor="@color/colorPrimary"
             android:textSize="44dp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/btn_main_register"
+            app:layout_constraintBottom_toTopOf="@+id/start_btn_register"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_main_register"
+            android:id="@+id/start_btn_register"
             style="@style/filled_button_style"
             android:layout_width="0dp"
             android:layout_height="@dimen/btn_height_60dp"
             android:layout_marginStart="@dimen/layout_margin_16dp"
             android:layout_marginEnd="@dimen/layout_margin_16dp"
-            android:layout_marginBottom="8dp"
-            android:text="@string/start_register"
-            app:layout_constraintBottom_toTopOf="@+id/btn_main_login"
+            android:layout_marginBottom="@dimen/layout_margin_8dp"
+            android:text="@string/start_btn_register"
+            app:layout_constraintBottom_toTopOf="@+id/start_btnlogin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_main_login"
+            android:id="@+id/start_btnlogin"
             style="@style/outlined_button_style"
             android:layout_width="0dp"
             android:layout_height="@dimen/btn_height_60dp"
             android:layout_marginStart="@dimen/layout_margin_16dp"
             android:layout_marginEnd="@dimen/layout_margin_16dp"
-            android:layout_marginBottom="16dp"
-            android:text="@string/start_login"
+            android:layout_marginBottom="@dimen/layout_margin_16dp"
+            android:text="@string/start_btn_login"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
