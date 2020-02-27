@@ -11,15 +11,24 @@ import androidx.lifecycle.ViewModelProvider
 
 import com.br.queroajudar.R
 import com.br.queroajudar.databinding.FragmentRegisterDataBinding
-import com.br.queroajudar.viewmodel.RegisterDataViewModel
+import com.br.queroajudar.viewmodel.RegisterViewModel
 
 /**
  * A simple [Fragment] subclass.
  */
 class RegisterDataFragment : Fragment() {
-    private val viewModel: RegisterDataViewModel by lazy {
-        ViewModelProvider(this).get(RegisterDataViewModel::class.java)
+
+    private lateinit var registerViewModel : RegisterViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        registerViewModel = activity?.run{
+            ViewModelProvider(this).get(RegisterViewModel::class.java)
+        } ?: throw Exception("Invalid Activity")
+
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,12 +37,9 @@ class RegisterDataFragment : Fragment() {
         val binding: FragmentRegisterDataBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_register_data, container, false)
 
 
-        binding.viewModel = viewModel
+        binding.viewModel = registerViewModel
 
-        viewModel.test();
 
         return binding.root
     }
-
-
 }

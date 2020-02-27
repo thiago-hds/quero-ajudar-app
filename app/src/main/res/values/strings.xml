@@ -21,4 +21,9 @@
     <string name="registerData_et_password">Senha</string>
     <string name="registerData_et_confirmPassword">Confime a senha</string>
     <string name="registerData_btn_nextStep">Avançar</string>
+
+    <!-- Errors -->
+    <string name="error_field_invalid">O campo é inválido</string>
+    <string name="error_field_invalid_length">Número inválido de caracteres</string>
+
 </resources>

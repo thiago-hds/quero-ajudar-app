@@ -4,6 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".view.fragments.LoginFragment">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="com.br.queroajudar.viewmodel.LoginViewModel"/>
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -26,6 +32,8 @@
             android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
             android:hint="@string/login_et_email"
+            app:errorEnabled="true"
+            error="@{viewModel.login.emailError}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -33,6 +41,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/login_et_email"
+                android:text="@={viewModel.login.email}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress" />
@@ -42,24 +51,26 @@
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:id="@+id/login__til_password"
+            android:id="@+id/login_til_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:hint="@string/login_et_password"
+            app:endIconMode="password_toggle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/login_til_email"
-            app:endIconMode="password_toggle">
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/login_et_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"/>
+                android:inputType="textPassword"
+                android:text="@={viewModel.login.password}"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -72,9 +83,10 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
             android:text="@string/login_btn_enter"
+            android:onClick="@{() -> viewModel.onButtonEnterClick()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/login__til_password" />
+            app:layout_constraintTop_toBottomOf="@+id/login_til_password" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/login_btn_forgotPassword"
@@ -85,7 +97,8 @@
             android:text="@string/login_btn_forgotPassword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/login_btn_enter" />
+            app:layout_constraintTop_toBottomOf="@+id/login_btn_enter"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
