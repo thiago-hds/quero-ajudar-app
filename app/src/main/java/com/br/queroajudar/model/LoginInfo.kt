@@ -11,7 +11,9 @@ import com.br.queroajudar.R
 class LoginInfo () : BaseObservable(){
     var email : String = ""
     var password : String = ""
+    @Transient
     var emailError = ObservableField<String>()
+    @Transient
     var passwordError = ObservableField<String>()
 
 
