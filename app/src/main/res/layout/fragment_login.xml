@@ -100,5 +100,15 @@
             app:layout_constraintTop_toBottomOf="@+id/login_btn_enter"
             />
 
+        <ProgressBar
+            android:id="@+id/login_pb_loading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

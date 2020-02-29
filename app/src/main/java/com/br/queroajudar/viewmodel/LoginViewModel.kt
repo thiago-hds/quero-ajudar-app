@@ -2,25 +2,30 @@ package com.br.queroajudar.viewmodel
 
 import android.util.Log
 import androidx.databinding.BindingAdapter
-import androidx.databinding.InverseBindingAdapter
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.br.queroajudar.model.BasicResponse
+import com.br.queroajudar.network.response.SuccessResponse
 import com.br.queroajudar.model.LoginInfo
 import com.br.queroajudar.model.User
-import com.br.queroajudar.network.QueroAjudarApi
-import com.google.android.material.textfield.TextInputEditText
+import com.br.queroajudar.network.QueroAjudarApiStatus
+import com.br.queroajudar.network.ResultWrapper
+import com.br.queroajudar.repository.UserRepository
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 
 class LoginViewModel : ViewModel() {
     private val loginInfo : LoginInfo = LoginInfo()
 
+
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+    private val userRepository : UserRepository = UserRepository()
+
+    private val _apiStatus = MutableLiveData<QueroAjudarApiStatus>()
+    val apiStatus: LiveData<QueroAjudarApiStatus>
+        get() = _apiStatus
 
 
     fun getLogin(): LoginInfo? {
@@ -29,13 +34,13 @@ class LoginViewModel : ViewModel() {
 
     fun onButtonEnterClick() {
         Log.i("QueroAjudar", "Clicou")
-        if (loginInfo.isValid()) {
+        //if (loginInfo.isValid()) {
             Log.i("QueroAjudar", "Login is valid")
             doLogin()
-        }
-        else{
-            Log.i("QueroAjudar", "Login is not valid")
-        }
+        //}
+//        else{
+//            Log.i("QueroAjudar", "Login is not valid")
+//        }
     }
 
     @BindingAdapter("error")
@@ -47,45 +52,34 @@ class LoginViewModel : ViewModel() {
         }
     }
 
-    fun doLogin(){
+    private fun doLogin(){
         coroutineScope.launch {
-            var loginDeferred = QueroAjudarApi.retrofitService.login(loginInfo)
-            try {
-                var loginResponse = loginDeferred.await()
-                if (loginResponse.status == "fail"){
-
-                }
-                Log.i("QueroAjudar","Success: ${loginResponse.data.toString()} Mars properties retrieved")
+            val loginResponse = userRepository.postLogin(loginInfo)
+            _apiStatus.value = QueroAjudarApiStatus.LOADING
+            when (loginResponse) {
+                is ResultWrapper.NetworkError -> showNetworkError()
+                is ResultWrapper.GenericError -> showGenericError(loginResponse)
+                is ResultWrapper.Success -> showSuccess(loginResponse.value)
             }
-            catch (t:Throwable){
-                Log.i("QueroAjudar","Failure: " + t.message)
 
-            }
         }
-
-//        QueroAjudarApi.retrofitService.login(loginInfo).enqueue(object: Callback<BasicResponse<Map<String,User>>>{
-//
-//
-//            override fun onFailure(call: Call<BasicResponse<Map<String, User>>>, t: Throwable) {
-//                Log.i("QueroAjudar","Failure: " + t.message)
-//            }
-//
-//            override fun onResponse(
-//                call: Call<BasicResponse<Map<String, User>>>,
-//                response: Response<BasicResponse<Map<String, User>>>
-//            ) {
-//                Log.i("QueroAjudar","Success: ${response.body()?.toString()} Mars properties retrieved")
-//            }
-//
-//        })
-//        GlobalScope.launch(Dispatchers.Main){
-//            val webResponse  = QueroAjudarApi.retrofitService.login(loginInfo).await()
-//            Log.i("QueroAjudar", "Add success: ${webResponse.isSuccessful}")
-//        }
-
-
-
     }
+
+    fun showNetworkError( ){
+        Log.i("QueroAjudar", "Network Error")
+        _apiStatus.value = QueroAjudarApiStatus.ERROR
+    }
+
+    fun showGenericError(loginResponse: ResultWrapper.GenericError) {
+        Log.i("QueroAjudar", "Error! $loginResponse")
+        _apiStatus.value = QueroAjudarApiStatus.ERROR
+    }
+
+    fun showSuccess(value: SuccessResponse<Map<String, User>>) {
+        Log.i("QueroAjudar", "Success! $value")
+        _apiStatus.value = QueroAjudarApiStatus.DONE
+    }
+
 
     override fun onCleared() {
         super.onCleared()
