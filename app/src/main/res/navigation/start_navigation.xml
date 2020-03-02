@@ -32,7 +32,7 @@
         tools:layout="@layout/fragment_login" />
     <fragment
         android:id="@+id/registerDataFragment"
-        android:name="com.br.queroajudar.view.fragments.RegisterDataFragment"
+        android:name="com.br.queroajudar.view.fragments.RegisterFragment"
         android:label="fragment_register_data"
-        tools:layout="@layout/fragment_register_data" />
+        tools:layout="@layout/fragment_register" />
 </navigation>

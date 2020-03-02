@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.br.queroajudar.network.response.SuccessResponse
-import com.br.queroajudar.model.LoginInfo
+import com.br.queroajudar.model.formdata.LoginData
 import com.br.queroajudar.model.User
 import com.br.queroajudar.network.QueroAjudarApiStatus
 import com.br.queroajudar.network.ResultWrapper
@@ -16,25 +16,25 @@ import kotlinx.coroutines.*
 
 
 class LoginViewModel : ViewModel() {
-    private val loginInfo : LoginInfo = LoginInfo()
-
+    private val loginData : LoginData = LoginData()
+    private val userRepository : UserRepository = UserRepository()
 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
-    private val userRepository : UserRepository = UserRepository()
+
 
     private val _apiStatus = MutableLiveData<QueroAjudarApiStatus>()
     val apiStatus: LiveData<QueroAjudarApiStatus>
         get() = _apiStatus
 
 
-    fun getLogin(): LoginInfo? {
-        return loginInfo
+    fun getLogin(): LoginData? {
+        return loginData
     }
 
     fun onButtonEnterClick() {
         Log.i("QueroAjudar", "Clicou")
-        //if (loginInfo.isValid()) {
+        //if (loginData.isValid()) {
             Log.i("QueroAjudar", "Login is valid")
             doLogin()
         //}
@@ -43,39 +43,32 @@ class LoginViewModel : ViewModel() {
 //        }
     }
 
-    @BindingAdapter("error")
-    fun setError(textLayout: TextInputLayout, strOrResId: Any?) {
-        if (strOrResId is Int) {
-            textLayout.error = textLayout.context.getString((strOrResId as Int?)!!)
-        } else {
-            textLayout.error = strOrResId as String?
-        }
-    }
 
     private fun doLogin(){
+        _apiStatus.value = QueroAjudarApiStatus.LOADING
         coroutineScope.launch {
-            val loginResponse = userRepository.postLogin(loginInfo)
-            _apiStatus.value = QueroAjudarApiStatus.LOADING
-            when (loginResponse) {
+            when (val loginResponse = userRepository.postLogin(loginData)) {
                 is ResultWrapper.NetworkError -> showNetworkError()
                 is ResultWrapper.GenericError -> showGenericError(loginResponse)
                 is ResultWrapper.Success -> showSuccess(loginResponse.value)
             }
-
         }
     }
 
-    fun showNetworkError( ){
+    private fun showNetworkError( ){
         Log.i("QueroAjudar", "Network Error")
-        _apiStatus.value = QueroAjudarApiStatus.ERROR
+        _apiStatus.value = QueroAjudarApiStatus.NETWORK_ERROR
     }
 
-    fun showGenericError(loginResponse: ResultWrapper.GenericError) {
+    private fun showGenericError(loginResponse: ResultWrapper.GenericError) {
         Log.i("QueroAjudar", "Error! $loginResponse")
-        _apiStatus.value = QueroAjudarApiStatus.ERROR
+        _apiStatus.value = QueroAjudarApiStatus.GENERIC_ERROR
+        if(loginResponse.error != null) {
+            loginData.setApiValidationErrors(loginResponse.error.errors)
+        }
     }
 
-    fun showSuccess(value: SuccessResponse<Map<String, User>>) {
+    private fun showSuccess(value: SuccessResponse<Map<String, User>>) {
         Log.i("QueroAjudar", "Success! $value")
         _apiStatus.value = QueroAjudarApiStatus.DONE
     }

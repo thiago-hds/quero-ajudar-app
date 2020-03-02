@@ -11,5 +11,4 @@ data class User(
     @Json(name="date_of_birth") val dateOfBirth : String,
     val status : String,
     val token : String
-
 )

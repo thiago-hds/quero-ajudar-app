@@ -1,7 +1,6 @@
 package com.br.queroajudar.view.fragments
 
 
-import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -14,30 +13,29 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 
 import com.br.queroajudar.R
-import com.br.queroajudar.databinding.FragmentLoginBinding
+import com.br.queroajudar.databinding.FragmentRegisterBinding
 import com.br.queroajudar.network.QueroAjudarApiStatus
-import com.br.queroajudar.viewmodel.LoginViewModel
+import com.br.queroajudar.viewmodel.RegisterViewModel
 
 /**
  * A simple [Fragment] subclass.
  */
-class LoginFragment : Fragment() {
+class RegisterFragment : Fragment() {
 
-    private val loginViewModel: LoginViewModel by lazy {
-        ViewModelProvider(this).get(LoginViewModel::class.java)
+    private val registerViewModel: RegisterViewModel by lazy {
+        ViewModelProvider(this).get(RegisterViewModel::class.java)
     }
 
-    lateinit var binding : FragmentLoginBinding
+    private lateinit var binding : FragmentRegisterBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
-
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_register, container, false)
+        binding.viewModel = registerViewModel
         binding.lifecycleOwner = this
-        binding.viewModel = loginViewModel
 
         setupLoadingProgressBarVisibility()
 
@@ -45,7 +43,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun setupLoadingProgressBarVisibility(){
-        loginViewModel.apiStatus.observe(viewLifecycleOwner, Observer<QueroAjudarApiStatus>{status ->
+        registerViewModel.apiStatus.observe(viewLifecycleOwner, Observer<QueroAjudarApiStatus>{ status ->
             Log.i("QueroAjudar", "ApiStatus changed")
 
             if(status == QueroAjudarApiStatus.LOADING){
@@ -61,11 +59,10 @@ class LoginFragment : Fragment() {
         })
     }
 
-    private fun showLoadingOverlay(){binding.loginOverlayLoading.visibility = View.VISIBLE}
-    private fun hideLoadingOverlay(){binding.loginOverlayLoading.visibility = View.GONE}
+    private fun showLoadingOverlay(){binding.registerOverlayLoading.visibility = View.VISIBLE}
+    private fun hideLoadingOverlay(){binding.registerOverlayLoading.visibility = View.GONE}
 
     private fun showNetworkErrorMessage(){
         Toast.makeText(context, R.string.error_connection, Toast.LENGTH_LONG).show()
     }
-
 }

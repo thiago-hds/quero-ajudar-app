@@ -59,6 +59,8 @@
             android:layout_marginEnd="16dp"
             android:hint="@string/login_et_password"
             app:endIconMode="password_toggle"
+            app:errorEnabled="true"
+            error="@{viewModel.login.passwordError}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -97,18 +99,11 @@
             android:text="@string/login_btn_forgotPassword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/login_btn_enter"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/login_btn_enter" />
 
-        <ProgressBar
-            android:id="@+id/login_pb_loading"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="parent"
-            app:layout_constraintTop_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+        <include
+            android:id="@+id/login_overlay_loading"
+            layout="@layout/loading_overlay"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

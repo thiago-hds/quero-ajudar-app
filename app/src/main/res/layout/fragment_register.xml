@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".view.fragments.RegisterDataFragment">
+    tools:context=".view.fragments.RegisterFragment">
 
     <data>
         <variable
@@ -15,153 +15,172 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/registerData_tv_hint"
+            android:id="@+id/register_tv_hint"
             style="@style/layout_textview_hint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/registerData_tv_hint"
+            android:text="@string/register_tv_hint"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/registerData_til_name"
+            android:id="@+id/register_til_firstName"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
-            android:hint="@string/registerData_et_name"
+            android:hint="@string/register_et_name"
+            app:errorEnabled="true"
+            error="@{viewModel.register.firstNameError}"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/registerData_til_lastName"
+            app:layout_constraintEnd_toStartOf="@+id/register_til_lastName"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/registerData_tv_hint">
+            app:layout_constraintTop_toBottomOf="@+id/register_tv_hint">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/registerData_et_name"
+                android:id="@+id/register_et_firstName"
+                android:text="@={viewModel.register.firstName}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/registerData_til_lastName"
+            android:id="@+id/register_til_lastName"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:hint="@string/registerData_et_lastName"
+            android:hint="@string/register_et_lastName"
+            app:errorEnabled="true"
+            error="@{viewModel.register.lastNameError}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/registerData_til_name"
-            app:layout_constraintTop_toTopOf="@+id/registerData_til_name">
+            app:layout_constraintStart_toEndOf="@+id/register_til_firstName"
+            app:layout_constraintTop_toTopOf="@+id/register_til_firstName">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/registerData_et_lastName"
+                android:id="@+id/register_et_lastName"
+                android:text="@={viewModel.register.lastName}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/registerData_til_dateOfBirth"
+            android:id="@+id/register_til_dateOfBirth"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:hint="@string/registerData_et_dateOfBirth"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/registerData_til_name">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/registerData_et_dateOfBirth"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/registerData_til_email"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            error="@{viewModel.register.dateOfBirthError}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:hint="@string/registerData_et_email"
+            android:hint="@string/register_et_dateOfBirth"
+            app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/registerData_til_dateOfBirth">
+            app:layout_constraintTop_toBottomOf="@+id/register_til_firstName">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/registerData_et_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/registerData_til_password"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:hint="@string/registerData_et_password"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/registerData_til_email">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/registerData_et_password"
+                android:id="@+id/register_et_dateOfBirth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword" />
+                android:text="@={viewModel.register.dateOfBirth}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/registerData_til_confirmPassword"
+            android:id="@+id/register_til_email"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            error="@{viewModel.register.emailError}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:hint="@string/registerData_et_confirmPassword"
+            android:hint="@string/register_et_email"
+            app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/registerData_til_password">
+            app:layout_constraintTop_toBottomOf="@+id/register_til_dateOfBirth">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/registerData_et_confirmPassword"
+                android:id="@+id/register_et_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword" />
+                android:text="@={viewModel.register.email}" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/register_til_password"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            error="@{viewModel.register.passwordError}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:hint="@string/register_et_password"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/register_til_email">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/register_et_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:text="@={viewModel.register.password}" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/register_til_passwordConfirm"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            error="@{viewModel.register.passwordConfirmError}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:hint="@string/register_et_passwordConfirm"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/register_til_password">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/register_et_passwordConfirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:text="@={viewModel.register.passwordConfirm}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/registerData_btn_nextStep"
+            android:id="@+id/register_btn_nextStep"
             style="@style/filled_button_style"
             android:layout_width="0dp"
             android:layout_height="@dimen/btn_height_60dp"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
-            android:text="@string/registerData_btn_nextStep"
+            android:onClick="@{() -> viewModel.onButtonSendClick()}"
+            android:text="@string/register_btn_nextStep"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/registerData_til_confirmPassword" />
+            app:layout_constraintTop_toBottomOf="@+id/register_til_passwordConfirm" />
+
+        <include
+            android:id="@+id/register_overlay_loading"
+            layout="@layout/loading_overlay"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

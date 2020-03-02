@@ -2,8 +2,9 @@ package com.br.queroajudar.network
 
 import android.util.Log
 import com.br.queroajudar.network.response.SuccessResponse
-import com.br.queroajudar.model.LoginInfo
+import com.br.queroajudar.model.formdata.LoginData
 import com.br.queroajudar.model.User
+import com.br.queroajudar.model.formdata.RegisterData
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
@@ -42,7 +43,10 @@ private val retrofit = Retrofit.Builder()
 interface QueroAjudarApiService {
 
     @POST("login")
-    suspend fun postLogin(@Body loginInfo: LoginInfo): SuccessResponse<Map<String, User>>
+    suspend fun postLogin(@Body data: LoginData): SuccessResponse<Map<String, User>>
+
+    @POST("register")
+    suspend fun postRegister(@Body data: RegisterData): SuccessResponse<Map<String, User>>
 }
 
 object QueroAjudarApi {
@@ -51,4 +55,4 @@ object QueroAjudarApi {
     }
 }
 
-enum class QueroAjudarApiStatus { LOADING, ERROR, DONE }
+enum class QueroAjudarApiStatus { LOADING, DONE, GENERIC_ERROR, NETWORK_ERROR }
