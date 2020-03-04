@@ -4,17 +4,17 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.br.queroajudar.model.User
-import com.br.queroajudar.model.formdata.LoginData
 import com.br.queroajudar.model.formdata.RegisterData
 import com.br.queroajudar.network.QueroAjudarApiStatus
 import com.br.queroajudar.network.ResultWrapper
 import com.br.queroajudar.network.response.SuccessResponse
 import com.br.queroajudar.repository.UserRepository
+import com.br.queroajudar.util.QueroAjudarPreferences
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class RegisterViewModel : ViewModel() {
     private val registerData : RegisterData = RegisterData()
@@ -32,42 +32,37 @@ class RegisterViewModel : ViewModel() {
     }
 
     fun onButtonSendClick() {
-        Log.i("QueroAjudar", "Clicou")
-        //if (loginData.isValid()) {
-        Log.i("QueroAjudar", "Login is valid")
+        //TODO validação dos campos no lado do cliente
         register()
-        //}
-//        else{
-//            Log.i("QueroAjudar", "Login is not valid")
-//        }
     }
 
     private fun register(){
         _apiStatus.value = QueroAjudarApiStatus.LOADING
         coroutineScope.launch {
             when (val loginResponse = userRepository.postRegister(registerData)) {
-                is ResultWrapper.NetworkError -> showNetworkError()
-                is ResultWrapper.GenericError -> showGenericError(loginResponse)
-                is ResultWrapper.Success -> showSuccess(loginResponse.value)
+                is ResultWrapper.NetworkError -> onNetworkError()
+                is ResultWrapper.GenericError -> onGenericError(loginResponse)
+                is ResultWrapper.Success -> onSuccess(loginResponse.value)
             }
         }
     }
 
-    private fun showNetworkError( ){
-        Log.i("QueroAjudar", "Network Error")
+    private fun onNetworkError( ){
+        Timber.i("API call network error")
         _apiStatus.value = QueroAjudarApiStatus.NETWORK_ERROR
     }
 
-    private fun showGenericError(loginResponse: ResultWrapper.GenericError) {
-        Log.i("QueroAjudar", "Error! $loginResponse")
+    private fun onGenericError(loginResponse: ResultWrapper.GenericError) {
+        Timber.i("API call generic error: $loginResponse")
         _apiStatus.value = QueroAjudarApiStatus.GENERIC_ERROR
         if(loginResponse.error != null) {
             registerData.setApiValidationErrors(loginResponse.error.errors)
         }
     }
 
-    private fun showSuccess(value: SuccessResponse<Map<String, User>>) {
-        Log.i("QueroAjudar", "Success! $value")
+    private fun onSuccess(value: SuccessResponse<String>) {
+        Timber.i("API call success: $value")
+        QueroAjudarPreferences.apiToken = value.data
         _apiStatus.value = QueroAjudarApiStatus.DONE
     }
 

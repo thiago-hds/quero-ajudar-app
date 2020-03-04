@@ -16,6 +16,7 @@ import com.br.queroajudar.R
 import com.br.queroajudar.databinding.FragmentRegisterBinding
 import com.br.queroajudar.network.QueroAjudarApiStatus
 import com.br.queroajudar.viewmodel.RegisterViewModel
+import timber.log.Timber
 
 /**
  * A simple [Fragment] subclass.
@@ -37,14 +38,14 @@ class RegisterFragment : Fragment() {
         binding.viewModel = registerViewModel
         binding.lifecycleOwner = this
 
-        setupLoadingProgressBarVisibility()
+        setApiStatusObserver()
 
         return binding.root
     }
 
-    private fun setupLoadingProgressBarVisibility(){
+    private fun setApiStatusObserver(){
         registerViewModel.apiStatus.observe(viewLifecycleOwner, Observer<QueroAjudarApiStatus>{ status ->
-            Log.i("QueroAjudar", "ApiStatus changed")
+            Timber.i("API status changed")
 
             if(status == QueroAjudarApiStatus.LOADING){
                 showLoadingOverlay()
@@ -55,6 +56,9 @@ class RegisterFragment : Fragment() {
                 if(status == QueroAjudarApiStatus.NETWORK_ERROR){
                     showNetworkErrorMessage()
                 }
+                else if(status == QueroAjudarApiStatus.DONE){
+                    goToCausesFragment()
+                }
             }
         })
     }
@@ -64,5 +68,9 @@ class RegisterFragment : Fragment() {
 
     private fun showNetworkErrorMessage(){
         Toast.makeText(context, R.string.error_connection, Toast.LENGTH_LONG).show()
+    }
+
+    private fun goToCausesFragment(){
+
     }
 }

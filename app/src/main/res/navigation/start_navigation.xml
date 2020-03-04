@@ -34,5 +34,14 @@
         android:id="@+id/registerDataFragment"
         android:name="com.br.queroajudar.view.fragments.RegisterFragment"
         android:label="fragment_register_data"
-        tools:layout="@layout/fragment_register" />
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerDataFragment_to_causesFragment"
+            app:destination="@id/causesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/causesFragment"
+        android:name="com.br.queroajudar.view.fragments.CausesFragment"
+        android:label="causes_fragment"
+        tools:layout="@layout/fragment_causes" />
 </navigation>

@@ -68,7 +68,7 @@ class LoginViewModel : ViewModel() {
         }
     }
 
-    private fun showSuccess(value: SuccessResponse<Map<String, User>>) {
+    private fun showSuccess(value: SuccessResponse<String>) {
         Log.i("QueroAjudar", "Success! $value")
         _apiStatus.value = QueroAjudarApiStatus.DONE
     }
@@ -78,6 +78,4 @@ class LoginViewModel : ViewModel() {
         super.onCleared()
         viewModelJob.cancel()
     }
-
-
 }

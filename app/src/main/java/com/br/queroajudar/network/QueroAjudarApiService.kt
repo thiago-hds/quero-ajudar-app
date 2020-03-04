@@ -1,6 +1,7 @@
 package com.br.queroajudar.network
 
 import android.util.Log
+import com.br.queroajudar.model.Cause
 import com.br.queroajudar.network.response.SuccessResponse
 import com.br.queroajudar.model.formdata.LoginData
 import com.br.queroajudar.model.User
@@ -12,6 +13,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
 import java.util.concurrent.TimeUnit
 
@@ -43,10 +45,13 @@ private val retrofit = Retrofit.Builder()
 interface QueroAjudarApiService {
 
     @POST("login")
-    suspend fun postLogin(@Body data: LoginData): SuccessResponse<Map<String, User>>
+    suspend fun postLogin(@Body data: LoginData): SuccessResponse<String>
 
     @POST("register")
-    suspend fun postRegister(@Body data: RegisterData): SuccessResponse<Map<String, User>>
+    suspend fun postRegister(@Body data: RegisterData): SuccessResponse<String>
+
+    @GET("causes")
+    suspend fun getCauses(): SuccessResponse<List<Cause>>
 }
 
 object QueroAjudarApi {

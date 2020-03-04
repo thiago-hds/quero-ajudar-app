@@ -71,29 +71,6 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/register_til_dateOfBirth"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            error="@{viewModel.register.dateOfBirthError}"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:hint="@string/register_et_dateOfBirth"
-            app:errorEnabled="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/register_til_firstName">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/register_et_dateOfBirth"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@={viewModel.register.dateOfBirth}" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/register_til_email"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             error="@{viewModel.register.emailError}"
@@ -106,7 +83,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/register_til_dateOfBirth">
+            app:layout_constraintTop_toBottomOf="@+id/register_til_lastName">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/register_et_email"
@@ -140,30 +117,6 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/register_til_passwordConfirm"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            error="@{viewModel.register.passwordConfirmError}"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:hint="@string/register_et_passwordConfirm"
-            app:errorEnabled="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/register_til_password">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/register_et_passwordConfirm"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:text="@={viewModel.register.passwordConfirm}" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/register_btn_nextStep"
             style="@style/filled_button_style"
@@ -176,7 +129,7 @@
             android:text="@string/register_btn_nextStep"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/register_til_passwordConfirm" />
+            app:layout_constraintTop_toBottomOf="@+id/register_til_password" />
 
         <include
             android:id="@+id/register_overlay_loading"
