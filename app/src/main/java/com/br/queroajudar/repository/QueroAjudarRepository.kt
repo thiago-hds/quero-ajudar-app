@@ -14,7 +14,7 @@ class QueroAjudarRepository(private val dispatcher: CoroutineDispatcher = Dispat
 
     private val  apiCaller : SafeApiCaller = SafeApiCaller()
 
-    suspend fun getCauses(data : LoginData) : ResultWrapper<SuccessResponse<List<Cause>>> {
+    suspend fun getCauses() : ResultWrapper<SuccessResponse<List<Cause>>> {
         return apiCaller.safeApiCall(dispatcher) { QueroAjudarApi.retrofitService.getCauses()}
     }
 }

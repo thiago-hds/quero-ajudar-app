@@ -10,7 +10,6 @@ class RegisterData () : BaseFormData() {
     var firstName: String = ""
     @Json(name="last_name")
     var lastName: String = ""
-    @Json(name="date_of_birth")
     var email: String = ""
     var password: String = ""
 

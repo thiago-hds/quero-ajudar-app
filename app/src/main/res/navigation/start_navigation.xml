@@ -29,19 +29,23 @@
         android:id="@+id/loginFragment"
         android:name="com.br.queroajudar.view.fragments.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_homeActivity"
+            app:destination="@id/homeActivity" />
+    </fragment>
     <fragment
         android:id="@+id/registerDataFragment"
         android:name="com.br.queroajudar.view.fragments.RegisterFragment"
         android:label="fragment_register_data"
         tools:layout="@layout/fragment_register" >
         <action
-            android:id="@+id/action_registerDataFragment_to_causesFragment"
-            app:destination="@id/causesFragment" />
+            android:id="@+id/action_registerDataFragment_to_homeActivity"
+            app:destination="@id/homeActivity" />
     </fragment>
-    <fragment
-        android:id="@+id/causesFragment"
-        android:name="com.br.queroajudar.view.fragments.CausesFragment"
-        android:label="causes_fragment"
-        tools:layout="@layout/fragment_causes" />
+    <activity
+        android:id="@+id/homeActivity"
+        android:name="com.br.queroajudar.view.HomeActivity"
+        android:label="activity_home"
+        tools:layout="@layout/activity_home" />
 </navigation>

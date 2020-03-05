@@ -11,6 +11,8 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 
 import com.br.queroajudar.R
 import com.br.queroajudar.databinding.FragmentRegisterBinding
@@ -71,6 +73,6 @@ class RegisterFragment : Fragment() {
     }
 
     private fun goToCausesFragment(){
-
+        findNavController().navigate(R.id.action_registerDataFragment_to_homeActivity)
     }
 }

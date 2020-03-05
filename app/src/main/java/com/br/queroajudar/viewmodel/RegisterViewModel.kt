@@ -48,12 +48,12 @@ class RegisterViewModel : ViewModel() {
     }
 
     private fun onNetworkError( ){
-        Timber.i("API call network error")
+        Timber.tag("QueroAjudar").i("API call network error")
         _apiStatus.value = QueroAjudarApiStatus.NETWORK_ERROR
     }
 
     private fun onGenericError(loginResponse: ResultWrapper.GenericError) {
-        Timber.i("API call generic error: $loginResponse")
+        Timber.tag("QueroAjudar").i("API call generic error: $loginResponse")
         _apiStatus.value = QueroAjudarApiStatus.GENERIC_ERROR
         if(loginResponse.error != null) {
             registerData.setApiValidationErrors(loginResponse.error.errors)
@@ -61,7 +61,7 @@ class RegisterViewModel : ViewModel() {
     }
 
     private fun onSuccess(value: SuccessResponse<String>) {
-        Timber.i("API call success: $value")
+        Timber.tag("QueroAjudar").i("API call success: $value")
         QueroAjudarPreferences.apiToken = value.data
         _apiStatus.value = QueroAjudarApiStatus.DONE
     }

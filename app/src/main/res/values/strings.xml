@@ -27,4 +27,12 @@
     <string name="error_field_invalid_length">Número inválido de caracteres</string>
     <string name="error_connection">Não foi possível conectar-se com o servidor. Por favor, verifique sua conexão ou tente novamente mais tarde.</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- menu -->
+    <string name="menu_item_profile">Perfil</string>
+    <string name="menu_item_favorites">Favoritos</string>
+    <string name="menu_item_vacancies">Vagas</string>
+
 </resources>
