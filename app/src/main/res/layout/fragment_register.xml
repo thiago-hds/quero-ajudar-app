@@ -133,6 +133,7 @@
 
         <include
             android:id="@+id/register_overlay_loading"
+            android:visibility="gone"
             layout="@layout/loading_overlay"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

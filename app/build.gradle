@@ -31,6 +31,9 @@ android {
     dataBinding {
         enabled = true
     }
+    viewBinding {
+        enabled = true
+    }
 }
 
 dependencies {
@@ -49,6 +52,12 @@ dependencies {
 
     //Timber
     implementation "com.jakewharton.timber:timber:$timber_version"
+
+    //Recycler View
+    implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
+
+    //CardView
+    implementation "androidx.cardview:cardview:$cardview_version"
 
     //ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"

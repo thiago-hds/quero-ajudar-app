@@ -65,8 +65,12 @@ class RegisterFragment : Fragment() {
         })
     }
 
-    private fun showLoadingOverlay(){binding.registerOverlayLoading.visibility = View.VISIBLE}
-    private fun hideLoadingOverlay(){binding.registerOverlayLoading.visibility = View.GONE}
+    private fun showLoadingOverlay(){
+        //binding.registerOverlayLoading.visibility = View.VISIBLE}
+    }
+    private fun hideLoadingOverlay(){
+        //binding.registerOverlayLoading.visibility = View.GONE
+    }
 
     private fun showNetworkErrorMessage(){
         Toast.makeText(context, R.string.error_connection, Toast.LENGTH_LONG).show()

@@ -8,16 +8,16 @@
     <fragment
         android:id="@+id/vacanciesFragment"
         android:name="com.br.queroajudar.view.fragments.VacanciesFragment"
-        android:label="fragment_vacancies"
+        android:label="@string/fragment_vacancies_label"
         tools:layout="@layout/fragment_vacancies" />
     <fragment
         android:id="@+id/favoritesFragment"
         android:name="com.br.queroajudar.view.fragments.FavoritesFragment"
-        android:label="fragment_favorites"
+        android:label="@string/fragment_favorites_label"
         tools:layout="@layout/fragment_favorites" />
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.br.queroajudar.view.fragments.ProfileFragment"
-        android:label="fragment_profile"
+        android:label="@string/fragment_profile_label"
         tools:layout="@layout/fragment_profile" />
 </navigation>

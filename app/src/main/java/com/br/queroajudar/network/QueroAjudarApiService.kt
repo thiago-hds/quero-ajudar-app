@@ -2,6 +2,7 @@ package com.br.queroajudar.network
 
 import android.util.Log
 import com.br.queroajudar.model.Cause
+import com.br.queroajudar.model.Vacancy
 import com.br.queroajudar.network.response.SuccessResponse
 import com.br.queroajudar.model.formdata.LoginData
 import com.br.queroajudar.model.formdata.RegisterData
@@ -16,6 +17,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import timber.log.Timber
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -23,7 +25,7 @@ private const val BASE_URL = "http://192.168.1.109:8000/api/"
 
 val loggingInterceptor = HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
     override fun log(message: String) {
-        Log.i("QueroAjudar.APICall", message)
+        Timber.tag("QueroAjudar.APICall").i(message)
     }
 }).setLevel(HttpLoggingInterceptor.Level.BODY)
 
@@ -55,6 +57,9 @@ interface QueroAjudarApiService {
 
     @GET("causes")
     suspend fun getCauses(): SuccessResponse<List<Cause>>
+
+    @GET("vacancies")
+    suspend fun getVacancies(): SuccessResponse<List<Vacancy>>
 }
 
 object QueroAjudarApi {

@@ -61,8 +61,12 @@ class LoginFragment : Fragment() {
         })
     }
 
-    private fun showLoadingOverlay(){binding.loginOverlayLoading.visibility = View.VISIBLE}
-    private fun hideLoadingOverlay(){binding.loginOverlayLoading.visibility = View.GONE}
+    private fun showLoadingOverlay(){
+        //binding.loginOverlayLoading.visibility = View.VISIBLE
+    }
+    private fun hideLoadingOverlay(){
+        //binding.loginOverlayLoading.visibility = View.GONE
+    }
 
     private fun showNetworkErrorMessage(){
         Toast.makeText(context, R.string.error_connection, Toast.LENGTH_LONG).show()

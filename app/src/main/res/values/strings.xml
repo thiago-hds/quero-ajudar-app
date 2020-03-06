@@ -22,17 +22,39 @@
     <string name="register_et_passwordConfirm">Confime a senha</string>
     <string name="register_btn_nextStep">Avançar</string>
 
-    <!-- Errors -->
-    <string name="error_field_invalid">O campo é inválido</string>
-    <string name="error_field_invalid_length">Número inválido de caracteres</string>
-    <string name="error_connection">Não foi possível conectar-se com o servidor. Por favor, verifique sua conexão ou tente novamente mais tarde.</string>
+    <!-- VacanciesFragment -->
+    <string name="fragment_vacancies_label">Vagas</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- FavoritesFragment -->
+    <string name="fragment_favorites_label">Favoritos</string>
+
+    <!-- ProfileFragment -->
+    <string name="fragment_profile_label">Perfil</string>
+
+    <!-- vacancy_item.xml -->
+    <string name="item_vacancy_by">por</string>
 
     <!-- menu -->
     <string name="menu_item_profile">Perfil</string>
     <string name="menu_item_favorites">Favoritos</string>
     <string name="menu_item_vacancies">Vagas</string>
+
+    <!-- Errors -->
+    <string name="error_field_invalid">O campo é inválido</string>
+    <string name="error_field_invalid_length">Número inválido de caracteres</string>
+    <string name="error_connection">Não foi possível conectar-se com o servidor. Por favor, verifique sua conexão ou tente novamente mais tarde.</string>
+
+    <!-- Tools Text -->
+    <string name="tools_vacancyItem_name">Motorista Solidário</string>
+    <string name="tools_vacancyItem_organizationName">CAPEC</string>
+    <string name="tools_vacancyItem_location">Belo Horizonte - MG</string>
+    <string name="tools_vacancyItem_type">Recorrente</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+
+
 
 </resources>
