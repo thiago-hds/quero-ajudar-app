@@ -82,5 +82,8 @@ dependencies {
     //Logging interceptor
     implementation "com.squareup.okhttp3:logging-interceptor:$logging_interceptor_version"
 
+    //Glide
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+
     //implementation "androidx.multidex:multidex:$multidex_version"
 }

@@ -48,7 +48,7 @@ class VacanciesFragment : Fragment() {
 
         viewModel.vacancies.observe(viewLifecycleOwner, Observer { vacancyList ->
             vacancyList?.let{
-                adapter.data = vacancyList
+                adapter.submitList(vacancyList)
             }
         })
     }
