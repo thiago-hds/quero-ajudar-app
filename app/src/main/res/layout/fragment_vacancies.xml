@@ -13,39 +13,85 @@
             type="boolean"/>
     </data>
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/vacancies_btn_fiters"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/vacancies_recyclerView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:clipToPadding="false"
-            android:padding="6dp"
-            app:spanCount="2"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button"
-            tools:itemCount="4"
-            tools:listitem="@layout/vacancy_item" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/vacancies_recyclerView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:clipToPadding="false"
+                android:padding="6dp"
+                app:spanCount="2"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toTopOf="@id/progressBar"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/vacancies_btn_fiters"
+                tools:itemCount="4"
+                tools:listitem="@layout/vacancy_item" />
 
-        <include
-            android:id="@+id/vacancies_overlay_loading"
-            android:visibility="@{isLoadingProgressVisible ? View.VISIBLE : View.GONE}"
-            layout="@layout/loading_overlay"/>
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:background="@android:color/transparent"
+                android:progressTint="@color/colorPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:pbApiStatus="@{viewModel.apiStatus}"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <include
+                android:id="@+id/vacancies_overlay_loading"
+                android:visibility="@{isLoadingProgressVisible ? View.VISIBLE : View.GONE}"
+                layout="@layout/loading_overlay"/>
+            <!--
+            <ImageView
+                android:id="@+id/vacancies_iv_status"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:backgroundTint="@color/colorWhite"
+                android:elevation="2dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:apiStatus="@{viewModel.apiStatus}" /> -->
+
+            <androidx.drawerlayout.widget.DrawerLayout
+                android:id="@+id/vacancies_dl_filters"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_gravity="right">
+                </LinearLayout>
+
+            </androidx.drawerlayout.widget.DrawerLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 
 </layout>

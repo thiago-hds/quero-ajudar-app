@@ -1,6 +1,7 @@
 package com.br.queroajudar.view.fragments
 
 import android.os.Bundle
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,11 +11,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.br.queroajudar.R
 import com.br.queroajudar.databinding.FragmentVacanciesBinding
 import com.br.queroajudar.network.QueroAjudarApiStatus
 import com.br.queroajudar.view.adapters.VacancyAdapter
+import com.br.queroajudar.view.adapters.VacancyClickListener
+import com.br.queroajudar.view.adapters.VacancyListScrollListener
 import com.br.queroajudar.viewmodel.VacanciesViewModel
 import timber.log.Timber
 
@@ -36,15 +40,33 @@ class VacanciesFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        setApiStatusObserver()
+        //setApiStatusObserver()
+        setListeners()
         setupVacanciesList()
 
         return binding.root
     }
 
+    private fun setListeners(){
+        binding.vacanciesBtnFiters.setOnClickListener {
+            binding.vacanciesDlFilters.openDrawer(Gravity.RIGHT)
+        }
+    }
+
     private fun setupVacanciesList(){
-        val adapter = VacancyAdapter()
+        val adapter = VacancyAdapter(VacancyClickListener { vacancyId ->
+            Toast.makeText(context, "$vacancyId", Toast.LENGTH_LONG).show()
+            viewModel.onVacancyClicked()
+        })
+
+        val scrollListener = VacancyListScrollListener({
+                viewModel.onListEndReached()
+            },
+            binding.vacanciesRecyclerView.layoutManager as LinearLayoutManager
+        )
+
         binding.vacanciesRecyclerView.adapter = adapter
+        binding.vacanciesRecyclerView.addOnScrollListener(scrollListener)
 
         viewModel.vacancies.observe(viewLifecycleOwner, Observer { vacancyList ->
             vacancyList?.let{

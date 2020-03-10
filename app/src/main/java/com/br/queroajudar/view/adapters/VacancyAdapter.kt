@@ -2,22 +2,20 @@ package com.br.queroajudar.view.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.br.queroajudar.R
 import com.br.queroajudar.databinding.VacancyItemBinding
 import com.br.queroajudar.model.Vacancy
-import com.bumptech.glide.Glide
-import com.google.android.material.button.MaterialButton
+import timber.log.Timber
 
-class VacancyAdapter : ListAdapter<Vacancy, VacancyAdapter.ViewHolder>(VacancyDiffCallback()) {
+class VacancyAdapter(val clickListener : VacancyClickListener) : ListAdapter<
+    Vacancy, VacancyAdapter.ViewHolder>(VacancyDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = getItem(position)
-        holder.bind(item)
+        val item = getItem(position)!!
+        holder.bind(clickListener, item)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -26,8 +24,9 @@ class VacancyAdapter : ListAdapter<Vacancy, VacancyAdapter.ViewHolder>(VacancyDi
 
     class ViewHolder private constructor(val binding: VacancyItemBinding) : RecyclerView.ViewHolder(binding.root){
 
-        fun bind(item: Vacancy) {
+        fun bind(clickListener: VacancyClickListener, item: Vacancy) {
             binding.vacancy = item
+            binding.clickListener = clickListener
             binding.executePendingBindings()
         }
 
@@ -49,9 +48,59 @@ class VacancyDiffCallback : DiffUtil.ItemCallback<Vacancy>() {
     override fun areContentsTheSame(oldItem: Vacancy, newItem: Vacancy): Boolean {
         return oldItem == newItem
     }
+}
 
+class VacancyListScrollListener(
+    val onEndReached : () -> Unit,
+    val layoutManager : LinearLayoutManager
+) : RecyclerView.OnScrollListener() {
 
+    private val visibleThreshold = 2
+    private val PAGE_SIZE = 6
+
+    private var visibleItemCount = 0
+    private var totalItemCount = 0
+    private var firstVisibleItemPosition = 0
+
+    private var previousTotalItemCount = 0
+
+    private var loading = false
+
+    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+        super.onScrolled(recyclerView, dx, dy)
+
+        //lista foi rolada
+        if(dy > 0){
+            visibleItemCount = recyclerView.childCount
+            totalItemCount = layoutManager.itemCount
+            firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+        }
+
+        //if(loading){
+//            if(totalItemCount > previousTotalItemCount){
+//                loading = false
+//                previousTotalItemCount = totalItemCount
+//            }
+        //}
+        //else{
+            Timber.tag("QueroAjudar.SlL").i("visibleItemCount:$visibleItemCount\n" +
+                    "totalItemCount:$totalItemCount\nfirstvisible:$firstVisibleItemPosition")
+            if(firstVisibleItemPosition >= 0 && totalItemCount >= PAGE_SIZE && (visibleItemCount + firstVisibleItemPosition) >= totalItemCount){
+                onEndReached()
+            }
+//            if(totalItemCount - visibleItemCount <= firstVisibleItemPosition + visibleThreshold ){
+//                onEndReached()
+//                loading = true
+//            }
+        //}
+    }
 
 }
+
+class VacancyClickListener(val clickListener: (vacancyId: Int) -> Unit) {
+    fun onClick(vacancy: Vacancy) = clickListener(vacancy.id)
+}
+
+
 
 

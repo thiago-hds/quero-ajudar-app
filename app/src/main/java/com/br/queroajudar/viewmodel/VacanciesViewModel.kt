@@ -1,5 +1,6 @@
 package com.br.queroajudar.viewmodel
 
+import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,7 +8,6 @@ import com.br.queroajudar.model.Vacancy
 import com.br.queroajudar.network.QueroAjudarApiStatus
 import com.br.queroajudar.network.ResultWrapper
 import com.br.queroajudar.network.response.SuccessResponse
-import com.br.queroajudar.repository.QueroAjudarRepository
 import com.br.queroajudar.repository.VacancyRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,23 +24,40 @@ class VacanciesViewModel : ViewModel(){
     val apiStatus: LiveData<QueroAjudarApiStatus>
         get() = _apiStatus
 
-    private var _vacancies = MutableLiveData<List<Vacancy>>()
-    val vacancies : LiveData<List<Vacancy>>
+    private var _vacancies = MutableLiveData<MutableList<Vacancy>>()
+    val vacancies : LiveData<MutableList<Vacancy>>
         get() = _vacancies
 
+    private var _page = 1
+    private var _endLoading = false
+
     init{
-        getVacancies()
+        _vacancies.value = mutableListOf<Vacancy>()
+        loadVacancies()
     }
 
-    private fun getVacancies(){
+    fun onListEndReached(){
+        if(_apiStatus != QueroAjudarApiStatus.LOADING && !_endLoading) {
+            loadVacancies()
+        }
+    }
+
+
+    private fun loadVacancies(){
+        Timber.tag("QueroAjudar.VacanciesVM").i("Loading vacancies page $_page")
         _apiStatus.value = QueroAjudarApiStatus.LOADING
         coroutineScope.launch {
-            when (val getVacanciesResponse = repository.getVacancies()) {
+            when (val getVacanciesResponse = repository.getVacancies(_page)) {
                 is ResultWrapper.NetworkError -> onNetworkError()
                 is ResultWrapper.GenericError -> onGenericError(getVacanciesResponse)
                 is ResultWrapper.Success -> onSuccess(getVacanciesResponse.value)
             }
         }
+
+    }
+
+    fun onVacancyClicked(){
+        //TODO
     }
 
     private fun onNetworkError( ){
@@ -55,7 +72,17 @@ class VacanciesViewModel : ViewModel(){
 
     private fun onSuccess(value: SuccessResponse<List<Vacancy>>) {
         Timber.tag("QueroAjudar").i("API call success: $value")
-        _vacancies.value = value.data
+        val newVacancies = value.data
+        if(newVacancies?.isNotEmpty()!!){
+            _vacancies.value?.addAll(newVacancies)
+            _page ++
+        }
+        else{
+            _endLoading = true
+        }
+        //_vacancies.value = value.data
+
         _apiStatus.value = QueroAjudarApiStatus.DONE
+
     }
 }

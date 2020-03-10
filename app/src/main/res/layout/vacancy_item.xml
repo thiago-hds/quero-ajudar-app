@@ -8,6 +8,10 @@
         <variable
             name="vacancy"
             type="com.br.queroajudar.model.Vacancy" />
+        
+        <variable
+            name="clickListener"
+            type="com.br.queroajudar.view.adapters.VacancyClickListener" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -15,6 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:onClick="@{() -> clickListener.onClick(vacancy)}"
         card_view:cardCornerRadius="5dp"
         card_view:cardElevation="2dp"
         card_view:cardPreventCornerOverlap="true"

@@ -65,7 +65,7 @@
 
     <style name="layout_textview_itemFields">
         <item name="android:fontFamily">@font/raleway</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="Widget.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
