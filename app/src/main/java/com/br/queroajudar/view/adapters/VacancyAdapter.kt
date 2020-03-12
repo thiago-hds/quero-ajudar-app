@@ -83,11 +83,15 @@ class VacancyListScrollListener(
 //            }
         //}
         //else{
-            Timber.tag("QueroAjudar.SlL").i("visibleItemCount:$visibleItemCount\n" +
-                    "totalItemCount:$totalItemCount\nfirstvisible:$firstVisibleItemPosition")
-            if(firstVisibleItemPosition >= 0 && totalItemCount >= PAGE_SIZE && (visibleItemCount + firstVisibleItemPosition) >= totalItemCount){
-                onEndReached()
-            }
+        if(loading && (totalItemCount > previousTotalItemCount)){
+            loading = false
+            previousTotalItemCount = totalItemCount
+        }
+
+        if(!loading && (firstVisibleItemPosition + visibleItemCount  + visibleThreshold) >= totalItemCount){
+            loading = true
+            onEndReached()
+        }
 //            if(totalItemCount - visibleItemCount <= firstVisibleItemPosition + visibleThreshold ){
 //                onEndReached()
 //                loading = true
