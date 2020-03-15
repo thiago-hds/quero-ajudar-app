@@ -21,7 +21,7 @@
             android:text="@string/login_tv_hint"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            style="@style/layout_textview_hint" />
+            style="@style/big_textView_style" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/login_til_email"
@@ -78,7 +78,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/login_btn_enter"
-            style="@style/filled_button_style"
+            style="@style/rounded_contained_button_style"
             android:layout_width="0dp"
             android:layout_height="@dimen/btn_height_60dp"
             android:layout_marginStart="32dp"

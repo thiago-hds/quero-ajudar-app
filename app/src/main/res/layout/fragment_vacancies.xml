@@ -30,10 +30,11 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:openDrawer="end">
 
+            <!--
             <androidx.coordinatorlayout.widget.CoordinatorLayout
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
-                >
+                > -->
                 <!-- Your content goes here -->
 
 
@@ -55,8 +56,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:icon="@drawable/ic_tune_black_24dp"
-                        app:strokeColor="@color/colorPrimary"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"/>
+                        style="@style/small_outlined_icon_button_style"/>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/vacancies_recyclerView"
@@ -108,71 +108,9 @@
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.coordinatorlayout.widget.CoordinatorLayout>
+            <!-- </androidx.coordinatorlayout.widget.CoordinatorLayout> -->
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:backgroundTint="@color/colorPrimary"
-                android:fitsSystemWindows="true"
-                android:layout_gravity="end">
-
-
-                <TextView
-                    android:id="@+id/vacancies_tv_orderBy"
-                    style="@style/layout_textview_itemName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/vacancies_tv_orderBy"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
-                <Button
-                    android:id="@+id/vacancies_btn_recommended"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/vacancies_btn_recommended"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/vacancies_tv_orderBy" />
-
-                <Button
-                    android:id="@+id/vacancies_btn_popular"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="@string/vacancies_btn_recommended"
-                    app:layout_constraintStart_toEndOf="@id/vacancies_btn_recommended"
-                    app:layout_constraintTop_toTopOf="@id/vacancies_btn_recommended" />
-
-                <Button
-                    android:id="@+id/vacancies_btn_recent"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="@string/vacancies_btn_recommended"
-                    app:layout_constraintStart_toEndOf="@id/vacancies_btn_popular"
-                    app:layout_constraintTop_toTopOf="@id/vacancies_btn_recommended" />
-
-                <TextView
-                    android:id="@+id/vacancies_tv_FilterBy"
-                    style="@style/layout_textview_itemName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/vacancies_tv_filterBy"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <include layout="@layout/vacancies_filter_layout" />
 
         </androidx.drawerlayout.widget.DrawerLayout>
 

@@ -16,7 +16,7 @@
 
         <TextView
             android:id="@+id/register_tv_hint"
-            style="@style/layout_textview_hint"
+            style="@style/big_textView_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/register_tv_hint"
@@ -119,7 +119,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/register_btn_nextStep"
-            style="@style/filled_button_style"
+            style="@style/rounded_contained_button_style"
             android:layout_width="0dp"
             android:layout_height="@dimen/btn_height_60dp"
             android:layout_marginStart="32dp"

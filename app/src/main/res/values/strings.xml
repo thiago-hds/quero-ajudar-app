@@ -27,6 +27,9 @@
     <string name="vacancies_btn_filters">Filtros</string>
     <string name="vacancies_tv_orderBy">Ordernar por</string>
     <string name="vacancies_tv_filterBy">Filtrar por</string>
+    <string name="vacancies_btn_recommended">Recomendadas</string>
+    <string name="vacancies_btn_popular">Populares</string>
+    <string name="vacancies_btn_recent">Recentes</string>
 
     <!-- FavoritesFragment -->
     <string name="fragment_favorites_label">Favoritos</string>
@@ -55,7 +58,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="vacancies_btn_recommended">Button</string>
+
 
 
 </resources>

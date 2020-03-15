@@ -55,8 +55,7 @@ class VacancyListScrollListener(
     val layoutManager : LinearLayoutManager
 ) : RecyclerView.OnScrollListener() {
 
-    private val visibleThreshold = 2
-    private val PAGE_SIZE = 6
+    private val visibleThreshold = 8
 
     private var visibleItemCount = 0
     private var totalItemCount = 0

@@ -27,7 +27,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/start_btn_register"
-            style="@style/filled_button_style"
+            style="@style/rounded_contained_button_style"
             android:layout_width="0dp"
             android:layout_height="@dimen/btn_height_60dp"
             android:layout_marginStart="@dimen/layout_margin_16dp"
@@ -41,7 +41,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/start_btnlogin"
-            style="@style/outlined_button_style"
+            style="@style/rounded_outlined_button_style"
             android:layout_width="0dp"
             android:layout_height="@dimen/btn_height_60dp"
             android:layout_marginStart="@dimen/layout_margin_16dp"

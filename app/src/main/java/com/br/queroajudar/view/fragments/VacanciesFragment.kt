@@ -1,7 +1,6 @@
 package com.br.queroajudar.view.fragments
 
 import android.os.Bundle
-import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,6 @@ import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.br.queroajudar.R
@@ -52,6 +50,7 @@ class VacanciesFragment : Fragment() {
         binding.vacanciesBtnFiters.setOnClickListener {
             binding.vacanciesDlFilters.openDrawer(GravityCompat.END)
         }
+
     }
 
     private fun setupVacanciesList(){
@@ -61,7 +60,7 @@ class VacanciesFragment : Fragment() {
         })
 
         val scrollListener = VacancyListScrollListener({
-                viewModel.onListEndReached()
+                viewModel.onListScrollReachEnd()
             },
             binding.vacanciesRecyclerView.layoutManager as LinearLayoutManager
         )
