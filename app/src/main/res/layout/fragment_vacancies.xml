@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     tools:context=".view.fragments.VacanciesFragment">
 
     <data>
@@ -84,7 +85,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:pbApiStatus="@{viewModel.apiStatus}"/>
+                        app:pbApiStatus="@{viewModel.getCausesStatus}"/>
                     <!--
                     <include
                         android:id="@+id/vacancies_overlay_loading"
@@ -110,7 +111,11 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             <!-- </androidx.coordinatorlayout.widget.CoordinatorLayout> -->
 
-            <include layout="@layout/vacancies_filter_layout" />
+            <include
+                android:id="@+id/vacancies_filter_layout"
+                layout="@layout/vacancies_filter_layout"
+                bind:vacanciesFilterApiStatus="@{viewModel.getCausesStatus}"
+            />
 
         </androidx.drawerlayout.widget.DrawerLayout>
 

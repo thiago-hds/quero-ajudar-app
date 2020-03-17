@@ -46,23 +46,23 @@ class RegisterFragment : Fragment() {
     }
 
     private fun setApiStatusObserver(){
-        registerViewModel.apiStatus.observe(viewLifecycleOwner, Observer<QueroAjudarApiStatus>{ status ->
-            Timber.i("API status changed")
-
-            if(status == QueroAjudarApiStatus.LOADING){
-                showLoadingOverlay()
-            }
-            else {
-                hideLoadingOverlay()
-
-                if(status == QueroAjudarApiStatus.NETWORK_ERROR){
-                    showNetworkErrorMessage()
-                }
-                else if(status == QueroAjudarApiStatus.DONE){
-                    goToCausesFragment()
-                }
-            }
-        })
+//        registerViewModel.apiStatus.observe(viewLifecycleOwner, Observer<QueroAjudarApiStatus>{ status ->
+//            Timber.i("API status changed")
+//
+//            if(status == QueroAjudarApiStatus.LOADING){
+//                showLoadingOverlay()
+//            }
+//            else {
+//                hideLoadingOverlay()
+//
+//                if(status == QueroAjudarApiStatus.NETWORK_ERROR){
+//                    showNetworkErrorMessage()
+//                }
+//                else if(status == QueroAjudarApiStatus.DONE){
+//                    goToCausesFragment()
+//                }
+//            }
+//        })
     }
 
     private fun showLoadingOverlay(){

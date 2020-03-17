@@ -1,11 +1,13 @@
 package com.br.queroajudar.util
 
 import android.view.View
+import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import com.br.queroajudar.R
+//import com.br.queroajudar.R
 import com.br.queroajudar.model.Vacancy
 import com.br.queroajudar.network.QueroAjudarApiStatus
 import com.bumptech.glide.Glide
@@ -36,22 +38,22 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
     }
 }
 
-@BindingAdapter("apiStatus")
-fun bindApiStatus(statusImageView: ImageView, status: QueroAjudarApiStatus?) {
-    when (status) {
-        QueroAjudarApiStatus.LOADING -> {
-            statusImageView.visibility = View.VISIBLE
-            statusImageView.setImageResource(R.drawable.ic_navigate_next_black_24dp)
-        }
-        QueroAjudarApiStatus.NETWORK_ERROR -> {
-            statusImageView.visibility = View.VISIBLE
-            statusImageView.setImageResource(R.drawable.ic_person_black_24dp)
-        }
-        QueroAjudarApiStatus.DONE -> {
-            statusImageView.visibility = View.GONE
-        }
-    }
-}
+//@BindingAdapter("ivApiStatus")
+//fun bindApiStatusImageView(statusImageView: ImageView, status: QueroAjudarApiStatus?) {
+//    when (status) {
+//        QueroAjudarApiStatus.LOADING -> {
+//            statusImageView.visibility = View.VISIBLE
+//            statusImageView.setImageResource(R.drawable.ic_navigate_next_black_24dp)
+//        }
+//        QueroAjudarApiStatus.NETWORK_ERROR -> {
+//            statusImageView.visibility = View.VISIBLE
+//            statusImageView.setImageResource(R.drawable.ic_person_black_24dp)
+//        }
+//        QueroAjudarApiStatus.DONE -> {
+//            statusImageView.visibility = View.GONE
+//        }
+//    }
+//}
 
 @BindingAdapter("pbApiStatus")
 fun bindApiStatusProgressBar(progressBar : ProgressBar, status:QueroAjudarApiStatus?){
@@ -62,3 +64,13 @@ fun bindApiStatusProgressBar(progressBar : ProgressBar, status:QueroAjudarApiSta
         progressBar.visibility = View.GONE
     }
 }
+
+//@BindingAdapter("loadingViewApiStatus")
+//fun bindApiStatusViewGroup(view: FrameLayout, status: QueroAjudarApiStatus){
+//    if(status == QueroAjudarApiStatus.LOADING){
+//        view.visibility = View.VISIBLE
+//    }
+//    else{
+//        view.visibility = View.GONE
+//    }
+//}

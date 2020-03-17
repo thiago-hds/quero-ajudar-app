@@ -131,10 +131,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/register_til_password" />
 
-        <include
-            android:id="@+id/register_overlay_loading"
-            android:visibility="gone"
-            layout="@layout/loading_overlay"/>
+<!--        <include-->
+<!--            android:id="@+id/register_overlay_loading"-->
+<!--            android:visibility="gone"-->
+<!--            layout="@layout/loading_overlay"/>-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

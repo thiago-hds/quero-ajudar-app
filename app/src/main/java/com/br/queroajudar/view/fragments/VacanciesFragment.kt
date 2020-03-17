@@ -8,16 +8,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.br.queroajudar.R
 import com.br.queroajudar.databinding.FragmentVacanciesBinding
-import com.br.queroajudar.network.QueroAjudarApiStatus
-import com.br.queroajudar.view.adapters.VacancyAdapter
-import com.br.queroajudar.view.adapters.VacancyClickListener
-import com.br.queroajudar.view.adapters.VacancyListScrollListener
+import com.br.queroajudar.view.adapters.*
 import com.br.queroajudar.viewmodel.VacanciesViewModel
 import timber.log.Timber
 
@@ -42,14 +40,23 @@ class VacanciesFragment : Fragment() {
         //setApiStatusObserver()
         setListeners()
         setupVacanciesList()
+        setupFilters()
 
         return binding.root
     }
 
     private fun setListeners(){
+
         binding.vacanciesBtnFiters.setOnClickListener {
             binding.vacanciesDlFilters.openDrawer(GravityCompat.END)
         }
+
+        val drawerListener = VacancyDrawerListener {
+            Toast.makeText(context, "Drawer opened", Toast.LENGTH_LONG).show()
+            viewModel.onDrawerOpened()
+        }
+
+        binding.vacanciesDlFilters.addDrawerListener(drawerListener)
 
     }
 
@@ -75,19 +82,16 @@ class VacanciesFragment : Fragment() {
         })
     }
 
-    private fun setApiStatusObserver(){
-        viewModel.apiStatus.observe(viewLifecycleOwner, Observer<QueroAjudarApiStatus>{ status ->
-            Timber.i("API status changed")
+    private fun setupFilters(){
+        val adapter = CauseAdapter(CauseClickListener { causeId ->
+            Toast.makeText(context, "$causeId", Toast.LENGTH_LONG).show()
+        })
 
-            if(status == QueroAjudarApiStatus.LOADING){
-                showLoadingOverlay()
-            }
-            else {
-                hideLoadingOverlay()
+        binding.vacanciesFilterLayout.vacanciesRvCauses.adapter = adapter
 
-                if(status == QueroAjudarApiStatus.NETWORK_ERROR){
-                    showNetworkErrorMessage()
-                }
+        viewModel.causes.observe(viewLifecycleOwner, Observer { causeList ->
+            causeList?.let{
+                adapter.submitList(causeList)
             }
         })
     }
@@ -98,8 +102,14 @@ class VacanciesFragment : Fragment() {
     private fun showNetworkErrorMessage(){
         Toast.makeText(context, R.string.error_connection, Toast.LENGTH_LONG).show()
     }
+}
 
+class VacancyDrawerListener(val onDrawerOpened : () -> Unit) : DrawerLayout.SimpleDrawerListener(){
+    override fun onDrawerOpened(drawerView: View) {
+        super.onDrawerOpened(drawerView)
 
+        onDrawerOpened()
+    }
 }
 
 

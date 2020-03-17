@@ -23,13 +23,26 @@ class VacanciesViewModel : ViewModel(){
     private val globalRepository = QueroAjudarRepository()
 
     // Dados observaveis
-    private val _apiStatus = MutableLiveData<QueroAjudarApiStatus>()
-    val apiStatus: LiveData<QueroAjudarApiStatus>
-        get() = _apiStatus
+    private val _getVacanciesStatus = MutableLiveData<QueroAjudarApiStatus>()
+    val getVacanciesStatus: LiveData<QueroAjudarApiStatus>
+        get() = _getVacanciesStatus
+
+    private val _getCausesStatus = MutableLiveData<QueroAjudarApiStatus>()
+    val getCausesStatus: LiveData<QueroAjudarApiStatus>
+        get() = _getCausesStatus
+
+    private val _getSkillsStatus = MutableLiveData<QueroAjudarApiStatus>()
+    val getSkillsStatus: LiveData<QueroAjudarApiStatus>
+        get() = _getSkillsStatus
+
 
     private var _vacancies = MutableLiveData<MutableList<Vacancy>>()
     val vacancies : LiveData<MutableList<Vacancy>>
         get() = _vacancies
+
+    private var _causes = MutableLiveData<List<Cause>>()
+    val causes : LiveData<List<Cause>>
+        get() = _causes
 
     // Variaveis de controle
     private var _page = 1
@@ -42,6 +55,7 @@ class VacanciesViewModel : ViewModel(){
 
     init{
         _vacancies.value = mutableListOf()
+        _causes.value = mutableListOf()
         loadVacancies()
     }
 
@@ -51,8 +65,16 @@ class VacanciesViewModel : ViewModel(){
      */
 
     fun onListScrollReachEnd(){
-        if(_apiStatus != QueroAjudarApiStatus.LOADING && !_endLoading) {
+        if(_getVacanciesStatus != QueroAjudarApiStatus.LOADING && !_endLoading) {
             loadVacancies()
+        }
+    }
+
+    fun onDrawerOpened(){
+        _causes.value?.let{
+            if(it.isEmpty()){
+                loadCauses()
+            }
         }
     }
 
@@ -63,7 +85,7 @@ class VacanciesViewModel : ViewModel(){
 
     private fun loadVacancies(){
         Timber.tag("QueroAjudar.VacanciesVM").i("Loading vacancies page $_page")
-        _apiStatus.value = QueroAjudarApiStatus.LOADING
+        _getVacanciesStatus.value = QueroAjudarApiStatus.LOADING
         coroutineScope.launch {
             when (val getVacanciesResponse = vacancyRepository.getVacancies(_page)) {
                 is ResultWrapper.NetworkError -> onNetworkError()
@@ -76,7 +98,7 @@ class VacanciesViewModel : ViewModel(){
 
     private fun loadCauses(){
         Timber.tag("QueroAjudar.VacanciesVM").i("Loading causes")
-        _apiStatus.value = QueroAjudarApiStatus.LOADING
+        _getCausesStatus.value = QueroAjudarApiStatus.LOADING
         coroutineScope.launch {
             when (val getCausesResponse = globalRepository.getCauses()) {
                 is ResultWrapper.NetworkError -> onNetworkError()
@@ -88,22 +110,24 @@ class VacanciesViewModel : ViewModel(){
     }
 
     private fun onLoadCausesSuccess(value: SuccessResponse<List<Cause>>) {
-        //TODO
+        _getCausesStatus.value = QueroAjudarApiStatus.DONE
+        Timber.tag("QueroAjudar").i("Causes API call success: $value")
+        _causes.value = value.data
     }
 
 
     private fun onNetworkError( ){
         Timber.tag("QueroAjudar").i("API call network error")
-        _apiStatus.value = QueroAjudarApiStatus.NETWORK_ERROR
+        _getVacanciesStatus.value = QueroAjudarApiStatus.NETWORK_ERROR
     }
 
     private fun onGenericError(loginResponse: ResultWrapper.GenericError) {
         Timber.tag("QueroAjudar").i("API call generic error: $loginResponse")
-        _apiStatus.value = QueroAjudarApiStatus.GENERIC_ERROR
+        _getVacanciesStatus.value = QueroAjudarApiStatus.GENERIC_ERROR
     }
 
     private fun onLoadVacanciesSuccess(value: SuccessResponse<List<Vacancy>>) {
-        Timber.tag("QueroAjudar").i("API call success: $value")
+        Timber.tag("QueroAjudar").i("Vacancies API call success: $value")
         val newVacancies = value.data
         if(newVacancies?.isNotEmpty()!!){
             _vacancies.value?.addAll(newVacancies)
@@ -114,7 +138,7 @@ class VacanciesViewModel : ViewModel(){
         }
         //_vacancies.value = value.data
 
-        _apiStatus.value = QueroAjudarApiStatus.DONE
+        _getVacanciesStatus.value = QueroAjudarApiStatus.DONE
 
     }
 }

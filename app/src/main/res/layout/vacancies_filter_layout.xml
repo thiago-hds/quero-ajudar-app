@@ -1,19 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="vacanciesFilterApiStatus"
+            type="com.br.queroajudar.network.QueroAjudarApiStatus" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/filter_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="end"
         android:background="#FFFFFF"
         android:fitsSystemWindows="true"
         tools:showIn="@layout/fragment_vacancies">
+
+        <include
+            layout="@layout/loading_overlay"
+            android:visibility="gone"
+            tools:visibility="gone"
+            bind:loadingOverlayApiStatus="@{vacanciesFilterApiStatus}"/>
 
 
         <TextView
@@ -75,6 +85,30 @@
             android:text="@string/vacancies_tv_filterBy"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/vacancies_btn_recommended" />
+
+        <TextView
+            android:id="@+id/vacancies_tv_Causes"
+            style="@style/itemTitle_textView_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/vacancies_tv_Cause"
+            bind:layout_constraintStart_toStartOf="parent"
+            bind:layout_constraintTop_toBottomOf="@+id/vacancies_tv_FilterBy" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/vacancies_rv_causes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/vacancies_tv_Causes"
+            tools:itemCount="6"
+            tools:listitem="@layout/cause_item" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

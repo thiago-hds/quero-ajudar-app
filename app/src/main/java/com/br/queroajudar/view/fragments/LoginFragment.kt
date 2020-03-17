@@ -45,20 +45,20 @@ class LoginFragment : Fragment() {
     }
 
     private fun setupLoadingProgressBarVisibility(){
-        loginViewModel.apiStatus.observe(viewLifecycleOwner, Observer<QueroAjudarApiStatus>{status ->
-            Log.i("QueroAjudar", "ApiStatus changed")
-
-            if(status == QueroAjudarApiStatus.LOADING){
-                showLoadingOverlay()
-            }
-            else {
-                hideLoadingOverlay()
-
-                if(status == QueroAjudarApiStatus.NETWORK_ERROR){
-                    showNetworkErrorMessage()
-                }
-            }
-        })
+//        loginViewModel.apiStatus.observe(viewLifecycleOwner, Observer<QueroAjudarApiStatus>{status ->
+//            Log.i("QueroAjudar", "ApiStatus changed")
+//
+//            if(status == QueroAjudarApiStatus.LOADING){
+//                showLoadingOverlay()
+//            }
+//            else {
+//                hideLoadingOverlay()
+//
+//                if(status == QueroAjudarApiStatus.NETWORK_ERROR){
+//                    showNetworkErrorMessage()
+//                }
+//            }
+//        })
     }
 
     private fun showLoadingOverlay(){

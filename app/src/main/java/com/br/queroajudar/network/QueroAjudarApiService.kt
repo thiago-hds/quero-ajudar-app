@@ -46,14 +46,15 @@ private val retrofit = Retrofit.Builder()
 
 interface QueroAjudarApiService {
 
+    @GET("causes")
+    suspend fun getCauses(): SuccessResponse<List<Cause>>
+
     @POST("login")
     suspend fun postLogin(@Body data: LoginData): SuccessResponse<String>
 
     @POST("register")
     suspend fun postRegister(@Body data: RegisterData): SuccessResponse<String>
 
-    @GET("causes")
-    suspend fun getCauses(): SuccessResponse<List<Cause>>
 
     @GET("vacancies")
     suspend fun getVacancies(@Query("page") page : Int): SuccessResponse<List<Vacancy>>
@@ -66,3 +67,4 @@ object QueroAjudarApi {
 }
 
 enum class QueroAjudarApiStatus { LOADING, DONE, GENERIC_ERROR, NETWORK_ERROR }
+

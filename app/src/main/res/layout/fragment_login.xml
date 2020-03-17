@@ -101,10 +101,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/login_btn_enter" />
 
-        <include
-            android:id="@+id/login_overlay_loading"
-            android:visibility="gone"
-            layout="@layout/loading_overlay"/>
+<!--        <include-->
+<!--            android:id="@+id/login_overlay_loading"-->
+<!--            android:visibility="gone"-->
+<!--            layout="@layout/loading_overlay"/>-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

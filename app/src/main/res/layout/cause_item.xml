@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="cause"
+            type="com.br.queroajudar.model.Cause" />
+
+        <variable
+            name="clickListener"
+            type="com.br.queroajudar.view.adapters.CauseClickListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:onClick="@{() -> clickListener.onClick(cause)}">
+
+
+        <TextView
+            android:id="@+id/causeItem_tv_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/colorPrimary"
+            android:text="@{cause.iconClass}"
+            android:textColor="@color/colorWhite"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="A" />
+
+        <TextView
+            android:id="@+id/causeItem_tv_Name"
+            style="@style/itemFields_textView_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@{cause.name}"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+            app:layout_constraintStart_toEndOf="@+id/causeItem_tv_icon"
+            app:layout_constraintTop_toTopOf="@+id/causeItem_tv_icon"
+            tools:text="@string/tools_causeItem_name" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
