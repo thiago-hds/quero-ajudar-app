@@ -88,6 +88,15 @@
         <item name="android:textSize">12sp</item>
     </style>
 
+    <style name="icon_textView_style">
+        <item name="android:layout_width">25dp</item>
+        <item name="android:layout_height">25dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:fontFamily">@font/font_awesome_solid</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:background">@drawable/appcolor_round_shape</item>
+    </style>
+
 
     <!-- Bottom Navigation -->
     <style name="Widget.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
@@ -96,5 +105,7 @@
         <item name="itemIconTint">@color/bottom_navigation_colors</item>
         <item name="itemTextColor">@color/bottom_navigation_colors</item>
     </style>
+
+
 
 </resources>

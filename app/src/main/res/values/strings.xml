@@ -27,8 +27,8 @@
     <string name="vacancies_btn_filters">Filtros</string>
     <string name="vacancies_tv_orderBy">Ordernar por</string>
     <string name="vacancies_tv_filterBy">Filtrar por</string>
-    <string name="vacancies_tv_Cause">Causa</string>
-    <string name="vacancies_tv_Skill">Habilidade</string>
+    <string name="vacancies_tv_cause">Causa</string>
+    <string name="vacancies_tv_skill">Habilidade</string>
     <string name="vacancies_btn_recommended">Recomendadas</string>
     <string name="vacancies_btn_popular">Populares</string>
     <string name="vacancies_btn_recent">Recentes</string>
@@ -59,10 +59,10 @@
     <string name="tools_vacancyItem_location">Belo Horizonte - MG</string>
     <string name="tools_vacancyItem_type">Recorrente</string>
     <string name="tools_causeItem_name">Animais</string>
+    <string name="tools_skillItem_name">Artes</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
-
 
 </resources>

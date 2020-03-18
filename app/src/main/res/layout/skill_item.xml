@@ -5,7 +5,7 @@
 
     <data>
         <variable
-            name="cause"
+            name="skill"
             type="com.br.queroajudar.model.Cause" />
 
         <variable
@@ -16,31 +16,31 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{() -> clickListener.onClick(cause)}">
+        android:onClick="@{() -> clickListener.onClick(skill)}">
 
 
         <TextView
-            android:id="@+id/causeItem_tv_icon"
-            style="@style/icon_textView_style"
+            android:id="@+id/skillItem_tv_icon"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            app:htmlText="@{cause.iconUnicode}"
+            android:text="@{skill.iconUnicode}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="\uf6d3" />
+            tools:text="\uf2b9"
+            style="@style/icon_textView_style" />
 
         <TextView
-            android:id="@+id/causeItem_tv_Name"
+            android:id="@+id/skillItem_tv_Name"
             style="@style/itemFields_textView_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="@{cause.name}"
-            app:layout_constraintBottom_toBottomOf="@+id/causeItem_tv_icon"
-            app:layout_constraintStart_toEndOf="@+id/causeItem_tv_icon"
-            app:layout_constraintTop_toTopOf="@+id/causeItem_tv_icon"
-            tools:text="@string/tools_causeItem_name" />
+            android:text="@{skill.name}"
+            app:layout_constraintBottom_toBottomOf="@+id/skillItem_tv_icon"
+            app:layout_constraintStart_toEndOf="@+id/skillItem_tv_icon"
+            app:layout_constraintTop_toTopOf="@+id/skillItem_tv_icon"
+            tools:text="@string/tools_skillItem_name" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

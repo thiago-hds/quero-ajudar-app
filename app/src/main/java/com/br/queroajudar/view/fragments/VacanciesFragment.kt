@@ -77,7 +77,7 @@ class VacanciesFragment : Fragment() {
 
         viewModel.vacancies.observe(viewLifecycleOwner, Observer { vacancyList ->
             vacancyList?.let{
-                adapter.submitList(vacancyList)
+                adapter.submitList(it)
             }
         })
     }
@@ -90,8 +90,9 @@ class VacanciesFragment : Fragment() {
         binding.vacanciesFilterLayout.vacanciesRvCauses.adapter = adapter
 
         viewModel.causes.observe(viewLifecycleOwner, Observer { causeList ->
+            Timber.tag("QueroAjudar.VacFrag").i("Cause list changed. Size is ${causeList.size}")
             causeList?.let{
-                adapter.submitList(causeList)
+                adapter.submitList(it)
             }
         })
     }

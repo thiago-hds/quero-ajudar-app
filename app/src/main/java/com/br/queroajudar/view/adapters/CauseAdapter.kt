@@ -2,13 +2,17 @@ package com.br.queroajudar.view.adapters
 
 import android.content.Context
 import android.graphics.Typeface
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.br.queroajudar.R
 import com.br.queroajudar.databinding.CauseItemBinding
 import com.br.queroajudar.model.Cause
+import timber.log.Timber
 
 
 class CauseAdapter(val clickListener : CauseClickListener) : ListAdapter<
@@ -26,10 +30,6 @@ class CauseAdapter(val clickListener : CauseClickListener) : ListAdapter<
     class ViewHolder private constructor(val binding: CauseItemBinding, val context : Context) : RecyclerView.ViewHolder(binding.root){
 
         fun bind(clickListener: CauseClickListener, item: Cause) {
-//            val fontAwesome =
-//                Typeface.createFromAsset(context.assets, "font/fontawesome.ttf")
-//            item.iconClass = "&#xf01c;"
-//            binding.causeItemTvIcon.typeface = fontAwesome
             binding.cause = item
             binding.clickListener = clickListener
             binding.executePendingBindings()

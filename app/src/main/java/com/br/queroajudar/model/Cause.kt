@@ -7,5 +7,5 @@ import com.squareup.moshi.JsonClass
 data class Cause(
     val id : Int,
     val name : String,
-    @Json(name="icon_class") var iconClass : String?
+    @Json(name="fontawesome_icon_unicode") var iconUnicode : String?
 )

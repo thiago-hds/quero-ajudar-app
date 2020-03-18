@@ -12,6 +12,8 @@
         <variable
             name="clickListener"
             type="com.br.queroajudar.view.adapters.VacancyClickListener" />
+
+
     </data>
 
     <androidx.cardview.widget.CardView

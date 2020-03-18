@@ -1,17 +1,19 @@
 package com.br.queroajudar.util
 
+//import com.br.queroajudar.R
+
+import android.os.Build
+import android.text.Html
+import android.text.Spanned
 import android.view.View
-import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-//import com.br.queroajudar.R
-import com.br.queroajudar.model.Vacancy
 import com.br.queroajudar.network.QueroAjudarApiStatus
 import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputLayout
+
 
 @BindingAdapter("error")
 fun setError(textLayout: TextInputLayout, strOrResId: Any?) {
@@ -74,3 +76,15 @@ fun bindApiStatusProgressBar(progressBar : ProgressBar, status:QueroAjudarApiSta
 //        view.visibility = View.GONE
 //    }
 //}
+
+@BindingAdapter("htmlText")
+fun setHtmlTextValue(textView: TextView, htmlText: String?) {
+    if (htmlText == null) return
+    val result: Spanned
+    result = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        Html.fromHtml(htmlText, Html.FROM_HTML_MODE_LEGACY)
+    } else {
+        Html.fromHtml(htmlText)
+    }
+    textView.text = result
+}
