@@ -17,6 +17,7 @@ import com.br.queroajudar.R
 import com.br.queroajudar.databinding.FragmentVacanciesBinding
 import com.br.queroajudar.view.adapters.*
 import com.br.queroajudar.viewmodel.VacanciesViewModel
+import okhttp3.internal.toImmutableList
 import timber.log.Timber
 
 class VacanciesFragment : Fragment() {
@@ -83,16 +84,35 @@ class VacanciesFragment : Fragment() {
     }
 
     private fun setupFilters(){
-        val adapter = CauseAdapter(CauseClickListener { causeId ->
-            Toast.makeText(context, "$causeId", Toast.LENGTH_LONG).show()
+        // Lista de Causas
+        val causeAdapter = CauseAdapter(CauseClickListener { causeId, position ->
+            Toast.makeText(context, "$causeId, $position", Toast.LENGTH_LONG).show()
+            viewModel.onCauseFilterItemClicked(causeId, position)
         })
 
-        binding.vacanciesFilterLayout.vacanciesRvCauses.adapter = adapter
+
 
         viewModel.causes.observe(viewLifecycleOwner, Observer { causeList ->
             Timber.tag("QueroAjudar.VacFrag").i("Cause list changed. Size is ${causeList.size}")
             causeList?.let{
-                adapter.submitList(it)
+                causeAdapter.submitList(it.toImmutableList())
+                Timber.tag("QueroAjudar.VacFrag").i("Cause list submitted")
+            }
+        })
+
+        binding.vacanciesFilterLayout.vacanciesRvCauses.adapter = causeAdapter
+
+        // Lista de Habilidades
+        val skillAdapter = SkillAdapter(SkillClickListener { skillId ->
+            Toast.makeText(context, "$skillId", Toast.LENGTH_LONG).show()
+        })
+
+        binding.vacanciesFilterLayout.vacanciesRvSkills.adapter = skillAdapter
+
+        viewModel.skills.observe(viewLifecycleOwner, Observer { skillList ->
+            Timber.tag("QueroAjudar.VacFrag").i("Skill list changed. Size is ${skillList.size}")
+            skillList?.let{
+                skillAdapter.submitList(it.toList())
             }
         })
     }

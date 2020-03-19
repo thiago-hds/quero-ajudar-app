@@ -20,17 +20,18 @@ class CauseAdapter(val clickListener : CauseClickListener) : ListAdapter<
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)!!
-        holder.bind(clickListener, item)
+        holder.bind(clickListener, item, position)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
     }
 
-    class ViewHolder private constructor(val binding: CauseItemBinding, val context : Context) : RecyclerView.ViewHolder(binding.root){
+    class ViewHolder private constructor(val binding: CauseItemBinding) : RecyclerView.ViewHolder(binding.root){
 
-        fun bind(clickListener: CauseClickListener, item: Cause) {
+        fun bind(clickListener: CauseClickListener, item: Cause, position:Int) {
             binding.cause = item
+            binding.position = position
             binding.clickListener = clickListener
             binding.executePendingBindings()
         }
@@ -39,7 +40,7 @@ class CauseAdapter(val clickListener : CauseClickListener) : ListAdapter<
             fun from(parent: ViewGroup): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = CauseItemBinding.inflate(layoutInflater, parent, false)
-                return ViewHolder(binding, parent.context)
+                return ViewHolder(binding)
             }
         }
     }
@@ -48,13 +49,15 @@ class CauseAdapter(val clickListener : CauseClickListener) : ListAdapter<
 class CauseDiffCallback : DiffUtil.ItemCallback<Cause>() {
 
     override fun areItemsTheSame(oldItem: Cause, newItem: Cause): Boolean {
+        Timber.tag("QueroAjudar").i("are items the same ${oldItem.id} ${oldItem.id == newItem.id}")
         return oldItem.id == newItem.id
     }
     override fun areContentsTheSame(oldItem: Cause, newItem: Cause): Boolean {
+        Timber.tag("QueroAjudar").i("are contents the same ${oldItem.id} ${oldItem.selected} ${newItem.selected} ${oldItem == newItem}")
         return oldItem == newItem
     }
 }
 
-class CauseClickListener(val clickListener: (causeId: Int) -> Unit) {
-    fun onClick(cause: Cause) = clickListener(cause.id)
+class CauseClickListener(val clickListener: (causeId: Int, position: Int) -> Unit) {
+    fun onClick(cause: Cause, position : Int) = clickListener(cause.id, position)
 }

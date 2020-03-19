@@ -75,7 +75,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:pbApiStatus="@{viewModel.getCausesStatus}"/>
+                    app:pbApiStatus="@{viewModel.getFiltersStatus}"/>
                 <!--
                 <include
                     android:id="@+id/vacancies_overlay_loading"
@@ -104,7 +104,7 @@
             <include
                 android:id="@+id/vacancies_filter_layout"
                 layout="@layout/vacancies_filter_layout"
-                bind:vacanciesFilterApiStatus="@{viewModel.getCausesStatus}" />
+                bind:vacanciesFilterApiStatus="@{viewModel.getFiltersStatus}" />
 
         </androidx.drawerlayout.widget.DrawerLayout>
 

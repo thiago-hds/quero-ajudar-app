@@ -9,10 +9,14 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.content.ContextCompat.getColor
+import androidx.core.content.ContextCompat.getDrawable
 import androidx.databinding.BindingAdapter
+import com.br.queroajudar.R
 import com.br.queroajudar.network.QueroAjudarApiStatus
 import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputLayout
+import timber.log.Timber
 
 
 @BindingAdapter("error")
@@ -77,14 +81,25 @@ fun bindApiStatusProgressBar(progressBar : ProgressBar, status:QueroAjudarApiSta
 //    }
 //}
 
+@Suppress("DEPRECATION")
 @BindingAdapter("htmlText")
 fun setHtmlTextValue(textView: TextView, htmlText: String?) {
     if (htmlText == null) return
-    val result: Spanned
-    result = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+    val result: Spanned = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
         Html.fromHtml(htmlText, Html.FROM_HTML_MODE_LEGACY)
     } else {
         Html.fromHtml(htmlText)
     }
+
+    Timber.tag("QA.html").i("$result")
     textView.text = result
+}
+
+@BindingAdapter("filterItemSelected")
+fun setFilterItemSelected(textView: TextView, isSelected : Boolean){
+    Timber.tag("QA.BindingAdapters").i("filterItemSelected $isSelected")
+    if(isSelected){
+        textView.setTextColor(getColor(textView.context, R.color.colorWhite))
+        textView.setBackgroundResource(R.drawable.appcolor_round_shape)
+    }
 }

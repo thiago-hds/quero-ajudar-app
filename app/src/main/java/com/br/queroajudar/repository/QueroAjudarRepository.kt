@@ -1,6 +1,7 @@
 package com.br.queroajudar.repository
 
 import com.br.queroajudar.model.Cause
+import com.br.queroajudar.model.Skill
 import com.br.queroajudar.model.formdata.LoginData
 import com.br.queroajudar.model.formdata.RegisterData
 import com.br.queroajudar.network.QueroAjudarApi
@@ -16,6 +17,10 @@ class QueroAjudarRepository(private val dispatcher: CoroutineDispatcher = Dispat
 
     suspend fun getCauses() : ResultWrapper<SuccessResponse<List<Cause>>> {
         return apiCaller.safeApiCall(dispatcher) { QueroAjudarApi.retrofitService.getCauses()}
+    }
+
+    suspend fun getSkills() : ResultWrapper<SuccessResponse<List<Skill>>> {
+        return apiCaller.safeApiCall(dispatcher) { QueroAjudarApi.retrofitService.getSkills()}
     }
 
 

@@ -2,6 +2,7 @@ package com.br.queroajudar.network
 
 import android.util.Log
 import com.br.queroajudar.model.Cause
+import com.br.queroajudar.model.Skill
 import com.br.queroajudar.model.Vacancy
 import com.br.queroajudar.network.response.SuccessResponse
 import com.br.queroajudar.model.formdata.LoginData
@@ -48,6 +49,9 @@ interface QueroAjudarApiService {
 
     @GET("causes")
     suspend fun getCauses(): SuccessResponse<List<Cause>>
+
+    @GET("skills")
+    suspend fun getSkills(): SuccessResponse<List<Skill>>
 
     @POST("login")
     suspend fun postLogin(@Body data: LoginData): SuccessResponse<String>

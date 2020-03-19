@@ -1,5 +1,9 @@
 package com.br.queroajudar.util
 
+import androidx.lifecycle.MutableLiveData
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
+
 object Constants {
     const val VIEW_TYPE_ITEM    = 1
     const val VIEW_TYPE_LOADING = 2
@@ -11,18 +15,26 @@ fun convertOrganizationNameToFormatted(name : String) : String{
     return name
 }
 
-////TODO entender e refatorar
-//fun hexStringToByteArray(s: String): String? {
-////    val len = s.length
-////    val data = ByteArray(len / 2)
-////    var i = 0
-////    while (i < len) {
-////        data[i / 2] = ((Character.digit(s[i], 16) shl 4)
-////                + Character.digit(s[i + 1], 16)).toByte()
-////        i += 2
-////    }
-//    val s1 = s.toByteArray()
-//
-//    //return data.toString(Charsets.UTF_8)
+//operator fun <T> MutableLiveData<ArrayList<T>>.plusAssign(values: List<T>) {
+//    val value = this.value ?: arrayListOf()
+//    value.addAll(values)
+//    this.value = value
 //}
 
+fun <T> MutableLiveData<MutableList<T>>.updateItemOnPosition(
+    position:Int, newItem : T) {
+    val value = this.value ?: mutableListOf()
+    if(position >= 0 && position < value.size){
+        value[position] = newItem
+        this.value = value
+    }
+}
+
+//fun <T, VH : RecyclerView.ViewHolder> ListAdapter<T, VH>.updateList(list: List<T>?) {
+//    // ListAdapter<>.submitList() contains (stripped):
+//    //  if (newList == mList) {
+//    //      // nothing to do
+//    //      return;
+//    //  }
+//    this.submitList(if (list == this.currentList) list.toList() else list)
+//}

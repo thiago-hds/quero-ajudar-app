@@ -100,10 +100,11 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/vacancies_rv_causes"
             android:layout_width="0dp"
-            android:layout_height="200dp"
+            android:layout_height="0dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/vacancies_tv_causes"
@@ -119,7 +120,8 @@
             android:layout_marginTop="8dp"
             android:text="@string/vacancies_tv_skill"
             bind:layout_constraintStart_toStartOf="parent"
-            bind:layout_constraintTop_toBottomOf="@+id/vacancies_rv_causes" />
+            bind:layout_constraintTop_toBottomOf="@+id/vacancies_rv_causes"
+            android:visibility="gone"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/vacancies_rv_skills"
@@ -133,7 +135,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/vacancies_tv_skills"
             tools:itemCount="4"
-            tools:listitem="@layout/skill_item" />
+            tools:listitem="@layout/skill_item"
+            android:visibility="gone"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

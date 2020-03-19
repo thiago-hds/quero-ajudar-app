@@ -4,16 +4,19 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.br.queroajudar.model.Cause
+import com.br.queroajudar.model.Skill
 import com.br.queroajudar.model.Vacancy
 import com.br.queroajudar.network.QueroAjudarApiStatus
 import com.br.queroajudar.network.ResultWrapper
 import com.br.queroajudar.network.response.SuccessResponse
 import com.br.queroajudar.repository.QueroAjudarRepository
 import com.br.queroajudar.repository.VacancyRepository
+import com.br.queroajudar.util.updateItemOnPosition
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import okhttp3.internal.toImmutableList
 import timber.log.Timber
 
 class VacanciesViewModel : ViewModel(){
@@ -27,26 +30,28 @@ class VacanciesViewModel : ViewModel(){
     val getVacanciesStatus: LiveData<QueroAjudarApiStatus>
         get() = _getVacanciesStatus
 
-    private val _getCausesStatus = MutableLiveData<QueroAjudarApiStatus>()
-    val getCausesStatus: LiveData<QueroAjudarApiStatus>
-        get() = _getCausesStatus
-
-    private val _getSkillsStatus = MutableLiveData<QueroAjudarApiStatus>()
-    val getSkillsStatus: LiveData<QueroAjudarApiStatus>
-        get() = _getSkillsStatus
+    private val _getFiltersStatus = MutableLiveData<QueroAjudarApiStatus>()
+    val getFiltersStatus: LiveData<QueroAjudarApiStatus>
+        get() = _getFiltersStatus
 
 
     private var _vacancies = MutableLiveData<MutableList<Vacancy>>()
     val vacancies : LiveData<MutableList<Vacancy>>
         get() = _vacancies
 
-    private var _causes = MutableLiveData<List<Cause>>()
-    val causes : LiveData<List<Cause>>
+    private var _causes = MutableLiveData<MutableList<Cause>>()
+    val causes : LiveData<MutableList<Cause>>
         get() = _causes
+
+    private var _skills = MutableLiveData<List<Skill>>()
+    val skills : LiveData<List<Skill>>
+        get() = _skills
 
     // Variaveis de controle
     private var _page = 1
     private var _endLoading = false
+    private var _getCausesStatus = QueroAjudarApiStatus.DONE
+    private var _getSkillsStatus = QueroAjudarApiStatus.DONE
 
     // Escopo de Corotina
     private var viewModelJob = Job()
@@ -56,6 +61,7 @@ class VacanciesViewModel : ViewModel(){
     init{
         _vacancies.value = mutableListOf()
         _causes.value = mutableListOf()
+        _skills.value = mutableListOf()
         loadVacancies()
     }
 
@@ -65,21 +71,38 @@ class VacanciesViewModel : ViewModel(){
      */
 
     fun onListScrollReachEnd(){
-        if(_getVacanciesStatus != QueroAjudarApiStatus.LOADING && !_endLoading) {
+        if(_getVacanciesStatus.value != QueroAjudarApiStatus.LOADING && !_endLoading) {
             loadVacancies()
-        }
-    }
-
-    fun onDrawerOpened(){
-        _causes.value?.let{
-            if(it.isEmpty()){
-                loadCauses()
-            }
         }
     }
 
     fun onVacancyClicked(){
         //TODO
+    }
+
+    fun onDrawerOpened(){
+        // Carregar filtros
+        if(causes.value.isNullOrEmpty() || skills.value.isNullOrEmpty()){
+            loadCauses()
+            loadSkills()
+        }
+    }
+
+    fun onCauseFilterItemClicked(causeId : Int, position : Int){
+        _causes.value?.let{
+            Timber.tag("QueroAjudar.VM").i("cause before ${it[position]}")
+            val cause = it[position].copy(selected = !it[position].selected)
+//            val causesTmp = it.toMutableList()
+//            causesTmp[position].selected = !causesTmp[position].selected
+//            causesTmp[position].name = "Cremilda"
+//            _causes.value = causesTmp.toImmutableList()
+//            cause
+
+//            cause.selected = !cause.selected
+
+            _causes.updateItemOnPosition(position, cause)
+            Timber.tag("QueroAjudar.VM").i("cause after ${it[position]}")
+        }
     }
 
 
@@ -88,42 +111,37 @@ class VacanciesViewModel : ViewModel(){
         _getVacanciesStatus.value = QueroAjudarApiStatus.LOADING
         coroutineScope.launch {
             when (val getVacanciesResponse = vacancyRepository.getVacancies(_page)) {
-                is ResultWrapper.NetworkError -> onNetworkError()
-                is ResultWrapper.GenericError -> onGenericError(getVacanciesResponse)
                 is ResultWrapper.Success -> onLoadVacanciesSuccess(getVacanciesResponse.value)
+                is ResultWrapper.NetworkError   ->
+                    _getVacanciesStatus.value = QueroAjudarApiStatus.NETWORK_ERROR
+                is ResultWrapper.GenericError   ->
+                    _getVacanciesStatus.value = QueroAjudarApiStatus.GENERIC_ERROR
             }
         }
-
     }
 
     private fun loadCauses(){
         Timber.tag("QueroAjudar.VacanciesVM").i("Loading causes")
-        _getCausesStatus.value = QueroAjudarApiStatus.LOADING
+        _getCausesStatus = QueroAjudarApiStatus.LOADING
         coroutineScope.launch {
             when (val getCausesResponse = globalRepository.getCauses()) {
-                is ResultWrapper.NetworkError -> onNetworkError()
-                is ResultWrapper.GenericError -> onGenericError(getCausesResponse)
-                is ResultWrapper.Success -> onLoadCausesSuccess(getCausesResponse.value)
+                is ResultWrapper.Success        -> onLoadCausesSuccess(getCausesResponse.value)
+                is ResultWrapper.NetworkError   -> _getCausesStatus = QueroAjudarApiStatus.NETWORK_ERROR
+                is ResultWrapper.GenericError   -> _getCausesStatus = QueroAjudarApiStatus.GENERIC_ERROR
             }
         }
-
     }
 
-    private fun onLoadCausesSuccess(value: SuccessResponse<List<Cause>>) {
-        _getCausesStatus.value = QueroAjudarApiStatus.DONE
-        Timber.tag("QueroAjudar").i("Causes API call success: $value")
-        _causes.value = value.data
-    }
-
-
-    private fun onNetworkError( ){
-        Timber.tag("QueroAjudar").i("API call network error")
-        _getVacanciesStatus.value = QueroAjudarApiStatus.NETWORK_ERROR
-    }
-
-    private fun onGenericError(loginResponse: ResultWrapper.GenericError) {
-        Timber.tag("QueroAjudar").i("API call generic error: $loginResponse")
-        _getVacanciesStatus.value = QueroAjudarApiStatus.GENERIC_ERROR
+    private fun loadSkills(){
+        Timber.tag("QueroAjudar.VacanciesVM").i("Loading skills")
+        _getSkillsStatus = QueroAjudarApiStatus.LOADING
+        coroutineScope.launch {
+            when (val getSkillsResponse = globalRepository.getSkills()) {
+                is ResultWrapper.Success        -> onLoadSkillsSuccess(getSkillsResponse.value)
+                is ResultWrapper.NetworkError   -> _getSkillsStatus = QueroAjudarApiStatus.NETWORK_ERROR
+                is ResultWrapper.GenericError   -> _getSkillsStatus = QueroAjudarApiStatus.GENERIC_ERROR
+            }
+        }
     }
 
     private fun onLoadVacanciesSuccess(value: SuccessResponse<List<Vacancy>>) {
@@ -136,9 +154,18 @@ class VacanciesViewModel : ViewModel(){
         else{
             _endLoading = true
         }
-        //_vacancies.value = value.data
-
         _getVacanciesStatus.value = QueroAjudarApiStatus.DONE
+    }
 
+    private fun onLoadCausesSuccess(response: SuccessResponse<List<Cause>>) {
+        Timber.tag("QA.V").i("Causes API call success: $response")
+        _getCausesStatus = QueroAjudarApiStatus.DONE
+        _causes.value = response.data?.toMutableList()
+    }
+
+    private fun onLoadSkillsSuccess(response: SuccessResponse<List<Skill>>) {
+        Timber.tag("QA.V").i("Causes API call success: $response")
+        _getSkillsStatus = QueroAjudarApiStatus.DONE
+        _skills.value = response.data?.toMutableList()
     }
 }
