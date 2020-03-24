@@ -56,8 +56,12 @@ dependencies {
     //Timber
     implementation "com.jakewharton.timber:timber:$timber_version"
 
-    //Recycler View
+    //RecyclerView
     implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
+
+    // RecyclerView Selection
+    implementation "androidx.recyclerview:recyclerview-selection:$recyclerviewselection_version"
+
 
     //CardView
     implementation "androidx.cardview:cardview:$cardview_version"

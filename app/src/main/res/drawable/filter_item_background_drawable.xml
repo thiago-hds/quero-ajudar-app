@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:state_activated="true"
+        android:drawable="@drawable/appcolor_round_shape" />
+    <item
+        android:state_activated="false"
+        android:drawable="@drawable/white_round_shape" />
+</selector>
+<!--<selector xmlns:android="http://schemas.android.com/apk/res/android">-->
+<!--    <item android:drawable="@android:color/holo_blue_light" android:state_activated="true" />-->
+<!--    <item android:drawable="@android:color/white" />-->
+<!--</selector>-->

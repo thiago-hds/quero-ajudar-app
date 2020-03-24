@@ -11,6 +11,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.selection.SelectionPredicates
+import androidx.recyclerview.selection.SelectionTracker
+import androidx.recyclerview.selection.StableIdKeyProvider
+import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.br.queroajudar.R
@@ -62,10 +66,13 @@ class VacanciesFragment : Fragment() {
     }
 
     private fun setupVacanciesList(){
+
         val adapter = VacancyAdapter(VacancyClickListener { vacancyId ->
             Toast.makeText(context, "$vacancyId", Toast.LENGTH_LONG).show()
             viewModel.onVacancyClicked()
         })
+
+
 
         val scrollListener = VacancyListScrollListener({
                 viewModel.onListScrollReachEnd()
@@ -85,10 +92,28 @@ class VacanciesFragment : Fragment() {
 
     private fun setupFilters(){
         // Lista de Causas
-        val causeAdapter = CauseAdapter(CauseClickListener { causeId, position ->
-            Toast.makeText(context, "$causeId, $position", Toast.LENGTH_LONG).show()
-            viewModel.onCauseFilterItemClicked(causeId, position)
-        })
+
+
+
+
+        val causeAdapter = CauseAdapter(/*CauseClickListener { causeId ->
+            Toast.makeText(context, "$causeId", Toast.LENGTH_LONG).show()
+            viewModel.onCauseFilterItemClicked(causeId)
+        }*/)
+
+        binding.vacanciesFilterLayout.vacanciesRvCauses.adapter = causeAdapter
+
+        var causeTracker = SelectionTracker.Builder<Long>(
+            "mySelection",
+            binding.vacanciesFilterLayout.vacanciesRvCauses,
+            StableIdKeyProvider(binding.vacanciesFilterLayout.vacanciesRvCauses),
+            CauseDetailsLookup(binding.vacanciesFilterLayout.vacanciesRvCauses),
+            StorageStrategy.createLongStorage()
+        ).withSelectionPredicate(
+            SelectionPredicates.createSelectAnything()
+        ).build()
+
+        causeAdapter.tracker = causeTracker
 
 
 
@@ -100,7 +125,7 @@ class VacanciesFragment : Fragment() {
             }
         })
 
-        binding.vacanciesFilterLayout.vacanciesRvCauses.adapter = causeAdapter
+
 
         // Lista de Habilidades
         val skillAdapter = SkillAdapter(SkillClickListener { skillId ->

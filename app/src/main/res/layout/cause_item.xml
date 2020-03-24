@@ -8,19 +8,14 @@
             name="cause"
             type="com.br.queroajudar.model.Cause" />
 
-        <variable
-            name="position"
-            type="Integer" />
-
-        <variable
-            name="clickListener"
-            type="com.br.queroajudar.view.adapters.CauseClickListener" />
+<!--        <variable-->
+<!--            name="clickListener"-->
+<!--            type="com.br.queroajudar.view.adapters.CauseClickListener" />-->
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="@{() -> clickListener.onClick(cause, position)}">
+        android:layout_height="wrap_content">
 
 
         <TextView
@@ -30,10 +25,11 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             htmlText="@{cause.iconUnicode}"
-
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:textColor="@color/filter_item_icon_color"
+            android:background="@drawable/filter_item_background_drawable"
             tools:text="\uf6d3" />
 
         <TextView

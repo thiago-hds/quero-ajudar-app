@@ -88,21 +88,21 @@ class VacanciesViewModel : ViewModel(){
         }
     }
 
-    fun onCauseFilterItemClicked(causeId : Int, position : Int){
-        _causes.value?.let{
-            Timber.tag("QueroAjudar.VM").i("cause before ${it[position]}")
-            val cause = it[position].copy(selected = !it[position].selected)
-//            val causesTmp = it.toMutableList()
-//            causesTmp[position].selected = !causesTmp[position].selected
-//            causesTmp[position].name = "Cremilda"
-//            _causes.value = causesTmp.toImmutableList()
-//            cause
-
-//            cause.selected = !cause.selected
-
-            _causes.updateItemOnPosition(position, cause)
-            Timber.tag("QueroAjudar.VM").i("cause after ${it[position]}")
-        }
+    fun onCauseFilterItemClicked(causeId : Int){
+//        _causes.value?.let{
+////            Timber.tag("QueroAjudar.VM").i("cause before ${it[position]}")
+////            val cause = it[position].copy(selected = !it[position].selected)
+////            val causesTmp = it.toMutableList()
+////            causesTmp[position].selected = !causesTmp[position].selected
+////            causesTmp[position].name = "Cremilda"
+////            _causes.value = causesTmp.toImmutableList()
+////            cause
+//
+////            cause.selected = !cause.selected
+//
+//            _causes.updateItemOnPosition(position, cause)
+//            Timber.tag("QueroAjudar.VM").i("cause after ${it[position]}")
+//        }
     }
 
 
