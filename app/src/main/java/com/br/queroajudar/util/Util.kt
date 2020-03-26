@@ -1,6 +1,7 @@
 package com.br.queroajudar.util
 
 import androidx.lifecycle.MutableLiveData
+import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
@@ -28,6 +29,14 @@ fun <T> MutableLiveData<MutableList<T>>.updateItemOnPosition(
         value[position] = newItem
         this.value = value
     }
+}
+
+fun SelectionTracker<Long>.enable(){
+    this.select(-1)
+}
+
+fun SelectionTracker<Long>.disable(){
+    this.clearSelection()
 }
 
 //fun <T, VH : RecyclerView.ViewHolder> ListAdapter<T, VH>.updateList(list: List<T>?) {

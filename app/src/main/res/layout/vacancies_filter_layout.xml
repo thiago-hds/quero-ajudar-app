@@ -10,6 +10,7 @@
             type="com.br.queroajudar.network.QueroAjudarApiStatus" />
     </data>
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/filter_layout"
         android:layout_width="match_parent"
@@ -100,11 +101,10 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/vacancies_rv_causes"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/vacancies_tv_causes"
@@ -119,18 +119,18 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/vacancies_tv_skill"
-            bind:layout_constraintStart_toStartOf="parent"
-            bind:layout_constraintTop_toBottomOf="@+id/vacancies_rv_causes"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/vacancies_rv_causes"
             android:visibility="gone"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/vacancies_rv_skills"
             android:layout_width="0dp"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/vacancies_tv_skills"
@@ -139,4 +139,6 @@
             android:visibility="gone"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </layout>

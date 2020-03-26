@@ -16,9 +16,12 @@ import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StableIdKeyProvider
 import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 
 import com.br.queroajudar.R
 import com.br.queroajudar.databinding.FragmentVacanciesBinding
+import com.br.queroajudar.util.enable
 import com.br.queroajudar.view.adapters.*
 import com.br.queroajudar.viewmodel.VacanciesViewModel
 import okhttp3.internal.toImmutableList
@@ -94,17 +97,22 @@ class VacanciesFragment : Fragment() {
         // Lista de Causas
 
 
+        setupCauseFilter()
 
 
-        val causeAdapter = CauseAdapter(/*CauseClickListener { causeId ->
-            Toast.makeText(context, "$causeId", Toast.LENGTH_LONG).show()
-            viewModel.onCauseFilterItemClicked(causeId)
-        }*/)
+        // Lista de Habilidades
+       setupSkillFilter()
+
+
+    }
+
+    private fun setupCauseFilter() {
+        val causeAdapter = CauseAdapter()
 
         binding.vacanciesFilterLayout.vacanciesRvCauses.adapter = causeAdapter
 
         var causeTracker = SelectionTracker.Builder<Long>(
-            "mySelection",
+            "causeSelection",
             binding.vacanciesFilterLayout.vacanciesRvCauses,
             StableIdKeyProvider(binding.vacanciesFilterLayout.vacanciesRvCauses),
             CauseDetailsLookup(binding.vacanciesFilterLayout.vacanciesRvCauses),
@@ -113,34 +121,47 @@ class VacanciesFragment : Fragment() {
             SelectionPredicates.createSelectAnything()
         ).build()
 
+        causeTracker.enable()
+
         causeAdapter.tracker = causeTracker
-
-
 
         viewModel.causes.observe(viewLifecycleOwner, Observer { causeList ->
             Timber.tag("QueroAjudar.VacFrag").i("Cause list changed. Size is ${causeList.size}")
-            causeList?.let{
+            causeList?.let {
                 causeAdapter.submitList(it.toImmutableList())
                 Timber.tag("QueroAjudar.VacFrag").i("Cause list submitted")
             }
         })
+    }
 
-
-
-        // Lista de Habilidades
-        val skillAdapter = SkillAdapter(SkillClickListener { skillId ->
-            Toast.makeText(context, "$skillId", Toast.LENGTH_LONG).show()
-        })
+    private fun setupSkillFilter() {
+        val skillAdapter = SkillAdapter()
 
         binding.vacanciesFilterLayout.vacanciesRvSkills.adapter = skillAdapter
 
+        var skillTracker = SelectionTracker.Builder<Long>(
+            "skillSelection",
+            binding.vacanciesFilterLayout.vacanciesRvSkills,
+            StableIdKeyProvider(binding.vacanciesFilterLayout.vacanciesRvSkills),
+            SkillDetailsLookup(binding.vacanciesFilterLayout.vacanciesRvSkills),
+            StorageStrategy.createLongStorage()
+        ).withSelectionPredicate(
+            SelectionPredicates.createSelectAnything()
+        ).build()
+
+        skillTracker.enable()
+
+        skillAdapter.tracker = skillTracker
+
         viewModel.skills.observe(viewLifecycleOwner, Observer { skillList ->
             Timber.tag("QueroAjudar.VacFrag").i("Skill list changed. Size is ${skillList.size}")
-            skillList?.let{
-                skillAdapter.submitList(it.toList())
+            skillList?.let {
+                skillAdapter.submitList(it.toImmutableList())
+                Timber.tag("QueroAjudar.VacFrag").i("Skill list submitted")
             }
         })
     }
+
 
     private fun showLoadingOverlay(){ binding.isLoadingProgressVisible = true}
     private fun hideLoadingOverlay(){binding.isLoadingProgressVisible = false}

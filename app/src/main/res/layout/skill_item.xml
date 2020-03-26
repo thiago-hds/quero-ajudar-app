@@ -8,15 +8,14 @@
             name="skill"
             type="com.br.queroajudar.model.Skill" />
 
-        <variable
-            name="clickListener"
-            type="com.br.queroajudar.view.adapters.SkillClickListener" />
+<!--        <variable-->
+<!--            name="clickListener"-->
+<!--            type="com.br.queroajudar.view.adapters.SkillClickListener" />-->
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="@{() -> clickListener.onClick(skill)}">
+        android:layout_height="wrap_content">
 
 
         <TextView
