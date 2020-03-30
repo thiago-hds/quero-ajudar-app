@@ -40,5 +40,6 @@
             app:layout_constraintBaseline_toBaselineOf="@+id/skillItem_tv_icon"
             app:layout_constraintStart_toEndOf="@+id/skillItem_tv_icon"
             tools:text="@string/tools_skillItem_name" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

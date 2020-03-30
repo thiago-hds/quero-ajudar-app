@@ -22,8 +22,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.br.queroajudar.R
 import com.br.queroajudar.databinding.FragmentVacanciesBinding
 import com.br.queroajudar.util.enable
+import com.br.queroajudar.util.toggleViewExpansion
+import com.br.queroajudar.util.toggleViewRotation0to180
 import com.br.queroajudar.view.adapters.*
 import com.br.queroajudar.viewmodel.VacanciesViewModel
+import kotlinx.android.synthetic.main.vacancies_filter_layout.view.*
 import okhttp3.internal.toImmutableList
 import timber.log.Timber
 
@@ -34,6 +37,9 @@ class VacanciesFragment : Fragment() {
     }
 
     lateinit var binding : FragmentVacanciesBinding
+
+    var isCauseFilterExpanded = false
+    var isSkillFilterExpanded = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -103,19 +109,19 @@ class VacanciesFragment : Fragment() {
         // Lista de Habilidades
        setupSkillFilter()
 
-
     }
 
     private fun setupCauseFilter() {
         val causeAdapter = CauseAdapter()
 
-        binding.vacanciesFilterLayout.vacanciesRvCauses.adapter = causeAdapter
+
+        binding.vacanciesFilterLayout.causesListLayout.causes_recyclerView.adapter = causeAdapter
 
         var causeTracker = SelectionTracker.Builder<Long>(
             "causeSelection",
-            binding.vacanciesFilterLayout.vacanciesRvCauses,
-            StableIdKeyProvider(binding.vacanciesFilterLayout.vacanciesRvCauses),
-            CauseDetailsLookup(binding.vacanciesFilterLayout.vacanciesRvCauses),
+            binding.vacanciesFilterLayout.causesListLayout.causes_recyclerView,
+            StableIdKeyProvider(binding.vacanciesFilterLayout.causesListLayout.causes_recyclerView),
+            CauseDetailsLookup(binding.vacanciesFilterLayout.causesListLayout.causes_recyclerView),
             StorageStrategy.createLongStorage()
         ).withSelectionPredicate(
             SelectionPredicates.createSelectAnything()
@@ -132,18 +138,40 @@ class VacanciesFragment : Fragment() {
                 Timber.tag("QueroAjudar.VacFrag").i("Cause list submitted")
             }
         })
+
+        binding.vacanciesFilterLayout.layoutExpandCauseFilter.setOnClickListener {
+            toggleViewRotation0to180(
+                binding.vacanciesFilterLayout
+                    .layoutExpandCauseFilter
+                    .iv_expandCauseFilterArrow, isCauseFilterExpanded)
+
+//            toggleViewExpansion(
+//                binding.vacanciesFilterLayout.causesListLayout,isCauseFilterExpanded)
+
+            if(isCauseFilterExpanded){
+                binding.vacanciesFilterLayout.causesListLayout.visibility = View.GONE
+            }
+            else{
+                binding.vacanciesFilterLayout.causesListLayout.visibility = View.VISIBLE
+            }
+
+            isCauseFilterExpanded = !isCauseFilterExpanded
+
+        }
+
+
     }
 
     private fun setupSkillFilter() {
         val skillAdapter = SkillAdapter()
 
-        binding.vacanciesFilterLayout.vacanciesRvSkills.adapter = skillAdapter
+        binding.vacanciesFilterLayout.skillsListLayout.skills_recyclerView.adapter = skillAdapter
 
         var skillTracker = SelectionTracker.Builder<Long>(
             "skillSelection",
-            binding.vacanciesFilterLayout.vacanciesRvSkills,
-            StableIdKeyProvider(binding.vacanciesFilterLayout.vacanciesRvSkills),
-            SkillDetailsLookup(binding.vacanciesFilterLayout.vacanciesRvSkills),
+            binding.vacanciesFilterLayout.skillsListLayout.skills_recyclerView,
+            StableIdKeyProvider(binding.vacanciesFilterLayout.skillsListLayout.skills_recyclerView),
+            SkillDetailsLookup(binding.vacanciesFilterLayout.skillsListLayout.skills_recyclerView),
             StorageStrategy.createLongStorage()
         ).withSelectionPredicate(
             SelectionPredicates.createSelectAnything()
@@ -160,6 +188,27 @@ class VacanciesFragment : Fragment() {
                 Timber.tag("QueroAjudar.VacFrag").i("Skill list submitted")
             }
         })
+
+        binding.vacanciesFilterLayout.layoutExpandSkillFilter.setOnClickListener {
+            toggleViewRotation0to180(
+                binding.vacanciesFilterLayout
+                    .layoutExpandSkillFilter
+                    .iv_expandSkillFilterArrow, isSkillFilterExpanded)
+
+//            toggleViewExpansion(
+//                binding.vacanciesFilterLayout.skillsListLayout,isSkillFilterExpanded)
+
+            if(isSkillFilterExpanded){
+                binding.vacanciesFilterLayout.skillsListLayout.visibility = View.GONE
+            }
+            else{
+                binding.vacanciesFilterLayout.skillsListLayout.visibility = View.VISIBLE
+            }
+
+            isSkillFilterExpanded = !isSkillFilterExpanded
+
+        }
+
     }
 
 

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -24,11 +23,11 @@
             layout="@layout/loading_overlay"
             android:visibility="gone"
             tools:visibility="gone"
-            bind:loadingOverlayApiStatus="@{vacanciesFilterApiStatus}"/>
+            app:loadingOverlayApiStatus="@{vacanciesFilterApiStatus}"/>
 
 
         <TextView
-            android:id="@+id/vacancies_tv_orderBy"
+            android:id="@+id/tv_orderBy"
             style="@style/itemTitle_textView_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -40,32 +39,32 @@
 
 
         <Button
-            android:id="@+id/vacancies_btn_recommended"
+            android:id="@+id/btn_recommended"
             style="@style/small_outlined_button_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/vacancies_btn_recommended"
-            app:layout_constraintEnd_toStartOf="@+id/vacancies_btn_popular"
+            app:layout_constraintEnd_toStartOf="@+id/btn_popular"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/vacancies_tv_orderBy" />
+            app:layout_constraintTop_toBottomOf="@id/tv_orderBy" />
 
         <Button
-            android:id="@+id/vacancies_btn_popular"
+            android:id="@+id/btn_popular"
             style="@style/small_outlined_button_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="@string/vacancies_btn_popular"
-            app:layout_constraintEnd_toStartOf="@+id/vacancies_btn_recent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_recent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/vacancies_btn_recommended"
-            app:layout_constraintTop_toTopOf="@id/vacancies_btn_recommended" />
+            app:layout_constraintStart_toEndOf="@+id/btn_recommended"
+            app:layout_constraintTop_toTopOf="@id/btn_recommended" />
 
         <Button
-            android:id="@+id/vacancies_btn_recent"
+            android:id="@+id/btn_recent"
             style="@style/small_outlined_button_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -73,11 +72,11 @@
             android:text="@string/vacancies_btn_recent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/vacancies_btn_popular"
-            app:layout_constraintTop_toTopOf="@id/vacancies_btn_recommended" />
+            app:layout_constraintStart_toEndOf="@+id/btn_popular"
+            app:layout_constraintTop_toTopOf="@id/btn_recommended" />
 
         <TextView
-            android:id="@+id/vacancies_tv_FilterBy"
+            android:id="@+id/tv_FilterBy"
             style="@style/itemTitle_textView_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -85,60 +84,114 @@
             android:layout_marginTop="8dp"
             android:text="@string/vacancies_tv_filterBy"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/vacancies_btn_recommended" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_recommended" />
 
-        <TextView
-            android:id="@+id/vacancies_tv_causes"
-            style="@style/itemTitle_textView_style"
-            android:layout_width="wrap_content"
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_expandCauseFilter"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/vacancies_tv_cause"
-            bind:layout_constraintStart_toStartOf="parent"
-            bind:layout_constraintTop_toBottomOf="@+id/vacancies_tv_FilterBy" />
+            android:layout_width="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_FilterBy">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/vacancies_rv_causes"
+            <TextView
+                android:id="@+id/tv_causes"
+                style="@style/itemTitle_textView_style"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/vacancies_tv_cause"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <ImageView
+                android:id="@+id/iv_expandCauseFilterArrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tint="@color/colorPrimary"
+                app:srcCompat="@drawable/ic_arrow_drop_down_black_24dp"
+                app:layout_constraintStart_toEndOf="@id/tv_causes"
+                app:layout_constraintTop_toTopOf="@id/tv_causes"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <FrameLayout
+            android:id="@+id/causesListLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/vacancies_tv_causes"
-            tools:itemCount="4"
-            tools:listitem="@layout/cause_item" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_expandCauseFilter">
 
-        <TextView
-            android:id="@+id/vacancies_tv_skills"
-            style="@style/itemTitle_textView_style"
-            android:layout_width="wrap_content"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/causes_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="4"
+                tools:listitem="@layout/cause_item" />
+
+        </FrameLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_expandSkillFilter"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/vacancies_tv_skill"
+            android:layout_width="0dp"
+            android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/vacancies_rv_causes"
-            android:visibility="gone"/>
+            app:layout_constraintTop_toBottomOf="@id/causesListLayout">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/vacancies_rv_skills"
+            <TextView
+                android:id="@+id/tv_skills"
+                style="@style/itemTitle_textView_style"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/vacancies_tv_skill"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <ImageView
+                android:id="@+id/iv_expandSkillFilterArrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tint="@color/colorPrimary"
+                app:srcCompat="@drawable/ic_arrow_drop_down_black_24dp"
+                app:layout_constraintStart_toEndOf="@id/tv_skills"
+                app:layout_constraintTop_toTopOf="@id/tv_skills"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/skillsListLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/vacancies_tv_skills"
-            tools:itemCount="4"
-            tools:listitem="@layout/skill_item"
-            android:visibility="gone"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_expandSkillFilter">
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/skills_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="4"
+                tools:listitem="@layout/skill_item" />
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </layout>
