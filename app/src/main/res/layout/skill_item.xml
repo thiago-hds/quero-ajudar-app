@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="skill"
             type="com.br.queroajudar.model.Skill" />
 
-<!--        <variable-->
-<!--            name="clickListener"-->
-<!--            type="com.br.queroajudar.view.adapters.SkillClickListener" />-->
+        <!--        <variable-->
+        <!--            name="clickListener"-->
+        <!--            type="com.br.queroajudar.view.adapters.SkillClickListener" />-->
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,10 +22,12 @@
         <TextView
             android:id="@+id/skillItem_tv_icon"
             style="@style/icon_textView_style"
+            htmlText="@{skill.iconUnicode}"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            htmlText="@{skill.iconUnicode}"
+            android:background="@drawable/filter_item_background_drawable"
+            android:textColor="@color/filter_item_icon_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

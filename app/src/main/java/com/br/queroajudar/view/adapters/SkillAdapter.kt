@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.br.queroajudar.databinding.SkillItemBinding
 import com.br.queroajudar.model.Skill
+import timber.log.Timber
 
 
 class SkillAdapter() : ListAdapter<
@@ -22,18 +23,26 @@ class SkillAdapter() : ListAdapter<
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)!!
-        holder.bind(/*clickListener,*/ item)
+        tracker?.let {
+            Timber.tag("QA.SkillAdapter").i("onBindViewHolder tracker isSelected ${it.isSelected(position.toLong())}")
+            holder.bind(/*clickListener,*/ item, it.isSelected(position.toLong()))
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
     }
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
     class ViewHolder private constructor(val binding: SkillItemBinding) : RecyclerView.ViewHolder(binding.root){
 
-        fun bind(/*clickListener: SkillClickListener,*/ item: Skill) {
+        fun bind(/*clickListener: SkillClickListener,*/ item: Skill, isSelected:Boolean = false) {
             binding.skill = item
             //binding.clickListener = clickListener
+            itemView.isActivated = false
             binding.executePendingBindings()
         }
 

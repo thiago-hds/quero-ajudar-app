@@ -7,5 +7,6 @@ import com.squareup.moshi.JsonClass
 data class Skill(
     val id : Int,
     val name : String,
-    @Json(name="fontawesome_icon_unicode") var iconUnicode : String?
+    @Json(name="fontawesome_icon_unicode") var iconUnicode : String?,
+    var selected : Boolean = false
 )

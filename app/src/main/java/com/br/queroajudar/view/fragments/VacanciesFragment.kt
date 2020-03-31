@@ -102,7 +102,6 @@ class VacanciesFragment : Fragment() {
     private fun setupFilters(){
         // Lista de Causas
 
-
         setupCauseFilter()
 
 
