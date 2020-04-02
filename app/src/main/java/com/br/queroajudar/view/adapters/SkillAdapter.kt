@@ -25,7 +25,7 @@ class SkillAdapter() : ListAdapter<
         val item = getItem(position)!!
         tracker?.let {
             Timber.tag("QA.SkillAdapter").i("onBindViewHolder tracker isSelected ${it.isSelected(position.toLong())}")
-            holder.bind(/*clickListener,*/ item, it.isSelected(position.toLong()))
+            holder.bind(/*clickListener,*/ item, it.isSelected(item.id.toLong()))
         }
     }
 
@@ -34,7 +34,7 @@ class SkillAdapter() : ListAdapter<
     }
 
     override fun getItemId(position: Int): Long {
-        return position.toLong()
+        return getItem(position).id.toLong()
     }
 
     class ViewHolder private constructor(val binding: SkillItemBinding) : RecyclerView.ViewHolder(binding.root){

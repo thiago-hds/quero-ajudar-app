@@ -14,8 +14,13 @@ class VacancyRepository(private val dispatcher: CoroutineDispatcher = Dispatcher
 
     private val  apiCaller : SafeApiCaller = SafeApiCaller()
 
-    suspend fun getVacancies(page : Int) : ResultWrapper<SuccessResponse<List<Vacancy>>> {
-        return apiCaller.safeApiCall(dispatcher) { QueroAjudarApi.retrofitService.getVacancies(page)}
+    suspend fun getVacancies(
+        page : Int,
+        causes:String = "",
+        skills:String = "") : ResultWrapper<SuccessResponse<List<Vacancy>>> {
+        return apiCaller.safeApiCall(dispatcher) {
+            QueroAjudarApi.retrofitService.getVacancies(page, causes, skills)
+        }
     }
 
 }

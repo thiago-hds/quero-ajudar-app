@@ -22,6 +22,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:onClick="@{() -> clickListener.onClick(vacancy)}"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:clickable="true"
         card_view:cardCornerRadius="5dp"
         card_view:cardElevation="2dp"
         card_view:cardPreventCornerOverlap="true"

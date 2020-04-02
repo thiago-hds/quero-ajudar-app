@@ -1,25 +1,20 @@
 package com.br.queroajudar.view.adapters
 
-import android.content.Context
-import android.graphics.Typeface
-import android.text.Html
+
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.ViewGroup
-import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.selection.ItemDetailsLookup
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.br.queroajudar.R
 import com.br.queroajudar.databinding.CauseItemBinding
 import com.br.queroajudar.model.Cause
 import timber.log.Timber
 
 
-class CauseAdapter(/*val clickListener : CauseClickListener*/) : ListAdapter<
-        Cause, CauseAdapter.ViewHolder>(CauseDiffCallback()) {
+class CauseAdapter() : ListAdapter<Cause, CauseAdapter.ViewHolder>(CauseDiffCallback()) {
     var tracker: SelectionTracker<Long>? = null
 
     init{
@@ -29,8 +24,9 @@ class CauseAdapter(/*val clickListener : CauseClickListener*/) : ListAdapter<
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)!!
         tracker?.let {
-            Timber.tag("QA.CauseAdapter").i("onBindViewHolder tracker isSelected ${it.isSelected(position.toLong())}")
-            holder.bind(/*clickListener,*/ item, it.isSelected(position.toLong()))
+            Timber.tag("QA.CauseAdapter")
+                .i("onBindViewHolder tracker isSelected ${it.isSelected(position.toLong())}")
+            holder.bind(/*clickListener,*/ item, it.isSelected(item.id.toLong()))
         }
     }
 
@@ -39,7 +35,7 @@ class CauseAdapter(/*val clickListener : CauseClickListener*/) : ListAdapter<
     }
 
     override fun getItemId(position: Int): Long {
-        return position.toLong()
+        return getItem(position).id.toLong()
     }
 
     class ViewHolder private constructor(val binding: CauseItemBinding) : RecyclerView.ViewHolder(binding.root){

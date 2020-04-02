@@ -11,12 +11,11 @@ import com.br.queroajudar.network.ResultWrapper
 import com.br.queroajudar.network.response.SuccessResponse
 import com.br.queroajudar.repository.QueroAjudarRepository
 import com.br.queroajudar.repository.VacancyRepository
-import com.br.queroajudar.util.updateItemOnPosition
+import com.br.queroajudar.util.append
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import okhttp3.internal.toImmutableList
 import timber.log.Timber
 
 class VacanciesViewModel : ViewModel(){
@@ -49,6 +48,8 @@ class VacanciesViewModel : ViewModel(){
 
     // Variaveis de controle
     private var _page = 1
+    private var _selectedCauses = listOf<Int>()
+    private var _selectedSkills = listOf<Int>()
     private var _endLoading = false
     private var _getCausesStatus = QueroAjudarApiStatus.DONE
     private var _getSkillsStatus = QueroAjudarApiStatus.DONE
@@ -88,29 +89,32 @@ class VacanciesViewModel : ViewModel(){
         }
     }
 
-    fun onCauseFilterItemClicked(causeId : Int){
-//        _causes.value?.let{
-////            Timber.tag("QueroAjudar.VM").i("cause before ${it[position]}")
-////            val cause = it[position].copy(selected = !it[position].selected)
-////            val causesTmp = it.toMutableList()
-////            causesTmp[position].selected = !causesTmp[position].selected
-////            causesTmp[position].name = "Cremilda"
-////            _causes.value = causesTmp.toImmutableList()
-////            cause
-//
-////            cause.selected = !cause.selected
-//
-//            _causes.updateItemOnPosition(position, cause)
-//            Timber.tag("QueroAjudar.VM").i("cause after ${it[position]}")
-//        }
+    fun onCauseItemSelected(selectedItems : List<Int>) {
+        Timber.tag("QA.VacanciesViewModel").i("cause selected ${selectedItems.toString()}")
+        _page = 1
+        _selectedCauses = selectedItems
+        _vacancies.value?.clear()
+        loadVacancies()
+    }
+
+    fun onSkillItemSelected(selectedItems : List<Int>) {
+        Timber.tag("QA.VacanciesViewModel").i("skill selected $selectedItems")
+        _page = 1
+        _selectedCauses = selectedItems
+        _vacancies.value?.clear()
+        loadVacancies()
     }
 
 
     private fun loadVacancies(){
         Timber.tag("QueroAjudar.VacanciesVM").i("Loading vacancies page $_page")
+        val strCauses = _selectedCauses.joinToString()
+        val strSkills = _selectedSkills.joinToString ()
+
         _getVacanciesStatus.value = QueroAjudarApiStatus.LOADING
         coroutineScope.launch {
-            when (val getVacanciesResponse = vacancyRepository.getVacancies(_page)) {
+            when (val getVacanciesResponse =
+                    vacancyRepository.getVacancies(_page, strCauses, strSkills)) {
                 is ResultWrapper.Success -> onLoadVacanciesSuccess(getVacanciesResponse.value)
                 is ResultWrapper.NetworkError   ->
                     _getVacanciesStatus.value = QueroAjudarApiStatus.NETWORK_ERROR
@@ -148,7 +152,7 @@ class VacanciesViewModel : ViewModel(){
         Timber.tag("QueroAjudar").i("Vacancies API call success: $value")
         val newVacancies = value.data
         if(newVacancies?.isNotEmpty()!!){
-            _vacancies.value?.addAll(newVacancies)
+            _vacancies.append(newVacancies)
             _page ++
         }
         else{
@@ -169,3 +173,5 @@ class VacanciesViewModel : ViewModel(){
         _skills.value = response.data?.toMutableList()
     }
 }
+
+

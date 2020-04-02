@@ -5,24 +5,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.selection.SelectionPredicates
-import androidx.recyclerview.selection.SelectionTracker
-import androidx.recyclerview.selection.StableIdKeyProvider
-import androidx.recyclerview.selection.StorageStrategy
+import androidx.recyclerview.selection.*
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
 import com.br.queroajudar.R
 import com.br.queroajudar.databinding.FragmentVacanciesBinding
 import com.br.queroajudar.util.enable
-import com.br.queroajudar.util.toggleViewExpansion
 import com.br.queroajudar.util.toggleViewRotation0to180
 import com.br.queroajudar.view.adapters.*
 import com.br.queroajudar.viewmodel.VacanciesViewModel
@@ -52,27 +48,15 @@ class VacanciesFragment : Fragment() {
         binding.viewModel = viewModel
 
         //setApiStatusObserver()
-        setListeners()
+
         setupVacanciesList()
         setupFilters()
+
+        setListeners()
 
         return binding.root
     }
 
-    private fun setListeners(){
-
-        binding.vacanciesBtnFiters.setOnClickListener {
-            binding.vacanciesDlFilters.openDrawer(GravityCompat.END)
-        }
-
-        val drawerListener = VacancyDrawerListener {
-            Toast.makeText(context, "Drawer opened", Toast.LENGTH_LONG).show()
-            viewModel.onDrawerOpened()
-        }
-
-        binding.vacanciesDlFilters.addDrawerListener(drawerListener)
-
-    }
 
     private fun setupVacanciesList(){
 
@@ -80,7 +64,6 @@ class VacanciesFragment : Fragment() {
             Toast.makeText(context, "$vacancyId", Toast.LENGTH_LONG).show()
             viewModel.onVacancyClicked()
         })
-
 
 
         val scrollListener = VacancyListScrollListener({
@@ -93,41 +76,24 @@ class VacanciesFragment : Fragment() {
         binding.vacanciesRecyclerView.addOnScrollListener(scrollListener)
 
         viewModel.vacancies.observe(viewLifecycleOwner, Observer { vacancyList ->
+            Timber.tag("QA.VacanciesFragment").i("vacancies list changed")
             vacancyList?.let{
-                adapter.submitList(it)
+                adapter.submitList(it.toImmutableList())
             }
         })
     }
 
+
     private fun setupFilters(){
-        // Lista de Causas
-
-        setupCauseFilter()
-
-
-        // Lista de Habilidades
-       setupSkillFilter()
-
-    }
-
-    private fun setupCauseFilter() {
+        // Filtro de Causas
         val causeAdapter = CauseAdapter()
-
-
         binding.vacanciesFilterLayout.causesListLayout.causes_recyclerView.adapter = causeAdapter
 
-        var causeTracker = SelectionTracker.Builder<Long>(
-            "causeSelection",
+        val causeTracker = setupSelectionTracker(
             binding.vacanciesFilterLayout.causesListLayout.causes_recyclerView,
-            StableIdKeyProvider(binding.vacanciesFilterLayout.causesListLayout.causes_recyclerView),
-            CauseDetailsLookup(binding.vacanciesFilterLayout.causesListLayout.causes_recyclerView),
-            StorageStrategy.createLongStorage()
-        ).withSelectionPredicate(
-            SelectionPredicates.createSelectAnything()
-        ).build()
-
-        causeTracker.enable()
-
+            "causeSelection",
+            CauseDetailsLookup(binding.vacanciesFilterLayout.causesListLayout.causes_recyclerView)
+        ) {selectedCauses -> viewModel.onCauseItemSelected(selectedCauses)}
         causeAdapter.tracker = causeTracker
 
         viewModel.causes.observe(viewLifecycleOwner, Observer { causeList ->
@@ -138,46 +104,15 @@ class VacanciesFragment : Fragment() {
             }
         })
 
-        binding.vacanciesFilterLayout.layoutExpandCauseFilter.setOnClickListener {
-            toggleViewRotation0to180(
-                binding.vacanciesFilterLayout
-                    .layoutExpandCauseFilter
-                    .iv_expandCauseFilterArrow, isCauseFilterExpanded)
-
-//            toggleViewExpansion(
-//                binding.vacanciesFilterLayout.causesListLayout,isCauseFilterExpanded)
-
-            if(isCauseFilterExpanded){
-                binding.vacanciesFilterLayout.causesListLayout.visibility = View.GONE
-            }
-            else{
-                binding.vacanciesFilterLayout.causesListLayout.visibility = View.VISIBLE
-            }
-
-            isCauseFilterExpanded = !isCauseFilterExpanded
-
-        }
-
-
-    }
-
-    private fun setupSkillFilter() {
+        // Filtro de Habilidades
         val skillAdapter = SkillAdapter()
-
         binding.vacanciesFilterLayout.skillsListLayout.skills_recyclerView.adapter = skillAdapter
 
-        var skillTracker = SelectionTracker.Builder<Long>(
-            "skillSelection",
+        val skillTracker = setupSelectionTracker(
             binding.vacanciesFilterLayout.skillsListLayout.skills_recyclerView,
-            StableIdKeyProvider(binding.vacanciesFilterLayout.skillsListLayout.skills_recyclerView),
-            SkillDetailsLookup(binding.vacanciesFilterLayout.skillsListLayout.skills_recyclerView),
-            StorageStrategy.createLongStorage()
-        ).withSelectionPredicate(
-            SelectionPredicates.createSelectAnything()
-        ).build()
-
-        skillTracker.enable()
-
+            "skillSelection",
+            SkillDetailsLookup(binding.vacanciesFilterLayout.skillsListLayout.skills_recyclerView)
+        ) {selectedSkills -> viewModel.onSkillItemSelected(selectedSkills)}
         skillAdapter.tracker = skillTracker
 
         viewModel.skills.observe(viewLifecycleOwner, Observer { skillList ->
@@ -188,28 +123,83 @@ class VacanciesFragment : Fragment() {
             }
         })
 
-        binding.vacanciesFilterLayout.layoutExpandSkillFilter.setOnClickListener {
-            toggleViewRotation0to180(
-                binding.vacanciesFilterLayout
-                    .layoutExpandSkillFilter
-                    .iv_expandSkillFilterArrow, isSkillFilterExpanded)
-
-//            toggleViewExpansion(
-//                binding.vacanciesFilterLayout.skillsListLayout,isSkillFilterExpanded)
-
-            if(isSkillFilterExpanded){
-                binding.vacanciesFilterLayout.skillsListLayout.visibility = View.GONE
-            }
-            else{
-                binding.vacanciesFilterLayout.skillsListLayout.visibility = View.VISIBLE
-            }
-
-            isSkillFilterExpanded = !isSkillFilterExpanded
-
-        }
-
     }
 
+    private fun setListeners(){
+        binding.vacanciesBtnFiters.setOnClickListener {
+            binding.vacanciesDlFilters.openDrawer(GravityCompat.END)
+        }
+
+        binding.vacanciesDlFilters.addDrawerListener(VacancyDrawerListener {
+            viewModel.onDrawerOpened()
+        })
+
+        binding.vacanciesFilterLayout.layoutExpandCauseFilter.setOnClickListener {
+            isCauseFilterExpanded = expandOrCollapseFilterLayout(binding.vacanciesFilterLayout
+                .layoutExpandCauseFilter
+                .iv_expandCauseFilterArrow, binding.vacanciesFilterLayout.causesListLayout,
+            isCauseFilterExpanded)
+        }
+
+        binding.vacanciesFilterLayout.layoutExpandSkillFilter.setOnClickListener {
+            isSkillFilterExpanded = expandOrCollapseFilterLayout(binding.vacanciesFilterLayout
+                .layoutExpandSkillFilter
+                .iv_expandSkillFilterArrow, binding.vacanciesFilterLayout.skillsListLayout,
+                isSkillFilterExpanded)
+        }
+    }
+
+    private fun expandOrCollapseFilterLayout(ivArrow: ImageView, listLayout:View, isExpanded:Boolean) : Boolean {
+        toggleViewRotation0to180(ivArrow, isExpanded)
+
+//            toggleViewExpansion(
+//                binding.vacanciesFilterLayout.causesListLayout,isCauseFilterExpanded)
+
+        if(isExpanded){
+            listLayout.visibility = View.GONE
+        }
+        else{
+            listLayout.visibility = View.VISIBLE
+        }
+
+        return !isExpanded
+    }
+
+
+    private fun setupSelectionTracker(recyclerView:RecyclerView, selectionId:String,
+                                      detailsLookup: ItemDetailsLookup<Long>,
+                                      onItemSelected : (items:List<Int>) -> Unit): SelectionTracker<Long>? {
+        val selectionTracker = SelectionTracker.Builder(
+            selectionId,
+            recyclerView,
+            StableIdKeyProvider(recyclerView),
+            detailsLookup,
+            StorageStrategy.createLongStorage()
+        ).withSelectionPredicate(
+            SelectionPredicates.createSelectAnything()
+        ).build()
+
+
+        selectionTracker.enable()
+
+        selectionTracker?.addObserver(
+            object : SelectionTracker.SelectionObserver<Long>() {
+                override fun onSelectionChanged() {
+                    super.onSelectionChanged()
+                    if (selectionTracker.selection.size() > 0) {
+                        Timber.tag("QA.VacanciesFragment")
+                            .i("selection observer: ${selectionTracker.selection}")
+                        val items = selectionTracker.selection.mapNotNull{
+                            if(it > 0) it.toInt() else null
+                        }
+                        onItemSelected(items)
+                    }
+                }
+            }
+        )
+
+        return selectionTracker
+    }
 
     private fun showLoadingOverlay(){ binding.isLoadingProgressVisible = true}
     private fun hideLoadingOverlay(){binding.isLoadingProgressVisible = false}

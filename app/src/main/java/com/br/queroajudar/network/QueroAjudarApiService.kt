@@ -61,7 +61,11 @@ interface QueroAjudarApiService {
 
 
     @GET("vacancies")
-    suspend fun getVacancies(@Query("page") page : Int): SuccessResponse<List<Vacancy>>
+    suspend fun getVacancies(
+        @Query("page") page : Int,
+        @Query("causes_id") causes: String,
+        @Query("skills_id") skills : String
+    ): SuccessResponse<List<Vacancy>>
 }
 
 object QueroAjudarApi {

@@ -20,8 +20,8 @@
         <include
             layout="@layout/loading_overlay"
             android:visibility="gone"
-            tools:visibility="gone"
-            app:loadingOverlayApiStatus="@{vacanciesFilterApiStatus}"/>
+            app:loadingOverlayApiStatus="@{vacanciesFilterApiStatus}"
+            tools:visibility="gone" />
 
 
         <TextView
@@ -41,11 +41,9 @@
             style="@style/small_outlined_button_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:text="@string/vacancies_btn_recommended"
-            app:layout_constraintEnd_toStartOf="@+id/btn_popular"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_orderBy" />
 
@@ -54,23 +52,9 @@
             style="@style/small_outlined_button_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="2dp"
             android:text="@string/vacancies_btn_popular"
-            app:layout_constraintEnd_toStartOf="@+id/btn_recent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/btn_recommended"
-            app:layout_constraintTop_toTopOf="@id/btn_recommended" />
-
-        <Button
-            android:id="@+id/btn_recent"
-            style="@style/small_outlined_button_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="@string/vacancies_btn_recent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/btn_popular"
             app:layout_constraintTop_toTopOf="@id/btn_recommended" />
 
         <TextView
@@ -85,14 +69,13 @@
             app:layout_constraintTop_toBottomOf="@+id/btn_recommended" />
 
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_expandCauseFilter"
-            android:layout_height="wrap_content"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_FilterBy">
 
             <TextView
@@ -100,20 +83,21 @@
                 style="@style/itemTitle_textView_style"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/vacancies_tv_cause"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/iv_expandCauseFilterArrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
                 android:tint="@color/colorPrimary"
-                app:srcCompat="@drawable/ic_arrow_drop_down_black_24dp"
-                app:layout_constraintStart_toEndOf="@id/tv_causes"
-                app:layout_constraintTop_toTopOf="@id/tv_causes"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_causes"
+                app:srcCompat="@drawable/ic_arrow_drop_down_black_24dp" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -143,11 +127,11 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_expandSkillFilter"
-            android:layout_height="wrap_content"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/causesListLayout">
 
             <TextView
@@ -155,20 +139,21 @@
                 style="@style/itemTitle_textView_style"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/vacancies_tv_skill"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/iv_expandSkillFilterArrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
                 android:tint="@color/colorPrimary"
-                app:srcCompat="@drawable/ic_arrow_drop_down_black_24dp"
-                app:layout_constraintStart_toEndOf="@id/tv_skills"
-                app:layout_constraintTop_toTopOf="@id/tv_skills"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_skills"
+                app:srcCompat="@drawable/ic_arrow_drop_down_black_24dp" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -188,9 +173,21 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
+                android:nestedScrollingEnabled="false"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:itemCount="4"
                 tools:listitem="@layout/skill_item" />
         </FrameLayout>
+
+        <Button
+            android:id="@+id/btn_recent"
+            style="@style/small_outlined_button_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:text="@string/vacancies_btn_recent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btn_popular"
+            app:layout_constraintTop_toTopOf="@+id/btn_recommended" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

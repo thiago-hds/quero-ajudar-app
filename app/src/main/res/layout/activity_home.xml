@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,9 +8,10 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="fill_parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/activity_home_navigationView">
+        app:layout_constraintBottom_toTopOf="@+id/activity_home_navigationView"
+        android:layout_above="@+id/activity_home_navigationView">
 
         <fragment
             android:id="@+id/activity_home_navhost"
@@ -27,10 +28,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_alignParentBottom="true"
         app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
         android:theme="@style/Widget.BottomNavigationView"
-
+        android:visibility="visible"
         app:menu="@menu/bottom_navigation_menu"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

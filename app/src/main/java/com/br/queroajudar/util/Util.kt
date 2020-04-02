@@ -31,6 +31,12 @@ fun <T> MutableLiveData<MutableList<T>>.updateItemOnPosition(
     }
 }
 
+fun <T> MutableLiveData<MutableList<T>>.append(newItens : List<T>) {
+    val value = this.value ?: mutableListOf()
+    value.addAll(newItens)
+    this.value = value
+}
+
 fun SelectionTracker<Long>.enable(){
     this.select(-1)
 }
