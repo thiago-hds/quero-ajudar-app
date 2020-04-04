@@ -24,47 +24,38 @@
             tools:visibility="gone" />
 
 
-        <TextView
-            android:id="@+id/tv_orderBy"
-            style="@style/itemTitle_textView_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/vacancies_tv_orderBy"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
 
-        <Button
-            android:id="@+id/btn_recommended"
-            style="@style/small_outlined_button_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/vacancies_btn_recommended"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_orderBy" />
 
-        <Button
-            android:id="@+id/btn_popular"
-            style="@style/small_outlined_button_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:text="@string/vacancies_btn_popular"
-            app:layout_constraintStart_toEndOf="@+id/btn_recommended"
-            app:layout_constraintTop_toTopOf="@id/btn_recommended" />
+<!--        <Button-->
+<!--            android:id="@+id/btn_recommended"-->
+<!--            style="@style/small_outlined_button_style"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="16dp"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:text="@string/vacancies_btn_recommended"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/tv_orderBy" />-->
+
+<!--        <Button-->
+<!--            android:id="@+id/btn_popular"-->
+<!--            style="@style/small_outlined_button_style"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="2dp"-->
+<!--            android:text="@string/vacancies_btn_popular"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/btn_recommended"-->
+<!--            app:layout_constraintTop_toTopOf="@id/btn_recommended" />-->
 
         <TextView
             android:id="@+id/tv_FilterBy"
             style="@style/itemTitle_textView_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/vacancies_tv_filterBy"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_recommended" />
 
@@ -179,15 +170,15 @@
                 tools:listitem="@layout/skill_item" />
         </FrameLayout>
 
-        <Button
-            android:id="@+id/btn_recent"
-            style="@style/small_outlined_button_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:text="@string/vacancies_btn_recent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/btn_popular"
-            app:layout_constraintTop_toTopOf="@+id/btn_recommended" />
+<!--        <Button-->
+<!--            android:id="@+id/btn_recent"-->
+<!--            style="@style/small_outlined_button_style"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="2dp"-->
+<!--            android:text="@string/vacancies_btn_recent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/btn_popular"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/btn_recommended" />-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

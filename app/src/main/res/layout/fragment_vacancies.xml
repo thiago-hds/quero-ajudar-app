@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.fragments.VacanciesFragment">
 
     <data>
@@ -20,71 +20,105 @@
 <!--        android:orientation="vertical"-->
 <!--        android:fitsSystemWindows="true">-->
 
-        <androidx.drawerlayout.widget.DrawerLayout
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/vacancies_dl_filters"
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/vacancies_dl_filters"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/contraintLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:openDrawer="end">
+            android:gravity="bottom">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/contraintLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="bottom"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            >
+            <Spinner
+                android:id="@+id/vacancies_spinner_orderBy"
+                style="@style/spinner_style"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="64dp"
+                app:layout_constraintBottom_toBottomOf="@+id/vacancies_btn_fiters"
+                app:layout_constraintEnd_toStartOf="@+id/vacancies_btn_fiters"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/vacancies_btn_fiters" />
 
-                <Button
-                    android:id="@+id/vacancies_btn_fiters"
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:id="@+id/vacancies_dropdown_orderBy_layout"-->
+<!--                style="@style/small_dropdown_style"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:layout_marginStart="8dp"-->
+<!--                android:layout_marginEnd="64dp"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/vacancies_btn_fiters"-->
+<!--                app:layout_constraintEnd_toStartOf="@+id/vacancies_btn_fiters"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/vacancies_btn_fiters">-->
 
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/vacancies_btn_filters"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:icon="@drawable/ic_tune_black_24dp"
-                    style="@style/small_outlined_icon_button_style"/>
+<!--                <AutoCompleteTextView-->
+<!--                    android:id="@+id/vacancies_dropdown_orderBy"-->
+<!--                    style="@style/small_textView_style"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:inputType="none" />-->
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/vacancies_recyclerView"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:clipToPadding="false"
-                    android:padding="6dp"
-                    app:spanCount="2"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintBottom_toTopOf="@id/progressBar"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/vacancies_btn_fiters"
-                    tools:itemCount="4"
-                    tools:listitem="@layout/vacancy_item" />
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
 
-                <ProgressBar
-                    android:id="@+id/progressBar"
-                    style="?android:attr/progressBarStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:background="@android:color/transparent"
-                    android:progressTint="@color/colorPrimary"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:pbApiStatus="@{viewModel.getFiltersStatus}"/>
-                <!--
+            <Button
+                android:id="@+id/vacancies_btn_fiters"
+                style="@style/small_outlined_icon_button_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/vacancies_btn_filters"
+                app:icon="@drawable/ic_tune_black_24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/vacancies_recyclerView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                android:clipToPadding="false"
+                android:padding="6dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toTopOf="@id/progressBar"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/vacancies_btn_fiters"
+                app:spanCount="2"
+                tools:itemCount="4"
+                tools:listitem="@layout/vacancy_item" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:progressTint="@color/colorPrimary"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:pbApiStatus="@{viewModel.getFiltersStatus}" />
+
+
+            <!--
                 <include
                     android:id="@+id/vacancies_overlay_loading"
                     android:visibility="gone"
                     layout="@layout/loading_overlay"/> -->
 
 
-                <!--
+            <!--
                 <ImageView
                     android:id="@+id/vacancies_iv_status"
                     android:layout_width="match_parent"
@@ -98,26 +132,25 @@
                     app:apiStatus="@{viewModel.apiStatus}" /> -->
 
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Gaveta de Filtros -->
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:background="#FFFFFF"
+            android:clickable="true"
+            android:elevation="12dp">
 
-            <!-- Gaveta de Filtros -->
-            <ScrollView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="end"
-                android:background="#FFFFFF"
-                android:clickable="true"
-                android:elevation="12dp">
+            <include
+                android:id="@+id/vacancies_filter_layout"
+                layout="@layout/vacancies_filter_layout"
+                app:vacanciesFilterApiStatus="@{viewModel.getFiltersStatus}" />
 
-                <include
-                    android:id="@+id/vacancies_filter_layout"
-                    layout="@layout/vacancies_filter_layout"
-                    bind:vacanciesFilterApiStatus="@{viewModel.getFiltersStatus}" />
+        </ScrollView>
 
-            </ScrollView>
-
-        </androidx.drawerlayout.widget.DrawerLayout>
+    </androidx.drawerlayout.widget.DrawerLayout>
 
 <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
 

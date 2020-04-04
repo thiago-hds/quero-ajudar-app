@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.view.GravityCompat
@@ -50,6 +51,7 @@ class VacanciesFragment : Fragment() {
         //setApiStatusObserver()
 
         setupVacanciesList()
+        setupOrderBySpinner()
         setupFilters()
 
         setListeners()
@@ -81,6 +83,20 @@ class VacanciesFragment : Fragment() {
                 adapter.submitList(it.toImmutableList())
             }
         })
+    }
+
+    private fun setupOrderBySpinner(){
+        context?.let {
+            ArrayAdapter.createFromResource(
+                it,
+                R.array.orderBy_array,
+                R.layout.dropdown_menu_item
+            ).also { adapter->
+                adapter.setDropDownViewResource(R.layout.dropdown_menu_item)
+                binding.vacanciesSpinnerOrderBy.adapter = adapter
+                //binding.vacanciesSpinnerOrderBy.setText(R.string.vacancies_btn_recommended)
+            }
+        }
     }
 
 

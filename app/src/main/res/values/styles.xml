@@ -68,6 +68,14 @@
         <item name="strokeColor">@color/colorPrimary</item>
     </style>
 
+    <!-- TextInputLayout -->
+    <style name="small_dropdown_style" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="android:fontFamily">@font/raleway</item>
+        <item name="android:minHeight">14dp</item>
+        <item name="android:minWidth">14dp</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+
     <!-- TextViews -->
     <style name="big_textView_style">
         <item name="android:fontFamily">@font/raleway</item>
@@ -75,6 +83,12 @@
         <item name="android:textSize">20sp</item>
         <item name="android:layout_marginStart">16dp</item>
         <item name="android:layout_marginTop">32dp</item>
+    </style>
+
+    <style name="small_textView_style">
+        <item name="android:fontFamily">@font/raleway</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="itemTitle_textView_style">
@@ -111,6 +125,11 @@
 <!--        <item name="android:textColor">@color/colorWhite</item>-->
 <!--        <item name="android:background">@drawable/appcolor_round_shape</item>-->
 <!--    </style>-->
+
+    <!-- Spinner -->
+    <style name="spinner_style">
+<!--        <item name="android:background">@drawable/white_round_shape</item>-->
+    </style>
 
     <!-- Bottom Navigation -->
     <style name="Widget.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
