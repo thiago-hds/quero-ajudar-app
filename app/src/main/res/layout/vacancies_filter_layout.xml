@@ -16,37 +16,16 @@
         android:layout_height="match_parent"
         tools:showIn="@layout/fragment_vacancies">
 
-
         <include
             layout="@layout/loading_overlay"
-            android:visibility="gone"
+            android:layout_height="0dp"
+            android:layout_width="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:loadingOverlayApiStatus="@{vacanciesFilterApiStatus}"
             tools:visibility="gone" />
-
-
-
-
-
-<!--        <Button-->
-<!--            android:id="@+id/btn_recommended"-->
-<!--            style="@style/small_outlined_button_style"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="16dp"-->
-<!--            android:layout_marginTop="8dp"-->
-<!--            android:text="@string/vacancies_btn_recommended"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/tv_orderBy" />-->
-
-<!--        <Button-->
-<!--            android:id="@+id/btn_popular"-->
-<!--            style="@style/small_outlined_button_style"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="2dp"-->
-<!--            android:text="@string/vacancies_btn_popular"-->
-<!--            app:layout_constraintStart_toEndOf="@+id/btn_recommended"-->
-<!--            app:layout_constraintTop_toTopOf="@id/btn_recommended" />-->
 
         <TextView
             android:id="@+id/tv_FilterBy"
@@ -57,7 +36,7 @@
             android:text="@string/vacancies_tv_filterBy"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_recommended" />
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -170,6 +149,8 @@
                 tools:listitem="@layout/skill_item" />
         </FrameLayout>
 
+
+
 <!--        <Button-->
 <!--            android:id="@+id/btn_recent"-->
 <!--            style="@style/small_outlined_button_style"-->
@@ -180,5 +161,6 @@
 <!--            app:layout_constraintEnd_toEndOf="parent"-->
 <!--            app:layout_constraintStart_toEndOf="@+id/btn_popular"-->
 <!--            app:layout_constraintTop_toTopOf="@+id/btn_recommended" />-->
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

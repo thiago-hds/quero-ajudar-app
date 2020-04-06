@@ -6,6 +6,7 @@ import android.os.Build
 import android.text.Html
 import android.text.Spanned
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -69,6 +70,17 @@ fun bindApiStatusProgressBar(progressBar : ProgressBar, status:QueroAjudarApiSta
     else{
         progressBar.visibility = View.GONE
     }
+}
+
+@BindingAdapter("apiStatusLoading")
+fun bindApiStatusLoading(vg : ViewGroup, status:QueroAjudarApiStatus){
+    Timber.tag("QA.BindingAdapters").i("bindApiStatusLoading $status")
+    if (status == QueroAjudarApiStatus.LOADING) {
+        vg.visibility = View.VISIBLE
+    } else {
+        vg.visibility = View.GONE
+    }
+
 }
 
 //@BindingAdapter("loadingViewApiStatus")

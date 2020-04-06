@@ -42,7 +42,7 @@ class SkillAdapter() : ListAdapter<
         fun bind(/*clickListener: SkillClickListener,*/ item: Skill, isSelected:Boolean = false) {
             binding.skill = item
             //binding.clickListener = clickListener
-            itemView.isActivated = false
+            itemView.isActivated = isSelected
             binding.executePendingBindings()
         }
 

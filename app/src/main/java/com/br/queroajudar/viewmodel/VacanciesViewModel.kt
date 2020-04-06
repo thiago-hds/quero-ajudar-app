@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.br.queroajudar.model.Cause
 import com.br.queroajudar.model.Skill
 import com.br.queroajudar.model.Vacancy
+import com.br.queroajudar.network.QueroAjudarApi
 import com.br.queroajudar.network.QueroAjudarApiStatus
 import com.br.queroajudar.network.ResultWrapper
 import com.br.queroajudar.network.response.SuccessResponse
@@ -32,7 +33,6 @@ class VacanciesViewModel : ViewModel(){
     private val _getFiltersStatus = MutableLiveData<QueroAjudarApiStatus>()
     val getFiltersStatus: LiveData<QueroAjudarApiStatus>
         get() = _getFiltersStatus
-
 
     private var _vacancies = MutableLiveData<MutableList<Vacancy>>()
     val vacancies : LiveData<MutableList<Vacancy>>
@@ -63,6 +63,10 @@ class VacanciesViewModel : ViewModel(){
         _vacancies.value = mutableListOf()
         _causes.value = mutableListOf()
         _skills.value = mutableListOf()
+
+        _getVacanciesStatus.value   = QueroAjudarApiStatus.LOADING
+        _getFiltersStatus.value     = QueroAjudarApiStatus.LOADING
+
         loadVacancies()
     }
 
@@ -127,6 +131,7 @@ class VacanciesViewModel : ViewModel(){
     private fun loadCauses(){
         Timber.tag("QueroAjudar.VacanciesVM").i("Loading causes")
         _getCausesStatus = QueroAjudarApiStatus.LOADING
+        updateFiltersStatus()
         coroutineScope.launch {
             when (val getCausesResponse = globalRepository.getCauses()) {
                 is ResultWrapper.Success        -> onLoadCausesSuccess(getCausesResponse.value)
@@ -139,6 +144,7 @@ class VacanciesViewModel : ViewModel(){
     private fun loadSkills(){
         Timber.tag("QueroAjudar.VacanciesVM").i("Loading skills")
         _getSkillsStatus = QueroAjudarApiStatus.LOADING
+        updateFiltersStatus()
         coroutineScope.launch {
             when (val getSkillsResponse = globalRepository.getSkills()) {
                 is ResultWrapper.Success        -> onLoadSkillsSuccess(getSkillsResponse.value)
@@ -164,13 +170,25 @@ class VacanciesViewModel : ViewModel(){
     private fun onLoadCausesSuccess(response: SuccessResponse<List<Cause>>) {
         Timber.tag("QA.V").i("Causes API call success: $response")
         _getCausesStatus = QueroAjudarApiStatus.DONE
+        updateFiltersStatus()
         _causes.value = response.data?.toMutableList()
     }
 
     private fun onLoadSkillsSuccess(response: SuccessResponse<List<Skill>>) {
         Timber.tag("QA.V").i("Causes API call success: $response")
         _getSkillsStatus = QueroAjudarApiStatus.DONE
+        updateFiltersStatus()
         _skills.value = response.data?.toMutableList()
+    }
+
+    private fun updateFiltersStatus(){
+        if(_getCausesStatus == QueroAjudarApiStatus.LOADING
+            || _getSkillsStatus == QueroAjudarApiStatus.LOADING){
+            _getFiltersStatus.value = QueroAjudarApiStatus.LOADING
+        }
+        else {
+            _getFiltersStatus.value = QueroAjudarApiStatus.DONE
+        }
     }
 }
 

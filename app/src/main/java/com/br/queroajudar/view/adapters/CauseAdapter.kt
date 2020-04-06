@@ -76,10 +76,6 @@ class CauseDiffCallback : DiffUtil.ItemCallback<Cause>() {
     }
 }
 
-//class CauseClickListener(val clickListener: (causeId: Int) -> Unit) {
-//    fun onClick(cause: Cause) = clickListener(cause.id)
-//}
-
 class CauseDetailsLookup(private val recyclerView: RecyclerView) :
     ItemDetailsLookup<Long>() {
     override fun getItemDetails(event: MotionEvent): ItemDetails<Long>? {
