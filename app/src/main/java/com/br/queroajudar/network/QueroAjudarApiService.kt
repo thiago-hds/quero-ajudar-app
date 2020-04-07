@@ -1,8 +1,7 @@
 package com.br.queroajudar.network
 
 import android.util.Log
-import com.br.queroajudar.model.Cause
-import com.br.queroajudar.model.Skill
+import com.br.queroajudar.model.Category
 import com.br.queroajudar.model.Vacancy
 import com.br.queroajudar.network.response.SuccessResponse
 import com.br.queroajudar.model.formdata.LoginData
@@ -48,10 +47,10 @@ private val retrofit = Retrofit.Builder()
 interface QueroAjudarApiService {
 
     @GET("causes")
-    suspend fun getCauses(): SuccessResponse<List<Cause>>
+    suspend fun getCauses(): SuccessResponse<List<Category>>
 
     @GET("skills")
-    suspend fun getSkills(): SuccessResponse<List<Skill>>
+    suspend fun getSkills(): SuccessResponse<List<Category>>
 
     @POST("login")
     suspend fun postLogin(@Body data: LoginData): SuccessResponse<String>

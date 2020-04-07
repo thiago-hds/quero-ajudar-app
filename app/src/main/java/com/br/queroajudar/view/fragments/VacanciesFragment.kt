@@ -20,6 +20,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.br.queroajudar.R
 import com.br.queroajudar.databinding.FragmentVacanciesBinding
 import com.br.queroajudar.util.enable
+import com.br.queroajudar.util.toggleViewExpansion
+import com.br.queroajudar.util.toggleViewExpansion2
 import com.br.queroajudar.util.toggleViewRotation0to180
 import com.br.queroajudar.view.adapters.*
 import com.br.queroajudar.viewmodel.VacanciesViewModel
@@ -102,13 +104,12 @@ class VacanciesFragment : Fragment() {
 
     private fun setupFilters(){
         // Filtro de Causas
-        val causeAdapter = CauseAdapter()
+        val causeAdapter = CategoryAdapter()
         binding.vacanciesFilterLayout.causesListLayout.causes_recyclerView.adapter = causeAdapter
 
         val causeTracker = setupSelectionTracker(
             binding.vacanciesFilterLayout.causesListLayout.causes_recyclerView,
-            "causeSelection",
-            CauseDetailsLookup(binding.vacanciesFilterLayout.causesListLayout.causes_recyclerView)
+            "causeSelection"
         ) {selectedCauses -> viewModel.onCauseItemSelected(selectedCauses)}
         causeAdapter.tracker = causeTracker
 
@@ -121,13 +122,12 @@ class VacanciesFragment : Fragment() {
         })
 
         // Filtro de Habilidades
-        val skillAdapter = SkillAdapter()
+        val skillAdapter = CategoryAdapter()
         binding.vacanciesFilterLayout.skillsListLayout.skills_recyclerView.adapter = skillAdapter
 
         val skillTracker = setupSelectionTracker(
             binding.vacanciesFilterLayout.skillsListLayout.skills_recyclerView,
-            "skillSelection",
-            SkillDetailsLookup(binding.vacanciesFilterLayout.skillsListLayout.skills_recyclerView)
+            "skillSelection"
         ) {selectedSkills -> viewModel.onSkillItemSelected(selectedSkills)}
         skillAdapter.tracker = skillTracker
 
@@ -168,28 +168,26 @@ class VacanciesFragment : Fragment() {
     private fun expandOrCollapseFilterLayout(ivArrow: ImageView, listLayout:View, isExpanded:Boolean) : Boolean {
         toggleViewRotation0to180(ivArrow, isExpanded)
 
-//            toggleViewExpansion(
-//                binding.vacanciesFilterLayout.causesListLayout,isCauseFilterExpanded)
+        toggleViewExpansion2(listLayout,isExpanded)
 
-        if(isExpanded){
-            listLayout.visibility = View.GONE
-        }
-        else{
-            listLayout.visibility = View.VISIBLE
-        }
+//        if(isExpanded){
+//            listLayout.visibility = View.GONE
+//        }
+//        else{
+//            listLayout.visibility = View.VISIBLE
+//        }
 
         return !isExpanded
     }
 
 
     private fun setupSelectionTracker(recyclerView:RecyclerView, selectionId:String,
-                                      detailsLookup: ItemDetailsLookup<Long>,
                                       onItemSelected : (items:List<Int>) -> Unit): SelectionTracker<Long>? {
         val selectionTracker = SelectionTracker.Builder(
             selectionId,
             recyclerView,
-            StableIdKeyProvider(recyclerView),
-            detailsLookup,
+            CategoryItemKeyProvider(recyclerView),
+            CategoryDetailsLookup(recyclerView),
             StorageStrategy.createLongStorage()
         ).withSelectionPredicate(
             SelectionPredicates.createSelectAnything()

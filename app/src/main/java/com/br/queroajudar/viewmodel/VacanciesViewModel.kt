@@ -3,8 +3,7 @@ package com.br.queroajudar.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.br.queroajudar.model.Cause
-import com.br.queroajudar.model.Skill
+import com.br.queroajudar.model.Category
 import com.br.queroajudar.model.Vacancy
 import com.br.queroajudar.network.QueroAjudarApi
 import com.br.queroajudar.network.QueroAjudarApiStatus
@@ -38,12 +37,12 @@ class VacanciesViewModel : ViewModel(){
     val vacancies : LiveData<MutableList<Vacancy>>
         get() = _vacancies
 
-    private var _causes = MutableLiveData<MutableList<Cause>>()
-    val causes : LiveData<MutableList<Cause>>
+    private var _causes = MutableLiveData<MutableList<Category>>()
+    val causes : LiveData<MutableList<Category>>
         get() = _causes
 
-    private var _skills = MutableLiveData<List<Skill>>()
-    val skills : LiveData<List<Skill>>
+    private var _skills = MutableLiveData<List<Category>>()
+    val skills : LiveData<List<Category>>
         get() = _skills
 
     // Variaveis de controle
@@ -94,7 +93,7 @@ class VacanciesViewModel : ViewModel(){
     }
 
     fun onCauseItemSelected(selectedItems : List<Int>) {
-        Timber.tag("QA.VacanciesViewModel").i("cause selected ${selectedItems.toString()}")
+        Timber.tag("QA.VacanciesVM").i("cause selected ${selectedItems.toString()}")
         _page = 1
         _selectedCauses = selectedItems
         _vacancies.value?.clear()
@@ -102,7 +101,7 @@ class VacanciesViewModel : ViewModel(){
     }
 
     fun onSkillItemSelected(selectedItems : List<Int>) {
-        Timber.tag("QA.VacanciesViewModel").i("skill selected $selectedItems")
+        Timber.tag("QA.VacanciesVM").i("skill selected $selectedItems")
         _page = 1
         _selectedCauses = selectedItems
         _vacancies.value?.clear()
@@ -111,7 +110,7 @@ class VacanciesViewModel : ViewModel(){
 
 
     private fun loadVacancies(){
-        Timber.tag("QueroAjudar.VacanciesVM").i("Loading vacancies page $_page")
+        Timber.tag("QA.VacanciesVM").i("Loading vacancies page $_page")
         val strCauses = _selectedCauses.joinToString()
         val strSkills = _selectedSkills.joinToString ()
 
@@ -129,7 +128,7 @@ class VacanciesViewModel : ViewModel(){
     }
 
     private fun loadCauses(){
-        Timber.tag("QueroAjudar.VacanciesVM").i("Loading causes")
+        Timber.tag("QA.VacanciesVM").i("Loading causes")
         _getCausesStatus = QueroAjudarApiStatus.LOADING
         updateFiltersStatus()
         coroutineScope.launch {
@@ -142,7 +141,7 @@ class VacanciesViewModel : ViewModel(){
     }
 
     private fun loadSkills(){
-        Timber.tag("QueroAjudar.VacanciesVM").i("Loading skills")
+        Timber.tag("QA.VacanciesVM").i("Loading skills")
         _getSkillsStatus = QueroAjudarApiStatus.LOADING
         updateFiltersStatus()
         coroutineScope.launch {
@@ -155,7 +154,7 @@ class VacanciesViewModel : ViewModel(){
     }
 
     private fun onLoadVacanciesSuccess(value: SuccessResponse<List<Vacancy>>) {
-        Timber.tag("QueroAjudar").i("Vacancies API call success: $value")
+        Timber.tag("QA.VacanciesVM").i("Vacancies API call success: $value")
         val newVacancies = value.data
         if(newVacancies?.isNotEmpty()!!){
             _vacancies.append(newVacancies)
@@ -167,15 +166,15 @@ class VacanciesViewModel : ViewModel(){
         _getVacanciesStatus.value = QueroAjudarApiStatus.DONE
     }
 
-    private fun onLoadCausesSuccess(response: SuccessResponse<List<Cause>>) {
-        Timber.tag("QA.V").i("Causes API call success: $response")
+    private fun onLoadCausesSuccess(response: SuccessResponse<List<Category>>) {
+        Timber.tag("QA.VacanciesVM").i("Causes API call success: $response")
         _getCausesStatus = QueroAjudarApiStatus.DONE
         updateFiltersStatus()
         _causes.value = response.data?.toMutableList()
     }
 
-    private fun onLoadSkillsSuccess(response: SuccessResponse<List<Skill>>) {
-        Timber.tag("QA.V").i("Causes API call success: $response")
+    private fun onLoadSkillsSuccess(response: SuccessResponse<List<Category>>) {
+        Timber.tag("QA.VacanciesVM").i("Causes API call success: $response")
         _getSkillsStatus = QueroAjudarApiStatus.DONE
         updateFiltersStatus()
         _skills.value = response.data?.toMutableList()

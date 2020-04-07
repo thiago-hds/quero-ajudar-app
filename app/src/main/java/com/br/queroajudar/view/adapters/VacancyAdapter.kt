@@ -106,3 +106,4 @@ class VacancyClickListener(val clickListener: (vacancyId: Int) -> Unit) {
 
 
 
+

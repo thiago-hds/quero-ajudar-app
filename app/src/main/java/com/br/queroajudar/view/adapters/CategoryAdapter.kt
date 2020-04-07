@@ -4,28 +4,26 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.ViewGroup
 import androidx.recyclerview.selection.ItemDetailsLookup
+import androidx.recyclerview.selection.ItemKeyProvider
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.br.queroajudar.databinding.SkillItemBinding
-import com.br.queroajudar.model.Skill
-import timber.log.Timber
+import com.br.queroajudar.databinding.CategoryItemBinding
+import com.br.queroajudar.model.Category
 
-
-class SkillAdapter() : ListAdapter<
-        Skill, SkillAdapter.ViewHolder>(SkillDiffCallback()) {
+class CategoryAdapter : ListAdapter<
+        Category, CategoryAdapter.ViewHolder>(CategoryDiffCallback()) {
     var tracker: SelectionTracker<Long>? = null
 
-    init{
+    init {
         setHasStableIds(true)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)!!
         tracker?.let {
-            Timber.tag("QA.SkillAdapter").i("onBindViewHolder tracker isSelected ${it.isSelected(position.toLong())}")
-            holder.bind(/*clickListener,*/ item, it.isSelected(item.id.toLong()))
+            holder.bind(item, it.isSelected(item.id.toLong()))
         }
     }
 
@@ -37,11 +35,11 @@ class SkillAdapter() : ListAdapter<
         return getItem(position).id.toLong()
     }
 
-    class ViewHolder private constructor(val binding: SkillItemBinding) : RecyclerView.ViewHolder(binding.root){
+    class ViewHolder private constructor(val binding: CategoryItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(/*clickListener: SkillClickListener,*/ item: Skill, isSelected:Boolean = false) {
-            binding.skill = item
-            //binding.clickListener = clickListener
+        fun bind(item:Category,isSelected: Boolean = false) {
+            binding.category = item
             itemView.isActivated = isSelected
             binding.executePendingBindings()
         }
@@ -55,35 +53,44 @@ class SkillAdapter() : ListAdapter<
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = SkillItemBinding.inflate(layoutInflater, parent, false)
+                val binding = CategoryItemBinding.inflate(layoutInflater, parent, false)
                 return ViewHolder(binding)
             }
         }
     }
 }
 
-class SkillDiffCallback : DiffUtil.ItemCallback<Skill>() {
+class CategoryDiffCallback : DiffUtil.ItemCallback<Category>() {
 
-    override fun areItemsTheSame(oldItem: Skill, newItem: Skill): Boolean {
+    override fun areItemsTheSame(oldItem: Category, newItem: Category): Boolean {
         return oldItem.id == newItem.id
     }
-    override fun areContentsTheSame(oldItem: Skill, newItem: Skill): Boolean {
+
+    override fun areContentsTheSame(oldItem: Category, newItem: Category): Boolean {
         return oldItem == newItem
     }
 }
 
-//class SkillClickListener(val clickListener: (skillId: Int) -> Unit) {
-//    fun onClick(skill: Skill) = clickListener(skill.id)
-//}
-
-class SkillDetailsLookup(private val recyclerView: RecyclerView) :
+class CategoryDetailsLookup(private val recyclerView: RecyclerView) :
     ItemDetailsLookup<Long>() {
     override fun getItemDetails(event: MotionEvent): ItemDetails<Long>? {
         val view = recyclerView.findChildViewUnder(event.x, event.y)
         if (view != null) {
-            return (recyclerView.getChildViewHolder(view) as SkillAdapter.ViewHolder)
+            return (recyclerView.getChildViewHolder(view) as CategoryAdapter.ViewHolder)
                 .getItemDetails()
         }
         return null
+    }
+}
+
+class CategoryItemKeyProvider(private val recyclerView: RecyclerView) :
+    ItemKeyProvider<Long>(SCOPE_MAPPED) {
+    override fun getKey(position: Int): Long? {
+        return recyclerView.adapter?.getItemId(position)
+    }
+
+    override fun getPosition(key: Long): Int {
+        val viewHolder = recyclerView.findViewHolderForItemId(key)
+        return viewHolder?.layoutPosition ?: RecyclerView.NO_POSITION
     }
 }

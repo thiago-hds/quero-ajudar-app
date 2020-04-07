@@ -1,28 +1,45 @@
 package com.br.queroajudar.util
 
+import android.animation.ValueAnimator
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.Transformation
+import androidx.core.animation.doOnEnd
 
 
-fun toggleViewRotation0to180(view : View, isRotated : Boolean) : Boolean{
-    return if(isRotated){
+fun toggleViewRotation0to180(view : View, isRotated : Boolean){
+    if(isRotated){
         view.animate().setDuration(200).rotation(0F)
-        false
     } else{
         view.animate().setDuration(200).rotation(180F)
-        true
     }
 }
 
-fun toggleViewExpansion(view:View, isExpanded:Boolean):Boolean{
-    return if(isExpanded){
+fun toggleViewExpansion2(view:View, isExpanded: Boolean){
+    view.measure(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+    val maxHeight = view.measuredHeight + view.paddingTop + view.paddingBottom
+    val startHeight = if (isExpanded) maxHeight else 0
+    val targetHeight = if (isExpanded) 0 else maxHeight
+
+    val expandAnimator = ValueAnimator
+        .ofInt(startHeight, targetHeight)
+        .setDuration(200)
+
+    expandAnimator.addUpdateListener {
+        val value = it.animatedValue as Int
+        view.layoutParams.height = value
+        view.requestLayout()
+    }
+
+    expandAnimator.start()
+}
+
+fun toggleViewExpansion(view:View, isExpanded:Boolean){
+    if(isExpanded){
         collapseView(view)
-        false
     } else{
         expandView(view)
-        true
     }
 }
 

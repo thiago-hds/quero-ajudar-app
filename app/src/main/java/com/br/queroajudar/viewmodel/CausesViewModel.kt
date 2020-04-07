@@ -3,7 +3,7 @@ package com.br.queroajudar.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.br.queroajudar.model.Cause
+import com.br.queroajudar.model.Category
 import com.br.queroajudar.network.QueroAjudarApiStatus
 import com.br.queroajudar.network.ResultWrapper
 import com.br.queroajudar.network.response.SuccessResponse
@@ -34,17 +34,17 @@ class CausesViewModel : ViewModel() {
     }
 
     private fun onNetworkError( ){
-        Timber.tag("QueroAjudar").i("API call network error")
+        Timber.tag("QA.").i("API call network error")
         _apiStatus.value = QueroAjudarApiStatus.NETWORK_ERROR
     }
 
     private fun onGenericError(loginResponse: ResultWrapper.GenericError) {
-        Timber.tag("QueroAjudar").i("API call generic error: $loginResponse")
+        Timber.tag("QA.").i("API call generic error: $loginResponse")
         _apiStatus.value = QueroAjudarApiStatus.GENERIC_ERROR
     }
 
-    private fun onSuccess(value: SuccessResponse<List<Cause>>) {
-        Timber.tag("QueroAjudar").i("API call success: $value")
+    private fun onSuccess(value: SuccessResponse<List<Category>>) {
+        Timber.tag("QA.").i("API call success: $value")
         _apiStatus.value = QueroAjudarApiStatus.DONE
     }
 

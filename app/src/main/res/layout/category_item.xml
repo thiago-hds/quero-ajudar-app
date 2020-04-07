@@ -6,12 +6,8 @@
     <data>
 
         <variable
-            name="skill"
-            type="com.br.queroajudar.model.Skill" />
-
-        <!--        <variable-->
-        <!--            name="clickListener"-->
-        <!--            type="com.br.queroajudar.view.adapters.SkillClickListener" />-->
+            name="category"
+            type="com.br.queroajudar.model.Category" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,7 +18,7 @@
         <TextView
             android:id="@+id/skillItem_tv_icon"
             style="@style/icon_textView_style"
-            htmlText="@{skill.iconUnicode}"
+            htmlText="@{category.iconUnicode}"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
@@ -39,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="@{skill.name}"
+            android:text="@{category.name}"
             app:layout_constraintBaseline_toBaselineOf="@+id/skillItem_tv_icon"
             app:layout_constraintStart_toEndOf="@+id/skillItem_tv_icon"
             tools:text="@string/tools_skillItem_name" />
