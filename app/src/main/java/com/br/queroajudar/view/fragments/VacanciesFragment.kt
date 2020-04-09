@@ -13,12 +13,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.paging.PagedList
 import androidx.recyclerview.selection.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.br.queroajudar.R
 import com.br.queroajudar.databinding.FragmentVacanciesBinding
+import com.br.queroajudar.model.Vacancy
 import com.br.queroajudar.util.enable
 import com.br.queroajudar.util.toggleViewExpansion
 import com.br.queroajudar.util.toggleViewExpansion2
@@ -70,20 +72,30 @@ class VacanciesFragment : Fragment() {
         })
 
 
-        val scrollListener = VacancyListScrollListener({
-                viewModel.onListScrollReachEnd()
-            },
-            binding.vacanciesRecyclerView.layoutManager as LinearLayoutManager
-        )
+//        val scrollListener = VacancyListScrollListener({
+//                viewModel.onListScrollReachEnd()
+//            },
+//            binding.vacanciesRecyclerView.layoutManager as LinearLayoutManager
+//        )
 
         binding.vacanciesRecyclerView.adapter = adapter
-        binding.vacanciesRecyclerView.addOnScrollListener(scrollListener)
+//        binding.vacanciesRecyclerView.addOnScrollListener(scrollListener)
 
-        viewModel.vacancies.observe(viewLifecycleOwner, Observer { vacancyList ->
-            Timber.tag("QA.VacanciesFragment").i("vacancies list changed")
-            vacancyList?.let{
-                adapter.submitList(it.toImmutableList())
-            }
+//        viewModel.vacancies.observe(viewLifecycleOwner, Observer { vacancyList ->
+//            Timber.tag("QA.VacanciesFragment").i("vacancies list changed")
+//            vacancyList?.let{
+//                adapter.submitList(it.toImmutableList())
+//            }
+//        })
+
+        viewModel.vacancies.observe(viewLifecycleOwner, Observer {
+            //showEmptyList(it?.size == 0)
+            adapter.submitList(it)
+        })
+
+        viewModel.getVacanciesStatus.observe(viewLifecycleOwner, Observer {
+            Timber.tag("QA.VacanciesFragment").i("getVacanciesStatus changed $it")
+            adapter.setApiStatus(it)
         })
     }
 

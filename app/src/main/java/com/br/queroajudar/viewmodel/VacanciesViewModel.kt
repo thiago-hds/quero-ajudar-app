@@ -2,7 +2,11 @@ package com.br.queroajudar.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import androidx.paging.DataSource
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.br.queroajudar.model.Category
 import com.br.queroajudar.model.Vacancy
 import com.br.queroajudar.network.QueroAjudarApi
@@ -10,6 +14,8 @@ import com.br.queroajudar.network.QueroAjudarApiStatus
 import com.br.queroajudar.network.ResultWrapper
 import com.br.queroajudar.network.response.SuccessResponse
 import com.br.queroajudar.repository.QueroAjudarRepository
+import com.br.queroajudar.repository.VacancyDataFactory
+import com.br.queroajudar.repository.VacancyDataSource
 import com.br.queroajudar.repository.VacancyRepository
 import com.br.queroajudar.util.append
 import kotlinx.coroutines.CoroutineScope
@@ -21,21 +27,19 @@ import timber.log.Timber
 class VacanciesViewModel : ViewModel(){
 
     // Repositorios
-    private val vacancyRepository = VacancyRepository()
     private val globalRepository = QueroAjudarRepository()
 
+    private lateinit var vacancyDataFactory : VacancyDataFactory
     // Dados observaveis
-    private val _getVacanciesStatus = MutableLiveData<QueroAjudarApiStatus>()
-    val getVacanciesStatus: LiveData<QueroAjudarApiStatus>
-        get() = _getVacanciesStatus
+    //private val _getVacanciesStatus = MutableLiveData<QueroAjudarApiStatus>()
+    lateinit var getVacanciesStatus: LiveData<QueroAjudarApiStatus>
 
     private val _getFiltersStatus = MutableLiveData<QueroAjudarApiStatus>()
     val getFiltersStatus: LiveData<QueroAjudarApiStatus>
         get() = _getFiltersStatus
 
-    private var _vacancies = MutableLiveData<MutableList<Vacancy>>()
-    val vacancies : LiveData<MutableList<Vacancy>>
-        get() = _vacancies
+    private var _vacancies = MutableLiveData<PagedList<Vacancy>>()
+    lateinit var vacancies : LiveData<PagedList<Vacancy>>
 
     private var _causes = MutableLiveData<MutableList<Category>>()
     val causes : LiveData<MutableList<Category>>
@@ -59,14 +63,35 @@ class VacanciesViewModel : ViewModel(){
 
 
     init{
-        _vacancies.value = mutableListOf()
         _causes.value = mutableListOf()
         _skills.value = mutableListOf()
 
-        _getVacanciesStatus.value   = QueroAjudarApiStatus.LOADING
         _getFiltersStatus.value     = QueroAjudarApiStatus.LOADING
 
-        loadVacancies()
+        initPaging()
+
+//        loadVacancies()
+    }
+
+    private fun initPaging(){
+        val config = PagedList.Config.Builder()
+            .setEnablePlaceholders(true)
+            .setPageSize(10)
+            .setInitialLoadSizeHint(10)
+            .build()
+        vacancies = initializedPagedListBuilder(config).build()
+    }
+
+    private fun initializedPagedListBuilder(config: PagedList.Config):
+            LivePagedListBuilder<Int, Vacancy> {
+
+        vacancyDataFactory = VacancyDataFactory(coroutineScope)
+
+        getVacanciesStatus = Transformations.switchMap(vacancyDataFactory.mutableLiveData) {
+            dataSource -> dataSource.vacanciesApiStatus
+        }
+
+        return LivePagedListBuilder(vacancyDataFactory, config)
     }
 
 
@@ -75,9 +100,9 @@ class VacanciesViewModel : ViewModel(){
      */
 
     fun onListScrollReachEnd(){
-        if(_getVacanciesStatus.value != QueroAjudarApiStatus.LOADING && !_endLoading) {
-            loadVacancies()
-        }
+//        if(_getVacanciesStatus.value != QueroAjudarApiStatus.LOADING && !_endLoading) {
+//            loadVacancies()
+//        }
     }
 
     fun onVacancyClicked(){
@@ -94,38 +119,37 @@ class VacanciesViewModel : ViewModel(){
 
     fun onCauseItemSelected(selectedItems : List<Int>) {
         Timber.tag("QA.VacanciesVM").i("cause selected ${selectedItems.toString()}")
-        _page = 1
         _selectedCauses = selectedItems
-        _vacancies.value?.clear()
-        loadVacancies()
+        vacancyDataFactory.causes = _selectedCauses.joinToString()
+        vacancyDataFactory.mutableLiveData.value?.invalidate()
     }
 
     fun onSkillItemSelected(selectedItems : List<Int>) {
         Timber.tag("QA.VacanciesVM").i("skill selected $selectedItems")
-        _page = 1
+
         _selectedCauses = selectedItems
-        _vacancies.value?.clear()
-        loadVacancies()
+        vacancyDataFactory.skills = _selectedSkills.joinToString()
+        vacancyDataFactory.mutableLiveData.value?.invalidate()
     }
 
 
-    private fun loadVacancies(){
-        Timber.tag("QA.VacanciesVM").i("Loading vacancies page $_page")
-        val strCauses = _selectedCauses.joinToString()
-        val strSkills = _selectedSkills.joinToString ()
-
-        _getVacanciesStatus.value = QueroAjudarApiStatus.LOADING
-        coroutineScope.launch {
-            when (val getVacanciesResponse =
-                    vacancyRepository.getVacancies(_page, strCauses, strSkills)) {
-                is ResultWrapper.Success -> onLoadVacanciesSuccess(getVacanciesResponse.value)
-                is ResultWrapper.NetworkError   ->
-                    _getVacanciesStatus.value = QueroAjudarApiStatus.NETWORK_ERROR
-                is ResultWrapper.GenericError   ->
-                    _getVacanciesStatus.value = QueroAjudarApiStatus.GENERIC_ERROR
-            }
-        }
-    }
+//    private fun loadVacancies(){
+//        Timber.tag("QA.VacanciesVM").i("Loading vacancies page $_page")
+//        val strCauses = _selectedCauses.joinToString()
+//        val strSkills = _selectedSkills.joinToString ()
+//
+//        _getVacanciesStatus.value = QueroAjudarApiStatus.LOADING
+//        coroutineScope.launch {
+//            when (val getVacanciesResponse =
+//                    vacancyRepository.getVacancies(_page, strCauses, strSkills)) {
+//                is ResultWrapper.Success -> onLoadVacanciesSuccess(getVacanciesResponse.value)
+//                is ResultWrapper.NetworkError   ->
+//                    _getVacanciesStatus.value = QueroAjudarApiStatus.NETWORK_ERROR
+//                is ResultWrapper.GenericError   ->
+//                    _getVacanciesStatus.value = QueroAjudarApiStatus.GENERIC_ERROR
+//            }
+//        }
+//    }
 
     private fun loadCauses(){
         Timber.tag("QA.VacanciesVM").i("Loading causes")
@@ -153,18 +177,18 @@ class VacanciesViewModel : ViewModel(){
         }
     }
 
-    private fun onLoadVacanciesSuccess(value: SuccessResponse<List<Vacancy>>) {
-        Timber.tag("QA.VacanciesVM").i("Vacancies API call success: $value")
-        val newVacancies = value.data
-        if(newVacancies?.isNotEmpty()!!){
-            _vacancies.append(newVacancies)
-            _page ++
-        }
-        else{
-            _endLoading = true
-        }
-        _getVacanciesStatus.value = QueroAjudarApiStatus.DONE
-    }
+//    private fun onLoadVacanciesSuccess(value: SuccessResponse<List<Vacancy>>) {
+//        Timber.tag("QA.VacanciesVM").i("Vacancies API call success: $value")
+//        val newVacancies = value.data
+//        if(newVacancies?.isNotEmpty()!!){
+//            _vacancies.append(newVacancies)
+//            _page ++
+//        }
+//        else{
+//            _endLoading = true
+//        }
+//        _getVacanciesStatus.value = QueroAjudarApiStatus.DONE
+//    }
 
     private fun onLoadCausesSuccess(response: SuccessResponse<List<Category>>) {
         Timber.tag("QA.VacanciesVM").i("Causes API call success: $response")
@@ -190,5 +214,6 @@ class VacanciesViewModel : ViewModel(){
         }
     }
 }
+
 
 
