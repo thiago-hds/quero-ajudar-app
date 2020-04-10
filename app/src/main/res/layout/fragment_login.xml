@@ -21,7 +21,7 @@
             android:text="@string/login_tv_hint"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            style="@style/big_textView_style" />
+            style="@style/primaryColor_textView_style_20sp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/login_til_email"

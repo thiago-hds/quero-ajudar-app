@@ -79,6 +79,8 @@ class VacanciesFragment : Fragment() {
 //        )
 
         binding.vacanciesRecyclerView.adapter = adapter
+
+//        binding.vacanciesOverlayLoading.loadingOverlayApiStatus = viewModel.getVacanciesStatus.value
 //        binding.vacanciesRecyclerView.addOnScrollListener(scrollListener)
 
 //        viewModel.vacancies.observe(viewLifecycleOwner, Observer { vacancyList ->
@@ -87,6 +89,7 @@ class VacanciesFragment : Fragment() {
 //                adapter.submitList(it.toImmutableList())
 //            }
 //        })
+
 
         viewModel.vacancies.observe(viewLifecycleOwner, Observer {
             //showEmptyList(it?.size == 0)

@@ -36,6 +36,8 @@
             android:layout_height="match_parent"
             android:gravity="bottom">
 
+
+
             <Spinner
                 android:id="@+id/vacancies_spinner_orderBy"
                 style="@style/spinner_style"
@@ -99,11 +101,11 @@
 
 
 
-            <!--
+
                 <include
                     android:id="@+id/vacancies_overlay_loading"
-                    android:visibility="gone"
-                    layout="@layout/loading_overlay"/> -->
+                    tools:visibility="gone"
+                    layout="@layout/loading_overlay"/>
 
 
             <!--
@@ -118,7 +120,6 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:apiStatus="@{viewModel.apiStatus}" /> -->
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

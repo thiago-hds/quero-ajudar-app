@@ -16,7 +16,7 @@
 
         <TextView
             android:id="@+id/register_tv_hint"
-            style="@style/big_textView_style"
+            style="@style/primaryColor_textView_style_20sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/register_tv_hint"

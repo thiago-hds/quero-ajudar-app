@@ -5,5 +5,5 @@
     android:padding="16dp"
     android:ellipsize="end"
     android:maxLines="1"
-    style="@style/small_textView_style"
+    style="@style/primaryColor_textView_style_12sp"
     android:textAppearance="?attr/textAppearanceSubtitle1"/>

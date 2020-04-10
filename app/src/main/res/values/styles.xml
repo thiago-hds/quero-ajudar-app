@@ -77,33 +77,35 @@
     </style>
 
     <!-- TextViews -->
-    <style name="big_textView_style">
+    <style name="primaryColor_textView_style">
         <item name="android:fontFamily">@font/raleway</item>
         <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="grey_textView_style">
+        <item name="android:fontFamily">@font/raleway</item>
+        <item name="android:textColor">@color/colorGrey</item>
+    </style>
+
+    <style name="primaryColor_textView_style_20sp" parent="primaryColor_textView_style">
         <item name="android:textSize">20sp</item>
         <item name="android:layout_marginStart">16dp</item>
         <item name="android:layout_marginTop">32dp</item>
     </style>
 
-    <style name="small_textView_style">
-        <item name="android:fontFamily">@font/raleway</item>
-        <item name="android:textColor">@color/colorPrimary</item>
+    <style name="primaryColor_textView_style_12sp" parent="primaryColor_textView_style">
         <item name="android:textSize">12sp</item>
     </style>
 
-    <style name="itemTitle_textView_style">
-        <item name="android:fontFamily">@font/raleway</item>
-        <item name="android:textColor">@color/colorPrimary</item>
+    <style name="primaryColor_textView_style_16sp" parent="primaryColor_textView_style">
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="itemFields_textView_style">
-        <item name="android:fontFamily">@font/raleway</item>
+    <style name="grey_textView_style_12sp" parent="grey_textView_style">
         <item name="android:textSize">12sp</item>
     </style>
 
-    <style name="filterItem_textView_style">
-        <item name="android:fontFamily">@font/raleway</item>
+    <style name="grey_textView_style_14sp" parent="grey_textView_style">
         <item name="android:textSize">14sp</item>
     </style>
 
@@ -114,6 +116,8 @@
         <item name="android:fontFamily">@font/font_awesome_solid</item>
         <item name="android:textSize">16dp</item>
     </style>
+
+
 
 <!--    <style name="icon_textView_style.unselected" parent="icon_textView_style">-->
 <!--        <item name="android:textColor">@color/colorPrimary</item>-->

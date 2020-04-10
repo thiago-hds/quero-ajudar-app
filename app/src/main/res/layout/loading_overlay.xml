@@ -16,6 +16,7 @@
         android:clickable="true"
         android:focusable="true"
         android:background="@android:color/white"
+        android:visibility="gone"
         app:apiStatusLoading="@{loadingOverlayApiStatus}">
 
 <!--        <FrameLayout-->
@@ -29,6 +30,51 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:indeterminate="true"
-            android:indeterminateTint="@color/colorPrimary" />
+            android:indeterminateTint="@color/colorPrimary"
+            android:visibility="visible"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+
+            <ImageView
+                android:id="@+id/iv_cloudOff"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:tint="@color/colorGrey"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.20"
+                app:srcCompat="@drawable/ic_cloud_off_black_24dp" />
+
+            <TextView
+                android:id="@+id/tv_networkInfo"
+                style="@style/grey_textView_style_14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="center"
+                android:text="@string/networkStatus_tv_networkInfo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_cloudOff" />
+
+            <Button
+                android:id="@+id/btn_tryAgain"
+                style="@style/text_button_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/networkStatus_btn_tryAgain"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_networkInfo" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
 </layout>

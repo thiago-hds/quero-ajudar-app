@@ -43,6 +43,19 @@
     <!-- vacancy_item.xml -->
     <string name="item_vacancy_by">por</string>
 
+    <!-- loading_item.xml -->
+    <string name="tv_networkInfo">Não foi possível carregar outras vagas.
+        Verifique sua conexão ou tente novamente mais tarde.
+    </string>
+
+    <!-- networkStatus_overlayoverlay.xml -->
+    <string name="networkStatus_tv_networkInfo">
+        Você está offline. Verifique sua conexão.
+    </string>
+    <string name="networkStatus_btn_tryAgain">
+        TENTAR NOVAMENTE
+    </string>
+
     <!-- menu -->
     <string name="menu_item_profile">Perfil</string>
     <string name="menu_item_favorites">Favoritos</string>

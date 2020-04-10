@@ -23,7 +23,7 @@ class VacancyAdapter(private val clickListener : VacancyClickListener) : PagedLi
             holder.bind(clickListener, item)
         }
         else{
-            (holder as LoadingViewHolder).bind()
+            (holder as LoadingViewHolder).bind(apiStatus)
         }
     }
 
@@ -66,9 +66,9 @@ class VacancyAdapter(private val clickListener : VacancyClickListener) : PagedLi
 
     class LoadingViewHolder private constructor(val binding: LoadingItemBinding) : RecyclerView.ViewHolder(binding.root){
 
-        fun bind() {
+        fun bind(apiStatus: QueroAjudarApiStatus) {
             //TODO exibir texto informando de erro de rede ao carregar mais items
-            
+            binding.apiStatus = apiStatus
             binding.executePendingBindings()
         }
 
