@@ -49,7 +49,9 @@ class VacancyDataSource(private val scope:CoroutineScope,
                         ) : PageKeyedDataSource<Int, Vacancy>() {
 
     private val repository = VacancyRepository()
-    val vacanciesApiStatus = MutableLiveData<QueroAjudarApiStatus>()
+    val vacanciesLoadInitialApiStatus = MutableLiveData<QueroAjudarApiStatus>()
+    val vacanciesLoadAfterApiStatus = MutableLiveData<QueroAjudarApiStatus>()
+
 
     override fun loadInitial(
         params: LoadInitialParams<Int>,
@@ -57,18 +59,18 @@ class VacancyDataSource(private val scope:CoroutineScope,
     ) {
 
         scope.launch {
-            vacanciesApiStatus.value = QueroAjudarApiStatus.LOADING
+            vacanciesLoadInitialApiStatus.value = QueroAjudarApiStatus.LOADING
             when (val getVacanciesResponse =
                 repository.getVacancies(1, causes, skills)) {
                 is ResultWrapper.Success -> {
-                    vacanciesApiStatus.value = QueroAjudarApiStatus.DONE
+                    vacanciesLoadInitialApiStatus.value = QueroAjudarApiStatus.DONE
                     val vacancies = getVacanciesResponse.value.data
                     callback.onResult(vacancies ?: listOf(), null, 2)
                 }
                 is ResultWrapper.NetworkError   ->
-                    vacanciesApiStatus.value = QueroAjudarApiStatus.NETWORK_ERROR
+                    vacanciesLoadInitialApiStatus.value = QueroAjudarApiStatus.NETWORK_ERROR
                 is ResultWrapper.GenericError   ->
-                    vacanciesApiStatus.value = QueroAjudarApiStatus.GENERIC_ERROR
+                    vacanciesLoadInitialApiStatus.value = QueroAjudarApiStatus.GENERIC_ERROR
             }
         }
     }
@@ -76,18 +78,18 @@ class VacancyDataSource(private val scope:CoroutineScope,
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Vacancy>) {
 
         scope.launch {
-            vacanciesApiStatus.value = QueroAjudarApiStatus.LOADING
+            vacanciesLoadAfterApiStatus.value = QueroAjudarApiStatus.LOADING
             when (val getVacanciesResponse =
                 repository.getVacancies(params.key, causes, skills)) {
                 is ResultWrapper.Success -> {
-                    vacanciesApiStatus.value = QueroAjudarApiStatus.DONE
+                    vacanciesLoadAfterApiStatus.value = QueroAjudarApiStatus.DONE
                     val vacancies = getVacanciesResponse.value.data
                     callback.onResult(vacancies ?: listOf(), params.key + 1)
                 }
                 is ResultWrapper.NetworkError   ->
-                    vacanciesApiStatus.value = QueroAjudarApiStatus.NETWORK_ERROR
+                    vacanciesLoadAfterApiStatus.value = QueroAjudarApiStatus.NETWORK_ERROR
                 is ResultWrapper.GenericError   ->
-                    vacanciesApiStatus.value = QueroAjudarApiStatus.GENERIC_ERROR
+                    vacanciesLoadAfterApiStatus.value = QueroAjudarApiStatus.GENERIC_ERROR
             }
         }
     }

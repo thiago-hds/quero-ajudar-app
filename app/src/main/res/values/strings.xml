@@ -52,9 +52,7 @@
     <string name="networkStatus_tv_networkInfo">
         Você está offline. Verifique sua conexão.
     </string>
-    <string name="networkStatus_btn_tryAgain">
-        TENTAR NOVAMENTE
-    </string>
+    <string name="networkStatus_btn_tryAgain">Tentar Novamente</string>
 
     <!-- menu -->
     <string name="menu_item_profile">Perfil</string>
@@ -73,6 +71,8 @@
     <string name="tools_vacancyItem_type">Recorrente</string>
     <string name="tools_causeItem_name">Animais</string>
     <string name="tools_skillItem_name">Artes e Cultura</string>
+    <string name="tools_vacanciesFilterLayout_selectedCauses">Animais, Arte e Cultura, Combate à Pobreza</string>
+
 
 
     <!-- TODO: Remove or change this placeholder text -->

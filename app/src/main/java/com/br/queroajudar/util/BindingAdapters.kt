@@ -73,22 +73,38 @@ fun bindApiStatusProgressBar(progressBar : ProgressBar, status:QueroAjudarApiSta
 }
 
 @BindingAdapter("apiStatusLoading")
-fun bindApiStatusLoading(view : View, status:QueroAjudarApiStatus){
+fun bindApiStatusLoading(view : View, status:QueroAjudarApiStatus?){
     Timber.tag("QA.BindingAdapters").i("bindApiStatusLoading $status")
-    if (status == QueroAjudarApiStatus.LOADING) {
-        view.visibility = View.VISIBLE
-    } else {
-        view.visibility = View.GONE
+    status.let {
+        if (it == QueroAjudarApiStatus.LOADING) {
+            view.visibility = View.VISIBLE
+        } else {
+            view.visibility = View.GONE
+        }
     }
 }
 
 @BindingAdapter("apiStatusNetworkError")
-fun bindApiStatusNetworkError(view : View, status:QueroAjudarApiStatus){
+fun bindApiStatusNetworkError(view : View, status:QueroAjudarApiStatus?){
     Timber.tag("QA.BindingAdapters").i("bindApiStatusNetworkError $status")
-    if (status == QueroAjudarApiStatus.NETWORK_ERROR) {
-        view.visibility = View.VISIBLE
-    } else {
-        view.visibility = View.GONE
+    status?.let {
+        if (it == QueroAjudarApiStatus.NETWORK_ERROR) {
+            view.visibility = View.VISIBLE
+        } else {
+            view.visibility = View.GONE
+        }
+    }
+}
+
+@BindingAdapter("apiStatusNetworkOverlay")
+fun bindApiStatusNetworkOverlay(view : View, status:QueroAjudarApiStatus?){
+    Timber.tag("QA.BindingAdapters").i("bindApiStatusNetworkOverlay $status")
+    status?.let {
+        if (it == QueroAjudarApiStatus.NETWORK_ERROR || it ==QueroAjudarApiStatus.LOADING) {
+            view.visibility = View.VISIBLE
+        } else {
+            view.visibility = View.GONE
+        }
     }
 }
 

@@ -17,7 +17,7 @@
         android:focusable="true"
         android:background="@android:color/white"
         android:visibility="gone"
-        app:apiStatusLoading="@{loadingOverlayApiStatus}">
+        app:apiStatusNetworkOverlay="@{loadingOverlayApiStatus}">
 
 <!--        <FrameLayout-->
 <!--            android:layout_width="match_parent"-->
@@ -31,12 +31,13 @@
             android:layout_gravity="center"
             android:indeterminate="true"
             android:indeterminateTint="@color/colorPrimary"
-            android:visibility="visible"/>
+            android:visibility="visible"
+            app:apiStatusLoading="@{loadingOverlayApiStatus}"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone">
+            app:apiStatusNetworkError="@{loadingOverlayApiStatus}">
 
 
             <ImageView

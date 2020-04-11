@@ -13,16 +13,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.paging.PagedList
 import androidx.recyclerview.selection.*
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.br.queroajudar.R
 import com.br.queroajudar.databinding.FragmentVacanciesBinding
-import com.br.queroajudar.model.Vacancy
 import com.br.queroajudar.util.enable
-import com.br.queroajudar.util.toggleViewExpansion
 import com.br.queroajudar.util.toggleViewExpansion2
 import com.br.queroajudar.util.toggleViewRotation0to180
 import com.br.queroajudar.view.adapters.*
@@ -96,7 +92,7 @@ class VacanciesFragment : Fragment() {
             adapter.submitList(it)
         })
 
-        viewModel.getVacanciesStatus.observe(viewLifecycleOwner, Observer {
+        viewModel.vacanciesLoadAfterApiStatus.observe(viewLifecycleOwner, Observer {
             Timber.tag("QA.VacanciesFragment").i("getVacanciesStatus changed $it")
             adapter.setApiStatus(it)
         })
@@ -178,6 +174,10 @@ class VacanciesFragment : Fragment() {
                 .iv_expandSkillFilterArrow, binding.vacanciesFilterLayout.skillsListLayout,
                 isSkillFilterExpanded)
         }
+
+        binding.vacanciesOverlayLoading.btnTryAgain.setOnClickListener {
+            viewModel.onTryAgainClicked()
+        }
     }
 
     private fun expandOrCollapseFilterLayout(ivArrow: ImageView, listLayout:View, isExpanded:Boolean) : Boolean {
@@ -219,7 +219,7 @@ class VacanciesFragment : Fragment() {
                         Timber.tag("QA.VacanciesFragment")
                             .i("selection observer: ${selectionTracker.selection}")
                         val items = selectionTracker.selection.mapNotNull{
-                            if(it > 0) it.toInt() else null
+                            if(it >= 0) it.toInt() else null
                         }
                         onItemSelected(items)
                     }

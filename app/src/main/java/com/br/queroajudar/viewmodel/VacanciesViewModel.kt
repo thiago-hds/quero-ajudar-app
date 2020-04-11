@@ -1,23 +1,16 @@
 package com.br.queroajudar.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
-import androidx.paging.DataSource
+import androidx.databinding.Observable
+import androidx.lifecycle.*
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.br.queroajudar.model.Category
 import com.br.queroajudar.model.Vacancy
-import com.br.queroajudar.network.QueroAjudarApi
 import com.br.queroajudar.network.QueroAjudarApiStatus
 import com.br.queroajudar.network.ResultWrapper
 import com.br.queroajudar.network.response.SuccessResponse
 import com.br.queroajudar.repository.QueroAjudarRepository
 import com.br.queroajudar.repository.VacancyDataFactory
-import com.br.queroajudar.repository.VacancyDataSource
-import com.br.queroajudar.repository.VacancyRepository
-import com.br.queroajudar.util.append
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -32,7 +25,8 @@ class VacanciesViewModel : ViewModel(){
     private lateinit var vacancyDataFactory : VacancyDataFactory
     // Dados observaveis
     //private val _getVacanciesStatus = MutableLiveData<QueroAjudarApiStatus>()
-    lateinit var getVacanciesStatus: LiveData<QueroAjudarApiStatus>
+    lateinit var vacanciesLoadInitialApiStatus: LiveData<QueroAjudarApiStatus>
+    lateinit var vacanciesLoadAfterApiStatus: LiveData<QueroAjudarApiStatus>
 
     private val _getFiltersStatus = MutableLiveData<QueroAjudarApiStatus>()
     val getFiltersStatus: LiveData<QueroAjudarApiStatus>
@@ -49,10 +43,19 @@ class VacanciesViewModel : ViewModel(){
     val skills : LiveData<List<Category>>
         get() = _skills
 
+    private var _selectedCausesStr = MutableLiveData<String>()
+    val selectedCausesStr : LiveData<String>
+        get() = _selectedCausesStr
+    
+    private var _selectedSkillsStr = MutableLiveData<String>()
+    val selectedSkillsStr : LiveData<String>
+        get() = _selectedSkillsStr
+
     // Variaveis de controle
     private var _page = 1
-    private var _selectedCauses = listOf<Int>()
-    private var _selectedSkills = listOf<Int>()
+    private var _selectedCausesId = listOf<Int>()
+    private var _selectedSkillsId = listOf<Int>()
+
     private var _endLoading = false
     private var _getCausesStatus = QueroAjudarApiStatus.DONE
     private var _getSkillsStatus = QueroAjudarApiStatus.DONE
@@ -87,8 +90,12 @@ class VacanciesViewModel : ViewModel(){
 
         vacancyDataFactory = VacancyDataFactory(coroutineScope)
 
-        getVacanciesStatus = Transformations.switchMap(vacancyDataFactory.mutableLiveData) {
-            dataSource -> dataSource.vacanciesApiStatus
+        vacanciesLoadInitialApiStatus = Transformations.switchMap(vacancyDataFactory.mutableLiveData) {
+                dataSource -> dataSource.vacanciesLoadInitialApiStatus
+        }
+
+        vacanciesLoadAfterApiStatus = Transformations.switchMap(vacancyDataFactory.mutableLiveData) {
+            dataSource -> dataSource.vacanciesLoadAfterApiStatus
         }
 
         return LivePagedListBuilder(vacancyDataFactory, config)
@@ -109,6 +116,10 @@ class VacanciesViewModel : ViewModel(){
         //TODO
     }
 
+    fun onTryAgainClicked(){
+        vacancyDataFactory.mutableLiveData.value?.invalidate()
+    }
+
     fun onDrawerOpened(){
         // Carregar filtros
         if(causes.value.isNullOrEmpty() || skills.value.isNullOrEmpty()){
@@ -119,16 +130,26 @@ class VacanciesViewModel : ViewModel(){
 
     fun onCauseItemSelected(selectedItems : List<Int>) {
         Timber.tag("QA.VacanciesVM").i("cause selected ${selectedItems.toString()}")
-        _selectedCauses = selectedItems
-        vacancyDataFactory.causes = _selectedCauses.joinToString()
+        _selectedCausesId = selectedItems
+
+        val selectedCauses = _causes.value?.filter { selectedItems.contains(it.id) }
+        val selectedCausesNames = selectedCauses?.map { it.name } ?: listOf()
+        _selectedCausesStr.value = selectedCausesNames.joinToString()
+
+
+        vacancyDataFactory.causes = _selectedCausesId.joinToString()
         vacancyDataFactory.mutableLiveData.value?.invalidate()
     }
 
     fun onSkillItemSelected(selectedItems : List<Int>) {
         Timber.tag("QA.VacanciesVM").i("skill selected $selectedItems")
+        _selectedCausesId = selectedItems
 
-        _selectedCauses = selectedItems
-        vacancyDataFactory.skills = _selectedSkills.joinToString()
+        val selectedSkills = _skills.value?.filter { selectedItems.contains(it.id) }
+        val selectedSkillsNames = selectedSkills?.map { it.name } ?: listOf()
+        _selectedSkillsStr.value = selectedSkillsNames.joinToString()
+        
+        vacancyDataFactory.skills = _selectedSkillsId.joinToString()
         vacancyDataFactory.mutableLiveData.value?.invalidate()
     }
 

@@ -105,6 +105,7 @@
                 <include
                     android:id="@+id/vacancies_overlay_loading"
                     tools:visibility="gone"
+                    app:loadingOverlayApiStatus="@{viewModel.vacanciesLoadInitialApiStatus}"
                     layout="@layout/loading_overlay"/>
 
 
@@ -135,6 +136,8 @@
             <include
                 android:id="@+id/vacancies_filter_layout"
                 layout="@layout/vacancies_filter_layout"
+                app:selectedCausesStr="@{viewModel.selectedCausesStr}"
+                app:selectedSkillsStr="@{viewModel.selectedSkillsStr}"
                 app:vacanciesFilterApiStatus="@{viewModel.getFiltersStatus}" />
 
         </ScrollView>
