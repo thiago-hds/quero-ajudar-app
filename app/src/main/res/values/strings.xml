@@ -32,6 +32,7 @@
     <string name="vacancies_btn_recommended">Recomendadas</string>
     <string name="vacancies_btn_popular">Populares</string>
     <string name="vacancies_btn_recent">Recentes</string>
+    <string name="vacancies_tv_rvVacanciesEmpty">Nenhuma vaga encontrada</string>
 
 
     <!-- FavoritesFragment -->
@@ -77,6 +78,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
     <string-array name="orderBy_array">
         <item>@string/vacancies_btn_recommended</item>

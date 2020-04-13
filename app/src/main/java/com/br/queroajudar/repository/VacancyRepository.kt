@@ -51,6 +51,7 @@ class VacancyDataSource(private val scope:CoroutineScope,
     private val repository = VacancyRepository()
     val vacanciesLoadInitialApiStatus = MutableLiveData<QueroAjudarApiStatus>()
     val vacanciesLoadAfterApiStatus = MutableLiveData<QueroAjudarApiStatus>()
+    val vacanciesSize = MutableLiveData<Int?>()
 
 
     override fun loadInitial(
@@ -60,17 +61,23 @@ class VacancyDataSource(private val scope:CoroutineScope,
 
         scope.launch {
             vacanciesLoadInitialApiStatus.value = QueroAjudarApiStatus.LOADING
+            vacanciesSize.value = 0
             when (val getVacanciesResponse =
                 repository.getVacancies(1, causes, skills)) {
                 is ResultWrapper.Success -> {
                     vacanciesLoadInitialApiStatus.value = QueroAjudarApiStatus.DONE
                     val vacancies = getVacanciesResponse.value.data
+                    vacanciesSize.value = vacancies?.size ?: 0
                     callback.onResult(vacancies ?: listOf(), null, 2)
                 }
-                is ResultWrapper.NetworkError   ->
+                is ResultWrapper.NetworkError   -> {
                     vacanciesLoadInitialApiStatus.value = QueroAjudarApiStatus.NETWORK_ERROR
-                is ResultWrapper.GenericError   ->
+                    vacanciesSize.value = 0
+                }
+                is ResultWrapper.GenericError   -> {
                     vacanciesLoadInitialApiStatus.value = QueroAjudarApiStatus.GENERIC_ERROR
+                    vacanciesSize.value = 0
+                }
             }
         }
     }
@@ -84,12 +91,17 @@ class VacancyDataSource(private val scope:CoroutineScope,
                 is ResultWrapper.Success -> {
                     vacanciesLoadAfterApiStatus.value = QueroAjudarApiStatus.DONE
                     val vacancies = getVacanciesResponse.value.data
+                    vacanciesSize.value = vacanciesSize.value?.plus((vacancies?.size ?: 0))
                     callback.onResult(vacancies ?: listOf(), params.key + 1)
                 }
-                is ResultWrapper.NetworkError   ->
+                is ResultWrapper.NetworkError   -> {
                     vacanciesLoadAfterApiStatus.value = QueroAjudarApiStatus.NETWORK_ERROR
-                is ResultWrapper.GenericError   ->
+                    vacanciesSize.value = 0
+                }
+                is ResultWrapper.GenericError   -> {
                     vacanciesLoadAfterApiStatus.value = QueroAjudarApiStatus.GENERIC_ERROR
+                    vacanciesSize.value = 0
+                }
             }
         }
     }

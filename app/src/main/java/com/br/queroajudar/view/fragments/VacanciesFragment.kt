@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
@@ -74,7 +75,8 @@ class VacanciesFragment : Fragment() {
 //            binding.vacanciesRecyclerView.layoutManager as LinearLayoutManager
 //        )
 
-        binding.vacanciesRecyclerView.adapter = adapter
+        binding.rvVacancies.adapter = adapter
+
 
 //        binding.vacanciesOverlayLoading.loadingOverlayApiStatus = viewModel.getVacanciesStatus.value
 //        binding.vacanciesRecyclerView.addOnScrollListener(scrollListener)
@@ -87,15 +89,30 @@ class VacanciesFragment : Fragment() {
 //        })
 
 
-        viewModel.vacancies.observe(viewLifecycleOwner, Observer {
-            //showEmptyList(it?.size == 0)
-            adapter.submitList(it)
+        viewModel.vacancies.observe(viewLifecycleOwner, Observer { vacanciesPagedList ->
+            Timber.tag("QA.VacanciesFragment").i("vacancies observed $vacanciesPagedList")
+            adapter.submitList(vacanciesPagedList)
+        })
+
+        viewModel.vacanciesSize.observe(viewLifecycleOwner,Observer{ size ->
+            Timber.tag("QA.VacanciesFragment").i("vacancies size changed $size")
+            showEmptyList(size == 0)
         })
 
         viewModel.vacanciesLoadAfterApiStatus.observe(viewLifecycleOwner, Observer {
             Timber.tag("QA.VacanciesFragment").i("getVacanciesStatus changed $it")
             adapter.setApiStatus(it)
         })
+    }
+
+    private fun showEmptyList(isEmpty : Boolean) {
+        if (isEmpty) {
+            binding.rvVacancies.visibility = View.INVISIBLE
+            binding.tvRvVacanciesEmpty.visibility = View.VISIBLE
+        } else {
+            binding.rvVacancies.visibility = View.VISIBLE
+            binding.tvRvVacanciesEmpty.visibility = View.GONE
+        }
     }
 
     private fun setupOrderBySpinner(){
@@ -153,7 +170,7 @@ class VacanciesFragment : Fragment() {
     }
 
     private fun setListeners(){
-        binding.vacanciesBtnFiters.setOnClickListener {
+        binding.vacanciesBtnFilters.setOnClickListener {
             binding.vacanciesDlFilters.openDrawer(GravityCompat.END)
         }
 
@@ -162,17 +179,17 @@ class VacanciesFragment : Fragment() {
         })
 
         binding.vacanciesFilterLayout.layoutExpandCauseFilter.setOnClickListener {
-            isCauseFilterExpanded = expandOrCollapseFilterLayout(binding.vacanciesFilterLayout
-                .layoutExpandCauseFilter
-                .iv_expandCauseFilterArrow, binding.vacanciesFilterLayout.causesListLayout,
-            isCauseFilterExpanded)
+            isCauseFilterExpanded = expandOrCollapseFilterLayout(
+                binding.vacanciesFilterLayout.ivExpandCauseFilterArrow,
+                binding.vacanciesFilterLayout.causesListLayout,
+                isCauseFilterExpanded,binding.vacanciesFilterLayout.tvSelectedCauses)
         }
 
         binding.vacanciesFilterLayout.layoutExpandSkillFilter.setOnClickListener {
-            isSkillFilterExpanded = expandOrCollapseFilterLayout(binding.vacanciesFilterLayout
-                .layoutExpandSkillFilter
-                .iv_expandSkillFilterArrow, binding.vacanciesFilterLayout.skillsListLayout,
-                isSkillFilterExpanded)
+            isSkillFilterExpanded = expandOrCollapseFilterLayout(
+                binding.vacanciesFilterLayout.ivExpandSkillFilterArrow,
+                binding.vacanciesFilterLayout.skillsListLayout,
+                isSkillFilterExpanded,binding.vacanciesFilterLayout.tvSelectedSkills)
         }
 
         binding.vacanciesOverlayLoading.btnTryAgain.setOnClickListener {
@@ -180,16 +197,18 @@ class VacanciesFragment : Fragment() {
         }
     }
 
-    private fun expandOrCollapseFilterLayout(ivArrow: ImageView, listLayout:View, isExpanded:Boolean) : Boolean {
+    private fun expandOrCollapseFilterLayout(ivArrow: ImageView, listLayout:View,
+                                             isExpanded:Boolean, tvCategoriesSelected : TextView
+    ) : Boolean {
         toggleViewRotation0to180(ivArrow, isExpanded)
 
         toggleViewExpansion2(listLayout,isExpanded)
 
 //        if(isExpanded){
-//            listLayout.visibility = View.GONE
+//            tvCategoriesSelected.visibility = View.VISIBLE
 //        }
 //        else{
-//            listLayout.visibility = View.VISIBLE
+//            tvCategoriesSelected.visibility = View.INVISIBLE
 //        }
 
         return !isExpanded

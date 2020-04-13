@@ -1,6 +1,5 @@
 package com.br.queroajudar.viewmodel
 
-import androidx.databinding.Observable
 import androidx.lifecycle.*
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
@@ -25,15 +24,17 @@ class VacanciesViewModel : ViewModel(){
     private lateinit var vacancyDataFactory : VacancyDataFactory
     // Dados observaveis
     //private val _getVacanciesStatus = MutableLiveData<QueroAjudarApiStatus>()
+    lateinit var vacancies : LiveData<PagedList<Vacancy>>
     lateinit var vacanciesLoadInitialApiStatus: LiveData<QueroAjudarApiStatus>
     lateinit var vacanciesLoadAfterApiStatus: LiveData<QueroAjudarApiStatus>
+    lateinit var vacanciesSize : LiveData<Int?>
+
 
     private val _getFiltersStatus = MutableLiveData<QueroAjudarApiStatus>()
     val getFiltersStatus: LiveData<QueroAjudarApiStatus>
         get() = _getFiltersStatus
 
-    private var _vacancies = MutableLiveData<PagedList<Vacancy>>()
-    lateinit var vacancies : LiveData<PagedList<Vacancy>>
+
 
     private var _causes = MutableLiveData<MutableList<Category>>()
     val causes : LiveData<MutableList<Category>>
@@ -78,9 +79,8 @@ class VacanciesViewModel : ViewModel(){
 
     private fun initPaging(){
         val config = PagedList.Config.Builder()
-            .setEnablePlaceholders(true)
+            .setEnablePlaceholders(false)
             .setPageSize(10)
-            .setInitialLoadSizeHint(10)
             .build()
         vacancies = initializedPagedListBuilder(config).build()
     }
@@ -89,6 +89,10 @@ class VacanciesViewModel : ViewModel(){
             LivePagedListBuilder<Int, Vacancy> {
 
         vacancyDataFactory = VacancyDataFactory(coroutineScope)
+
+        vacanciesSize = Transformations.switchMap(vacancyDataFactory.mutableLiveData){
+            dataSource -> dataSource.vacanciesSize
+        }
 
         vacanciesLoadInitialApiStatus = Transformations.switchMap(vacancyDataFactory.mutableLiveData) {
                 dataSource -> dataSource.vacanciesLoadInitialApiStatus
