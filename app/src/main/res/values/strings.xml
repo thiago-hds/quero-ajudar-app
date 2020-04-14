@@ -27,8 +27,8 @@
     <string name="vacancies_btn_filters">Filtros</string>
     <string name="vacancies_tv_orderBy">Ordernar por</string>
     <string name="vacancies_tv_filterBy">Filtrar por</string>
-    <string name="vacancies_tv_cause">Causa</string>
-    <string name="vacancies_tv_skill">Habilidade</string>
+    <string name="vacancies_tv_cause">Causas beneficiadas</string>
+    <string name="vacancies_tv_skill">Habilidades requeridas</string>
     <string name="vacancies_btn_recommended">Recomendadas</string>
     <string name="vacancies_btn_popular">Populares</string>
     <string name="vacancies_btn_recent">Recentes</string>
