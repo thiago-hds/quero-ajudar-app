@@ -41,6 +41,9 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
     imgUrl?.let {
         Glide.with(imgView.context)
             .load(imgUrl)
+            .centerCrop()
+            .placeholder(R.color.colorBackgroundGrey)
+            .error(R.drawable.ic_launcher_foreground)
             .into(imgView)
     }
 }

@@ -37,6 +37,7 @@
                 android:id="@+id/vacancyItem_iv_image"
                 android:layout_width="100dp"
                 android:layout_height="0dp"
+                android:cropToPadding="true"
                 app:imageUrl="@{vacancy.image}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -58,16 +59,16 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/vacancyItem_btn_organization"
-                android:layout_width="wrap_content"
+                style="@style/small_rounded_outlined_button_style"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                app:organizationNameFormatted="@{vacancy.organization.name}"
-                style="@style/small_rounded_outlined_button_style"
+                android:gravity="start"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/vacancyItem_tv_by"
                 app:layout_constraintTop_toBottomOf="@+id/vacancyItem_tv_name"
+                app:organizationNameFormatted="@{vacancy.organization.name}"
                 tools:text="@string/tools_vacancyItem_organizationName" />
 
             <TextView
