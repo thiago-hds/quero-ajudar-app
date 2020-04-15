@@ -94,6 +94,10 @@ class VacanciesFragment : Fragment() {
             adapter.submitList(vacanciesPagedList)
         })
 
+        viewModel.organizations.observe(viewLifecycleOwner, Observer {
+            Timber.tag("QA.VacanciesFragment").i("organizations list changed $it")
+        })
+
         viewModel.vacanciesSize.observe(viewLifecycleOwner,Observer{ size ->
             Timber.tag("QA.VacanciesFragment").i("vacancies size changed $size")
             showEmptyList(size == 0)

@@ -4,10 +4,12 @@ import androidx.lifecycle.*
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.br.queroajudar.model.Category
+import com.br.queroajudar.model.Organization
 import com.br.queroajudar.model.Vacancy
 import com.br.queroajudar.network.QueroAjudarApiStatus
 import com.br.queroajudar.network.ResultWrapper
 import com.br.queroajudar.network.response.SuccessResponse
+import com.br.queroajudar.repository.OrganizationRepository
 import com.br.queroajudar.repository.QueroAjudarRepository
 import com.br.queroajudar.repository.VacancyDataFactory
 import kotlinx.coroutines.CoroutineScope
@@ -20,6 +22,7 @@ class VacanciesViewModel : ViewModel(){
 
     // Repositorios
     private val globalRepository = QueroAjudarRepository()
+    private val organizationRepository = OrganizationRepository()
 
     private lateinit var vacancyDataFactory : VacancyDataFactory
     // Dados observaveis
@@ -34,15 +37,23 @@ class VacanciesViewModel : ViewModel(){
     val getFiltersStatus: LiveData<QueroAjudarApiStatus>
         get() = _getFiltersStatus
 
+    private var _getOrganizationsStatus = MutableLiveData<QueroAjudarApiStatus>()
+    val getOrganizationsStatus : LiveData<QueroAjudarApiStatus>
+        get() = _getOrganizationsStatus
 
 
-    private var _causes = MutableLiveData<MutableList<Category>>()
-    val causes : LiveData<MutableList<Category>>
+
+    private var _causes = MutableLiveData<List<Category>>()
+    val causes : LiveData<List<Category>>
         get() = _causes
 
     private var _skills = MutableLiveData<List<Category>>()
     val skills : LiveData<List<Category>>
         get() = _skills
+
+    private var _organizations = MutableLiveData<List<Organization>>()
+    val organizations : LiveData<List<Organization>>
+        get() = _organizations
 
     private var _selectedCausesStr = MutableLiveData<String>()
     val selectedCausesStr : LiveData<String>
@@ -71,6 +82,8 @@ class VacanciesViewModel : ViewModel(){
         _skills.value = mutableListOf()
 
         _getFiltersStatus.value     = QueroAjudarApiStatus.LOADING
+
+        loadOrganizations()
 
         initPaging()
 
@@ -202,6 +215,18 @@ class VacanciesViewModel : ViewModel(){
         }
     }
 
+    private fun loadOrganizations(){
+        Timber.tag("QA.VacanciesVM").i("Loading organizations")
+        _getOrganizationsStatus.value = QueroAjudarApiStatus.LOADING
+        coroutineScope.launch {
+            when (val getOrganizationsResponse = organizationRepository.getOrganizations()) {
+                is ResultWrapper.Success        -> onLoadOrganizationsSuccess(getOrganizationsResponse.value)
+                is ResultWrapper.NetworkError   -> _getOrganizationsStatus.value = QueroAjudarApiStatus.NETWORK_ERROR
+                is ResultWrapper.GenericError   -> _getOrganizationsStatus.value = QueroAjudarApiStatus.GENERIC_ERROR
+            }
+        }
+    }
+
 //    private fun onLoadVacanciesSuccess(value: SuccessResponse<List<Vacancy>>) {
 //        Timber.tag("QA.VacanciesVM").i("Vacancies API call success: $value")
 //        val newVacancies = value.data
@@ -219,14 +244,20 @@ class VacanciesViewModel : ViewModel(){
         Timber.tag("QA.VacanciesVM").i("Causes API call success: $response")
         _getCausesStatus = QueroAjudarApiStatus.DONE
         updateFiltersStatus()
-        _causes.value = response.data?.toMutableList()
+        _causes.value = response.data
     }
 
     private fun onLoadSkillsSuccess(response: SuccessResponse<List<Category>>) {
         Timber.tag("QA.VacanciesVM").i("Causes API call success: $response")
         _getSkillsStatus = QueroAjudarApiStatus.DONE
         updateFiltersStatus()
-        _skills.value = response.data?.toMutableList()
+        _skills.value = response.data
+    }
+
+    private fun onLoadOrganizationsSuccess(response: SuccessResponse<List<Organization>>) {
+        Timber.tag("QA.VacanciesVM").i("Organizations API call success: $response")
+        _getOrganizationsStatus.value = QueroAjudarApiStatus.DONE
+        _organizations.value = response.data
     }
 
     private fun updateFiltersStatus(){

@@ -20,7 +20,7 @@ class VacancyRepository(private val dispatcher: CoroutineDispatcher = Dispatcher
     private val  apiCaller : SafeApiCaller = SafeApiCaller()
 
     suspend fun getVacancies(
-        page : Int,
+        page : Int = 1,
         causes:String = "",
         skills:String = "") : ResultWrapper<SuccessResponse<List<Vacancy>>> {
         return apiCaller.safeApiCall(dispatcher) {
@@ -66,17 +66,15 @@ class VacancyDataSource(private val scope:CoroutineScope,
                 repository.getVacancies(1, causes, skills)) {
                 is ResultWrapper.Success -> {
                     vacanciesLoadInitialApiStatus.value = QueroAjudarApiStatus.DONE
-                    val vacancies = getVacanciesResponse.value.data
-                    vacanciesSize.value = vacancies?.size ?: 0
-                    callback.onResult(vacancies ?: listOf(), null, 2)
+                    val vacancies = getVacanciesResponse.value.data ?: listOf()
+                    vacanciesSize.value = vacancies.size
+                    callback.onResult(vacancies, null, 2)
                 }
                 is ResultWrapper.NetworkError   -> {
                     vacanciesLoadInitialApiStatus.value = QueroAjudarApiStatus.NETWORK_ERROR
-                    vacanciesSize.value = 0
                 }
                 is ResultWrapper.GenericError   -> {
                     vacanciesLoadInitialApiStatus.value = QueroAjudarApiStatus.GENERIC_ERROR
-                    vacanciesSize.value = 0
                 }
             }
         }
@@ -90,17 +88,15 @@ class VacancyDataSource(private val scope:CoroutineScope,
                 repository.getVacancies(params.key, causes, skills)) {
                 is ResultWrapper.Success -> {
                     vacanciesLoadAfterApiStatus.value = QueroAjudarApiStatus.DONE
-                    val vacancies = getVacanciesResponse.value.data
-                    vacanciesSize.value = vacanciesSize.value?.plus((vacancies?.size ?: 0))
-                    callback.onResult(vacancies ?: listOf(), params.key + 1)
+                    val vacancies = getVacanciesResponse.value.data ?: listOf()
+                    vacanciesSize.value = vacanciesSize.value?.plus((vacancies.size))
+                    callback.onResult(vacancies, params.key + 1)
                 }
                 is ResultWrapper.NetworkError   -> {
                     vacanciesLoadAfterApiStatus.value = QueroAjudarApiStatus.NETWORK_ERROR
-                    vacanciesSize.value = 0
                 }
                 is ResultWrapper.GenericError   -> {
                     vacanciesLoadAfterApiStatus.value = QueroAjudarApiStatus.GENERIC_ERROR
-                    vacanciesSize.value = 0
                 }
             }
         }

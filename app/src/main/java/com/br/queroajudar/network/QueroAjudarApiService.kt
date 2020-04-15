@@ -2,6 +2,7 @@ package com.br.queroajudar.network
 
 import android.util.Log
 import com.br.queroajudar.model.Category
+import com.br.queroajudar.model.Organization
 import com.br.queroajudar.model.Vacancy
 import com.br.queroajudar.network.response.SuccessResponse
 import com.br.queroajudar.model.formdata.LoginData
@@ -57,6 +58,11 @@ interface QueroAjudarApiService {
 
     @POST("register")
     suspend fun postRegister(@Body data: RegisterData): SuccessResponse<String>
+
+    @GET("organizations")
+    suspend fun getOrganizations(
+        @Query("page") page : Int
+    ) : SuccessResponse<List<Organization>>
 
 
     @GET("vacancies")
