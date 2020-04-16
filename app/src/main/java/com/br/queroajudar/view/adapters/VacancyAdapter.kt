@@ -2,14 +2,17 @@ package com.br.queroajudar.view.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.AsyncPagedListDiffer
+import androidx.paging.PagedList
 import androidx.paging.PagedListAdapter
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.*
 import com.br.queroajudar.databinding.LoadingItemBinding
 import com.br.queroajudar.databinding.RecommendedOrganizationsListBinding
 import com.br.queroajudar.databinding.VacancyItemBinding
+import com.br.queroajudar.model.Organization
 import com.br.queroajudar.model.Vacancy
 import com.br.queroajudar.network.QueroAjudarApiStatus
+
 
 class VacancyAdapter(private val clickListener : VacancyClickListener) : PagedListAdapter<
         Vacancy, RecyclerView.ViewHolder>(VacancyDiffCallback()) {
@@ -22,7 +25,34 @@ class VacancyAdapter(private val clickListener : VacancyClickListener) : PagedLi
 
     //private val adapterScope = CoroutineScope(Dispatchers.Default)
 
+    private var organizations = listOf<Organization>()
 
+    private lateinit var differ : AsyncPagedListDiffer<Vacancy>
+
+    init {
+
+        val adapterCallback = AdapterListUpdateCallback(this)
+        differ = AsyncPagedListDiffer(
+            object : ListUpdateCallback {
+                override fun onChanged(position: Int, count: Int, payload: Any?) {
+                    adapterCallback.onChanged(position + 1, count, payload);
+                }
+
+                override fun onMoved(fromPosition: Int, toPosition: Int) {
+                    adapterCallback.onMoved(fromPosition + 1, toPosition + 1);
+                }
+
+                override fun onInserted(position: Int, count: Int) {
+                    adapterCallback.onInserted(position + 1, count);
+                }
+
+                override fun onRemoved(position: Int, count: Int) {
+                    adapterCallback.onRemoved(position + 1, count);
+                }
+            },
+            AsyncDifferConfig.Builder(VacancyDiffCallback()).build()
+        )   
+    }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder){
@@ -31,7 +61,7 @@ class VacancyAdapter(private val clickListener : VacancyClickListener) : PagedLi
                 holder.bind(clickListener, item)
             }
             is OrganizationListViewHolder -> {
-                holder.bind()
+                holder.bind(organizations)
             }
             is LoadingViewHolder -> {
                 holder.bind(apiStatus)
@@ -71,14 +101,10 @@ class VacancyAdapter(private val clickListener : VacancyClickListener) : PagedLi
 
     override fun getItem(position: Int): Vacancy? {
 
-        return if(position == 5){
-            null
-        }
-        else if(position < 5){
-            super.getItem(position)
-        }
-        else{
-            super.getItem(position - 1)
+        return when {
+            position == 5 -> null
+            position < 5 -> differ.getItem(position)
+            else -> differ.getItem(position - 1)
         }
 
 //        return if(position == 0){
@@ -89,8 +115,20 @@ class VacancyAdapter(private val clickListener : VacancyClickListener) : PagedLi
 //        }
     }
 
+    override fun submitList(pagedList: PagedList<Vacancy>?) {
+        differ.submitList(pagedList)
+    }
+
+    override fun getCurrentList(): PagedList<Vacancy?>? {
+        return differ.getCurrentList()
+    }
+
     override fun getItemCount(): Int {
-        return super.getItemCount() + 1
+        return differ.itemCount + 1
+    }
+
+    fun setOrganizations(organizations : List<Organization>){
+        this.organizations = organizations
     }
 
 //    override fun submitList(pagedList: PagedList<Vacancy>?) {
@@ -138,8 +176,10 @@ class VacancyAdapter(private val clickListener : VacancyClickListener) : PagedLi
         private val binding : RecommendedOrganizationsListBinding
     ) : RecyclerView.ViewHolder(binding.root){
 
-        fun bind() {
-            //TODO
+        fun bind(organizations : List<Organization>) {
+            val adapter = RecommendedOrganizationsAdapter()
+            binding.rvOrganizations.adapter = adapter
+            adapter.submitList(organizations)
         }
 
         companion object {

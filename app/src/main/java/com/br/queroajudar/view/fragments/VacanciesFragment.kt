@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
@@ -96,6 +95,7 @@ class VacanciesFragment : Fragment() {
 
         viewModel.organizations.observe(viewLifecycleOwner, Observer {
             Timber.tag("QA.VacanciesFragment").i("organizations list changed $it")
+            adapter.setOrganizations(it)
         })
 
         viewModel.vacanciesSize.observe(viewLifecycleOwner,Observer{ size ->
@@ -186,14 +186,14 @@ class VacanciesFragment : Fragment() {
             isCauseFilterExpanded = expandOrCollapseFilterLayout(
                 binding.vacanciesFilterLayout.ivExpandCauseFilterArrow,
                 binding.vacanciesFilterLayout.causesListLayout,
-                isCauseFilterExpanded,binding.vacanciesFilterLayout.tvSelectedCauses)
+                isCauseFilterExpanded)
         }
 
         binding.vacanciesFilterLayout.layoutExpandSkillFilter.setOnClickListener {
             isSkillFilterExpanded = expandOrCollapseFilterLayout(
                 binding.vacanciesFilterLayout.ivExpandSkillFilterArrow,
                 binding.vacanciesFilterLayout.skillsListLayout,
-                isSkillFilterExpanded,binding.vacanciesFilterLayout.tvSelectedSkills)
+                isSkillFilterExpanded)
         }
 
         binding.vacanciesOverlayLoading.btnTryAgain.setOnClickListener {
@@ -202,18 +202,10 @@ class VacanciesFragment : Fragment() {
     }
 
     private fun expandOrCollapseFilterLayout(ivArrow: ImageView, listLayout:View,
-                                             isExpanded:Boolean, tvCategoriesSelected : TextView
-    ) : Boolean {
+                                             isExpanded:Boolean) : Boolean {
         toggleViewRotation0to180(ivArrow, isExpanded)
 
         toggleViewExpansion2(listLayout,isExpanded)
-
-//        if(isExpanded){
-//            tvCategoriesSelected.visibility = View.VISIBLE
-//        }
-//        else{
-//            tvCategoriesSelected.visibility = View.INVISIBLE
-//        }
 
         return !isExpanded
     }
@@ -251,13 +243,6 @@ class VacanciesFragment : Fragment() {
         )
 
         return selectionTracker
-    }
-
-    private fun showLoadingOverlay(){ binding.isLoadingProgressVisible = true}
-    private fun hideLoadingOverlay(){binding.isLoadingProgressVisible = false}
-
-    private fun showNetworkErrorMessage(){
-        Toast.makeText(context, R.string.error_connection, Toast.LENGTH_LONG).show()
     }
 }
 

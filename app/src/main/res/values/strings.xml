@@ -48,6 +48,10 @@
     <string name="tv_networkInfo">Não foi possível carregar outras vagas.
         Verifique sua conexão ou tente novamente mais tarde.
     </string>
+    
+    <!-- recommended_organizations_list -->
+    <string name="recommendedOrganizationsList_tv_organizations">Instituições</string>
+    <string name="recommendedOrganizationsList_btn_seeAll">Ver Todas</string>
 
     <!-- networkStatus_overlayoverlay.xml -->
     <string name="networkStatus_tv_networkInfo">
