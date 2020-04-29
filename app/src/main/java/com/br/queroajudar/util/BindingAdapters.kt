@@ -77,7 +77,7 @@ fun bindApiStatusProgressBar(progressBar : ProgressBar, status:QueroAjudarApiSta
 
 @BindingAdapter("apiStatusLoading")
 fun bindApiStatusLoading(view : View, status:QueroAjudarApiStatus?){
-    Timber.tag("QA.BindingAdapters").i("bindApiStatusLoading $status")
+    Timber.i("bindApiStatusLoading $status")
     status.let {
         if (it == QueroAjudarApiStatus.LOADING) {
             view.visibility = View.VISIBLE
@@ -89,7 +89,7 @@ fun bindApiStatusLoading(view : View, status:QueroAjudarApiStatus?){
 
 @BindingAdapter("apiStatusNetworkError")
 fun bindApiStatusNetworkError(view : View, status:QueroAjudarApiStatus?){
-    Timber.tag("QA.BindingAdapters").i("bindApiStatusNetworkError $status")
+    Timber.i("bindApiStatusNetworkError $status")
     status?.let {
         if (it == QueroAjudarApiStatus.NETWORK_ERROR) {
             view.visibility = View.VISIBLE
@@ -101,7 +101,7 @@ fun bindApiStatusNetworkError(view : View, status:QueroAjudarApiStatus?){
 
 @BindingAdapter("apiStatusNetworkOverlay")
 fun bindApiStatusNetworkOverlay(view : View, status:QueroAjudarApiStatus?){
-    Timber.tag("QA.BindingAdapters").i("bindApiStatusNetworkOverlay $status")
+    Timber.i("bindApiStatusNetworkOverlay $status")
     status?.let {
         if (it == QueroAjudarApiStatus.NETWORK_ERROR || it ==QueroAjudarApiStatus.LOADING) {
             view.visibility = View.VISIBLE
@@ -131,13 +131,13 @@ fun setHtmlTextValue(textView: TextView, htmlText: String?) {
         Html.fromHtml(htmlText)
     }
 
-    Timber.tag("QA.html").i("$result")
+    Timber.i("$result")
     textView.text = result
 }
 
 @BindingAdapter("filterItemSelected")
 fun setFilterItemSelected(textView: TextView, isSelected : Boolean){
-    Timber.tag("QA.BindingAdapters").i("filterItemSelected $isSelected")
+    Timber.i("filterItemSelected $isSelected")
     if(isSelected){
         textView.setTextColor(getColor(textView.context, R.color.colorWhite))
         textView.setBackgroundResource(R.drawable.appcolor_round_shape)

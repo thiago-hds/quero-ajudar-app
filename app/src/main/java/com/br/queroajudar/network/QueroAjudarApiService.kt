@@ -23,7 +23,7 @@ private const val BASE_URL = "http://192.168.1.109:8000/api/"
 
 val loggingInterceptor = HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
     override fun log(message: String) {
-        Timber.tag("QA.APICall").i(message)
+        Timber.i(message)
     }
 }).setLevel(HttpLoggingInterceptor.Level.BODY)
 

@@ -1,107 +1,60 @@
 package com.br.queroajudar.repository
 
-import androidx.lifecycle.MutableLiveData
-import androidx.paging.DataSource
-import androidx.paging.PageKeyedDataSource
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.br.queroajudar.model.Vacancy
-import com.br.queroajudar.network.QueroAjudarApi
-import com.br.queroajudar.network.QueroAjudarApiStatus
-import com.br.queroajudar.network.ResultWrapper
-import com.br.queroajudar.network.SafeApiCaller
-import com.br.queroajudar.network.response.SuccessResponse
-import kotlinx.coroutines.CoroutineDispatcher
+import com.br.queroajudar.repository.datasource.factory.VacancyDataSourceFactory
+import com.br.queroajudar.util.Listing
+import com.br.queroajudar.util.PagedListing
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import timber.log.Timber
-
-class VacancyRepository(private val dispatcher: CoroutineDispatcher = Dispatchers.IO) {
-
-    private val  apiCaller : SafeApiCaller = SafeApiCaller()
-
-    suspend fun getVacancies(
-        page : Int = 1,
-        causes:String = "",
-        skills:String = "") : ResultWrapper<SuccessResponse<List<Vacancy>>> {
-        return apiCaller.safeApiCall(dispatcher) {
-            QueroAjudarApi.retrofitService.getVacancies(page, causes, skills)
-        }
-    }
-}
-
-class VacancyDataFactory(private val scope:CoroutineScope) : DataSource.Factory<Int, Vacancy>() {
-    val mutableLiveData = MutableLiveData<VacancyDataSource>()
-    lateinit var vacancyDataSource : VacancyDataSource
-    var causes = ""
-    var skills = ""
-
-    override fun create(): DataSource<Int, Vacancy> {
-        Timber.tag("QA.VacancyRepository").i("Create called")
-        vacancyDataSource = VacancyDataSource(scope, causes, skills)
-        mutableLiveData.postValue(vacancyDataSource)
-        return vacancyDataSource
-    }
-}
-
-class VacancyDataSource(private val scope:CoroutineScope,
-                        private val causes:String,
-                        private val skills:String
-                        ) : PageKeyedDataSource<Int, Vacancy>() {
-
-    private val repository = VacancyRepository()
-    val vacanciesLoadInitialApiStatus = MutableLiveData<QueroAjudarApiStatus>()
-    val vacanciesLoadAfterApiStatus = MutableLiveData<QueroAjudarApiStatus>()
-    val vacanciesSize = MutableLiveData<Int?>()
+import javax.inject.Inject
 
 
-    override fun loadInitial(
-        params: LoadInitialParams<Int>,
-        callback: LoadInitialCallback<Int, Vacancy>
-    ) {
+class VacancyRepository @Inject constructor() {
 
-        scope.launch {
-            vacanciesLoadInitialApiStatus.value = QueroAjudarApiStatus.LOADING
-            vacanciesSize.value = 0
-            when (val getVacanciesResponse =
-                repository.getVacancies(1, causes, skills)) {
-                is ResultWrapper.Success -> {
-                    vacanciesLoadInitialApiStatus.value = QueroAjudarApiStatus.DONE
-                    val vacancies = getVacanciesResponse.value.data ?: listOf()
-                    vacanciesSize.value = vacancies.size
-                    callback.onResult(vacancies, null, 2)
-                }
-                is ResultWrapper.NetworkError   -> {
-                    vacanciesLoadInitialApiStatus.value = QueroAjudarApiStatus.NETWORK_ERROR
-                }
-                is ResultWrapper.GenericError   -> {
-                    vacanciesLoadInitialApiStatus.value = QueroAjudarApiStatus.GENERIC_ERROR
-                }
+
+//    fun observePagedVacancies(coroutineScope: CoroutineScope) = observeRemotePagedVacancies(coroutineScope)
+////        if (connectivityAvailable) observeRemotePagedSets(themeId, coroutineScope)
+////        else observeLocalPagedSets(themeId)
+
+    fun observeRemotePagedVacancies(
+        coroutineScope: CoroutineScope,
+        skills: String,
+        causes: String
+    ): PagedListing<Vacancy> {
+        val dataSourceFactory = VacancyDataSourceFactory(coroutineScope, skills, causes)
+//        dataSourceFactory.skills = skills
+//        dataSourceFactory.causes = causes
+
+        val livePagedList = LivePagedListBuilder(dataSourceFactory,
+            VacancyDataSourceFactory.pagedListConfig()).build()
+
+        return PagedListing(
+            pagedList = livePagedList,
+            loadInitialApiStatus = Transformations.switchMap(dataSourceFactory.mutableLiveData) {
+                    dataSource -> dataSource.loadInitialApiStatus
+            },
+            loadAfterApiStatus = Transformations.switchMap(dataSourceFactory.mutableLiveData) {
+                    dataSource -> dataSource.loadAfterApiStatus
+            },
+            refresh = {
+                dataSourceFactory.mutableLiveData.value?.invalidate()
             }
-        }
+        )
     }
 
-    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Vacancy>) {
-
-        scope.launch {
-            vacanciesLoadAfterApiStatus.value = QueroAjudarApiStatus.LOADING
-            when (val getVacanciesResponse =
-                repository.getVacancies(params.key, causes, skills)) {
-                is ResultWrapper.Success -> {
-                    vacanciesLoadAfterApiStatus.value = QueroAjudarApiStatus.DONE
-                    val vacancies = getVacanciesResponse.value.data ?: listOf()
-                    vacanciesSize.value = vacanciesSize.value?.plus((vacancies.size))
-                    callback.onResult(vacancies, params.key + 1)
-                }
-                is ResultWrapper.NetworkError   -> {
-                    vacanciesLoadAfterApiStatus.value = QueroAjudarApiStatus.NETWORK_ERROR
-                }
-                is ResultWrapper.GenericError   -> {
-                    vacanciesLoadAfterApiStatus.value = QueroAjudarApiStatus.GENERIC_ERROR
-                }
-            }
-        }
-    }
-
-    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Vacancy>) {
-    }
+//    fun setCauses(causes:String){
+//        dataSourceFactory.causes = causes
+//    }
+//
+//    fun setSkills(skills:String){
+//        dataSourceFactory.skills = skills
+//
+//    }
+//
+//    fun refresh(){
+//        dataSourceFactory.mutableLiveData.value?.invalidate()
+//    }
 }

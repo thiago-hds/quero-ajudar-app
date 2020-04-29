@@ -12,22 +12,22 @@ import com.br.queroajudar.databinding.VacancyItemBinding
 import com.br.queroajudar.model.Organization
 import com.br.queroajudar.model.Vacancy
 import com.br.queroajudar.network.QueroAjudarApiStatus
+import timber.log.Timber
 
 
 class VacancyAdapter(private val clickListener : VacancyClickListener) : PagedListAdapter<
         Vacancy, RecyclerView.ViewHolder>(VacancyDiffCallback()) {
 
-    private var apiStatus = QueroAjudarApiStatus.LOADING
-
     private val VIEW_TYPE_ITEM = 0
     private val VIEW_TYPE_ORGANIZATIONS = 1
     private val VIEW_TYPE_PROGRESS = 2
 
-    //private val adapterScope = CoroutineScope(Dispatchers.Default)
+    private val ORGANIZATIONS_LIST_POSITION = 5
 
     private var organizations = listOf<Organization>()
+    private var apiStatus = QueroAjudarApiStatus.LOADING
 
-    private lateinit var differ : AsyncPagedListDiffer<Vacancy>
+    private var differ : AsyncPagedListDiffer<Vacancy>
 
     init {
 
@@ -51,8 +51,10 @@ class VacancyAdapter(private val clickListener : VacancyClickListener) : PagedLi
                 }
             },
             AsyncDifferConfig.Builder(VacancyDiffCallback()).build()
-        )   
+        )
     }
+
+
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder){
@@ -66,17 +68,8 @@ class VacancyAdapter(private val clickListener : VacancyClickListener) : PagedLi
             is LoadingViewHolder -> {
                 holder.bind(apiStatus)
             }
-
         }
-//        if(holder is ItemViewHolder) {
-//            val item = getItem(position)!!
-//            holder.bind(clickListener, item)
-//        }
-//        else{
-//            (holder as LoadingViewHolder).bind(apiStatus)
-//        }
     }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType){
@@ -100,19 +93,12 @@ class VacancyAdapter(private val clickListener : VacancyClickListener) : PagedLi
     }
 
     override fun getItem(position: Int): Vacancy? {
-
-        return when {
-            position == 5 -> null
-            position < 5 -> differ.getItem(position)
-            else -> differ.getItem(position - 1)
+        return if(position == ORGANIZATIONS_LIST_POSITION){
+            null
         }
-
-//        return if(position == 0){
-//            null
-//        }
-//        else{
-//            super.getItem(position - 1)
-//        }
+        else{
+            differ.getItem(toRealPosition(position))
+        }
     }
 
     override fun submitList(pagedList: PagedList<Vacancy>?) {
@@ -131,26 +117,12 @@ class VacancyAdapter(private val clickListener : VacancyClickListener) : PagedLi
         this.organizations = organizations
     }
 
-//    override fun submitList(pagedList: PagedList<Vacancy>?) {
-////        pagedList?.addWeakCallback(pagedList.snapshot(), object : PagedList.Callback(){
-////            override fun onChanged(position: Int, count: Int) {
-////                Timber.tag("QA.VacancyAdapter").i("onChanged")
-////            }
-////
-////            override fun onInserted(position: Int, count: Int) {
-////                Timber.tag("QA.VacancyAdapter").i("onInserted $count")
-////            }
-////
-////            override fun onRemoved(position: Int, count: Int) {
-////                Timber.tag("QA.VacancyAdapter").i("onRemoved")
-////            }
-////        })
-////        Timber.tag("QA.VacancyAdapter").i("submitted ${pagedList?.size}" )
-//        super.submitList(pagedList)
-//    }
-
     fun setApiStatus(apiStatus : QueroAjudarApiStatus){
         this.apiStatus = apiStatus
+    }
+
+    private fun toRealPosition(position: Int): Int {
+        return if (position < ORGANIZATIONS_LIST_POSITION) position else position - 1
     }
 
     class ItemViewHolder private constructor(private val binding: VacancyItemBinding)
@@ -223,19 +195,3 @@ class VacancyDiffCallback : DiffUtil.ItemCallback<Vacancy>() {
 class VacancyClickListener(val clickListener: (vacancyId: Int) -> Unit) {
     fun onClick(vacancy: Vacancy) = clickListener(vacancy.id)
 }
-
-//sealed class VacancyDataItem{
-//    data class VacancyItem(val vacancy : Vacancy) : VacancyDataItem(){
-//        override val id: Int
-//            get() = vacancy.id
-//    }
-//    data class OrganizationsItem(val organizations : List<Organization>) : VacancyDataItem(){
-//        override val id: Int
-//            get() = Int.MIN_VALUE
-//    }
-//    abstract val id : Int
-//}
-
-
-
-

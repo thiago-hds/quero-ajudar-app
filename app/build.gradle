@@ -56,6 +56,10 @@ dependencies {
     //Timber
     implementation "com.jakewharton.timber:timber:$timber_version"
 
+    //Dagger
+    implementation "com.google.dagger:dagger:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+
     //RecyclerView
     implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
 

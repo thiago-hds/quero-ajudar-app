@@ -9,17 +9,20 @@ import com.br.queroajudar.network.SafeApiCaller
 import com.br.queroajudar.network.response.SuccessResponse
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import javax.inject.Inject
 
-class QueroAjudarRepository(private val dispatcher: CoroutineDispatcher = Dispatchers.IO) {
+class QueroAjudarRepository @Inject constructor(
+//    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+) {
 
     private val  apiCaller : SafeApiCaller = SafeApiCaller()
 
     suspend fun getCauses() : ResultWrapper<SuccessResponse<List<Category>>> {
-        return apiCaller.safeApiCall(dispatcher) { QueroAjudarApi.retrofitService.getCauses()}
+        return apiCaller.safeApiCall(Dispatchers.IO) { QueroAjudarApi.retrofitService.getCauses()}
     }
 
     suspend fun getSkills() : ResultWrapper<SuccessResponse<List<Category>>> {
-        return apiCaller.safeApiCall(dispatcher) { QueroAjudarApi.retrofitService.getSkills()}
+        return apiCaller.safeApiCall(Dispatchers.IO) { QueroAjudarApi.retrofitService.getSkills()}
     }
 
 

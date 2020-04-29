@@ -34,17 +34,17 @@ class CausesViewModel : ViewModel() {
     }
 
     private fun onNetworkError( ){
-        Timber.tag("QA.").i("API call network error")
+        Timber.i("API call network error")
         _apiStatus.value = QueroAjudarApiStatus.NETWORK_ERROR
     }
 
     private fun onGenericError(loginResponse: ResultWrapper.GenericError) {
-        Timber.tag("QA.").i("API call generic error: $loginResponse")
+        Timber.i("API call generic error: $loginResponse")
         _apiStatus.value = QueroAjudarApiStatus.GENERIC_ERROR
     }
 
     private fun onSuccess(value: SuccessResponse<List<Category>>) {
-        Timber.tag("QA.").i("API call success: $value")
+        Timber.i("API call success: $value")
         _apiStatus.value = QueroAjudarApiStatus.DONE
     }
 

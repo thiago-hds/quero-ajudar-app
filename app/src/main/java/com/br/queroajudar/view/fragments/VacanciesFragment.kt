@@ -1,5 +1,6 @@
 package com.br.queroajudar.view.fragments
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.selection.*
 import androidx.recyclerview.widget.RecyclerView
 
@@ -21,34 +23,51 @@ import com.br.queroajudar.databinding.FragmentVacanciesBinding
 import com.br.queroajudar.util.enable
 import com.br.queroajudar.util.toggleViewExpansion2
 import com.br.queroajudar.util.toggleViewRotation0to180
+import com.br.queroajudar.view.HomeActivity
 import com.br.queroajudar.view.adapters.*
 import com.br.queroajudar.viewmodel.VacanciesViewModel
 import kotlinx.android.synthetic.main.vacancies_filter_layout.view.*
 import okhttp3.internal.toImmutableList
 import timber.log.Timber
+import javax.inject.Inject
 
 class VacanciesFragment : Fragment() {
 
-    private val viewModel: VacanciesViewModel by lazy {
-        ViewModelProvider(this).get(VacanciesViewModel::class.java)
-    }
+//    private val viewModel: VacanciesViewModel by lazy {
+//        ViewModelProvider(this).get(VacanciesViewModel::class.java)
+//    }
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private lateinit var viewModel : VacanciesViewModel
 
     lateinit var binding : FragmentVacanciesBinding
 
     var isCauseFilterExpanded = false
     var isSkillFilterExpanded = false
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (activity as HomeActivity).homeComponent.inject(this)
+
+
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        viewModel = ViewModelProvider(this, viewModelFactory)[VacanciesViewModel::class.java]
+
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_vacancies, container, false)
+        binding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_vacancies, container, false
+        )
 
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-
-        //setApiStatusObserver()
 
         setupVacanciesList()
         setupOrderBySpinner()
@@ -60,6 +79,7 @@ class VacanciesFragment : Fragment() {
     }
 
 
+
     private fun setupVacanciesList(){
 
         val adapter = VacancyAdapter(VacancyClickListener { vacancyId ->
@@ -67,44 +87,25 @@ class VacanciesFragment : Fragment() {
             viewModel.onVacancyClicked()
         })
 
-
-//        val scrollListener = VacancyListScrollListener({
-//                viewModel.onListScrollReachEnd()
-//            },
-//            binding.vacanciesRecyclerView.layoutManager as LinearLayoutManager
-//        )
-
         binding.rvVacancies.adapter = adapter
 
-
-//        binding.vacanciesOverlayLoading.loadingOverlayApiStatus = viewModel.getVacanciesStatus.value
-//        binding.vacanciesRecyclerView.addOnScrollListener(scrollListener)
-
-//        viewModel.vacancies.observe(viewLifecycleOwner, Observer { vacancyList ->
-//            Timber.tag("QA.VacanciesFragment").i("vacancies list changed")
-//            vacancyList?.let{
-//                adapter.submitList(it.toImmutableList())
-//            }
-//        })
-
-
         viewModel.vacancies.observe(viewLifecycleOwner, Observer { vacanciesPagedList ->
-            Timber.tag("QA.VacanciesFragment").i("vacancies observed $vacanciesPagedList")
+            Timber.i("vacancies observed $vacanciesPagedList")
             adapter.submitList(vacanciesPagedList)
         })
 
         viewModel.organizations.observe(viewLifecycleOwner, Observer {
-            Timber.tag("QA.VacanciesFragment").i("organizations list changed $it")
+            Timber.i("organizations list changed $it")
             adapter.setOrganizations(it)
         })
 
-        viewModel.vacanciesSize.observe(viewLifecycleOwner,Observer{ size ->
-            Timber.tag("QA.VacanciesFragment").i("vacancies size changed $size")
-            showEmptyList(size == 0)
-        })
+//        viewModel.vacanciesSize.observe(viewLifecycleOwner,Observer{ size ->
+//            Timber.i("vacancies size changed $size")
+//            showEmptyList(size == 0)
+//        })
 
         viewModel.vacanciesLoadAfterApiStatus.observe(viewLifecycleOwner, Observer {
-            Timber.tag("QA.VacanciesFragment").i("getVacanciesStatus changed $it")
+            Timber.i("getVacanciesStatus changed $it")
             adapter.setApiStatus(it)
         })
     }
@@ -128,7 +129,6 @@ class VacanciesFragment : Fragment() {
             ).also { adapter->
                 adapter.setDropDownViewResource(R.layout.dropdown_menu_item)
                 binding.vacanciesSpinnerOrderBy.adapter = adapter
-                //binding.vacanciesSpinnerOrderBy.setText(R.string.vacancies_btn_recommended)
             }
         }
     }
@@ -146,10 +146,10 @@ class VacanciesFragment : Fragment() {
         causeAdapter.tracker = causeTracker
 
         viewModel.causes.observe(viewLifecycleOwner, Observer { causeList ->
-            Timber.tag("QueroAjudar.VacFrag").i("Cause list changed. Size is ${causeList.size}")
+            Timber.i("Cause list changed. Size is ${causeList.size}")
             causeList?.let {
                 causeAdapter.submitList(it.toImmutableList())
-                Timber.tag("QueroAjudar.VacFrag").i("Cause list submitted")
+                Timber.i("Cause list submitted")
             }
         })
 
@@ -164,10 +164,10 @@ class VacanciesFragment : Fragment() {
         skillAdapter.tracker = skillTracker
 
         viewModel.skills.observe(viewLifecycleOwner, Observer { skillList ->
-            Timber.tag("QueroAjudar.VacFrag").i("Skill list changed. Size is ${skillList.size}")
+            Timber.i("Skill list changed. Size is ${skillList.size}")
             skillList?.let {
                 skillAdapter.submitList(it.toImmutableList())
-                Timber.tag("QueroAjudar.VacFrag").i("Skill list submitted")
+                Timber.i("Skill list submitted")
             }
         })
 
@@ -178,9 +178,22 @@ class VacanciesFragment : Fragment() {
             binding.vacanciesDlFilters.openDrawer(GravityCompat.END)
         }
 
-        binding.vacanciesDlFilters.addDrawerListener(VacancyDrawerListener {
-            viewModel.onDrawerOpened()
+        binding.vacanciesDlFilters.addDrawerListener(object : DrawerLayout.DrawerListener {
+            override fun onDrawerStateChanged(newState: Int) {}
+
+            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {}
+
+            override fun onDrawerClosed(drawerView: View) {}
+
+            override fun onDrawerOpened(drawerView: View) {
+                viewModel.onDrawerOpened()
+            }
+
         })
+
+//        binding.vacanciesDlFilters.addDrawerListener(VacancyDrawerListener {
+//            viewModel.onDrawerOpened()
+//        })
 
         binding.vacanciesFilterLayout.layoutExpandCauseFilter.setOnClickListener {
             isCauseFilterExpanded = expandOrCollapseFilterLayout(
@@ -211,8 +224,11 @@ class VacanciesFragment : Fragment() {
     }
 
 
-    private fun setupSelectionTracker(recyclerView:RecyclerView, selectionId:String,
-                                      onItemSelected : (items:List<Int>) -> Unit): SelectionTracker<Long>? {
+    private fun setupSelectionTracker(recyclerView:RecyclerView,
+                                      selectionId:String,
+                                      onItemSelected : (items:List<Int>) -> Unit
+                                      ): SelectionTracker<Long>? {
+
         val selectionTracker = SelectionTracker.Builder(
             selectionId,
             recyclerView,
@@ -246,12 +262,9 @@ class VacanciesFragment : Fragment() {
     }
 }
 
-class VacancyDrawerListener(val onDrawerOpened : () -> Unit) : DrawerLayout.SimpleDrawerListener(){
-    override fun onDrawerOpened(drawerView: View) {
-        super.onDrawerOpened(drawerView)
-
-        onDrawerOpened()
-    }
-}
-
-
+//class VacancyDrawerListener(val onDrawerOpened : () -> Unit) : DrawerLayout.SimpleDrawerListener(){
+//    override fun onDrawerOpened(drawerView: View) {
+//        super.onDrawerOpened(drawerView)
+//        onDrawerOpened()
+//    }
+//}
