@@ -6,7 +6,7 @@
     <data>
         <variable
             name="vacanciesFilterApiStatus"
-            type="com.br.queroajudar.network.QueroAjudarApiStatus" />
+            type="com.br.queroajudar.network.ApiStatus" />
 
         <variable
             name="selectedCausesStr"

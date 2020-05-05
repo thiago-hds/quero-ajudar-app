@@ -6,7 +6,7 @@
     <data>
         <variable
             name="apiStatus"
-            type="com.br.queroajudar.network.QueroAjudarApiStatus" />
+            type="com.br.queroajudar.network.ApiStatus" />
     </data>
 
     <LinearLayout

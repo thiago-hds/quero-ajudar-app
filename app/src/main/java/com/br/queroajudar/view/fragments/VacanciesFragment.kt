@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 import com.br.queroajudar.R
 import com.br.queroajudar.databinding.FragmentVacanciesBinding
+import com.br.queroajudar.network.ResultWrapper
 import com.br.queroajudar.util.enable
 import com.br.queroajudar.util.toggleViewExpansion2
 import com.br.queroajudar.util.toggleViewRotation0to180
@@ -94,9 +95,13 @@ class VacanciesFragment : Fragment() {
             adapter.submitList(vacanciesPagedList)
         })
 
-        viewModel.organizations.observe(viewLifecycleOwner, Observer {
-            Timber.i("organizations list changed $it")
-            adapter.setOrganizations(it)
+        viewModel.organizations.observe(viewLifecycleOwner, Observer { result ->
+            Timber.i("organizations list changed $result")
+            when(result){
+                is ResultWrapper.Success -> result.value.data?.let { adapter.setOrganizations(it) }
+                is ResultWrapper.GenericError -> { /*TODO*/}
+                is ResultWrapper.NetworkError -> {/*TODO*/}
+            }
         })
 
 //        viewModel.vacanciesSize.observe(viewLifecycleOwner,Observer{ size ->
@@ -145,11 +150,12 @@ class VacanciesFragment : Fragment() {
         ) {selectedCauses -> viewModel.onCauseItemSelected(selectedCauses)}
         causeAdapter.tracker = causeTracker
 
-        viewModel.causes.observe(viewLifecycleOwner, Observer { causeList ->
-            Timber.i("Cause list changed. Size is ${causeList.size}")
-            causeList?.let {
-                causeAdapter.submitList(it.toImmutableList())
-                Timber.i("Cause list submitted")
+        viewModel.causes.observe(viewLifecycleOwner, Observer { result ->
+            when(result){
+                is ResultWrapper.Success -> { result.value.data?.let{causeAdapter.submitList(it)}}
+                is ResultWrapper.Loading -> {}
+                is ResultWrapper.NetworkError -> {}
+                is ResultWrapper.GenericError -> {}
             }
         })
 
@@ -163,11 +169,20 @@ class VacanciesFragment : Fragment() {
         ) {selectedSkills -> viewModel.onSkillItemSelected(selectedSkills)}
         skillAdapter.tracker = skillTracker
 
-        viewModel.skills.observe(viewLifecycleOwner, Observer { skillList ->
-            Timber.i("Skill list changed. Size is ${skillList.size}")
-            skillList?.let {
-                skillAdapter.submitList(it.toImmutableList())
-                Timber.i("Skill list submitted")
+//        viewModel.skills.observe(viewLifecycleOwner, Observer { skillList ->
+//            Timber.i("Skill list changed. Size is ${skillList.size}")
+//            skillList?.let {
+//                skillAdapter.submitList(it.toImmutableList())
+//                Timber.i("Skill list submitted")
+//            }
+//        })
+
+        viewModel.skills.observe(viewLifecycleOwner, Observer { result ->
+            when(result){
+                is ResultWrapper.Success -> { result.value.data?.let{skillAdapter.submitList(it)}}
+                is ResultWrapper.Loading -> {}
+                is ResultWrapper.NetworkError -> {}
+                is ResultWrapper.GenericError -> {}
             }
         })
 

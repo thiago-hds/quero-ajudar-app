@@ -1,11 +1,10 @@
 package com.br.queroajudar.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.br.queroajudar.model.formdata.RegisterData
-import com.br.queroajudar.network.QueroAjudarApiStatus
+import com.br.queroajudar.network.ApiStatus
 import com.br.queroajudar.network.ResultWrapper
 import com.br.queroajudar.network.response.SuccessResponse
 import com.br.queroajudar.repository.UserRepository
@@ -23,8 +22,8 @@ class RegisterViewModel : ViewModel() {
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-    private val _apiStatus = MutableLiveData<QueroAjudarApiStatus>()
-    val apiStatus: LiveData<QueroAjudarApiStatus>
+    private val _apiStatus = MutableLiveData<ApiStatus>()
+    val apiStatus: LiveData<ApiStatus>
         get() = _apiStatus
 
     fun getRegister(): RegisterData? {
@@ -33,28 +32,28 @@ class RegisterViewModel : ViewModel() {
 
     fun onButtonSendClick() {
         //TODO validação dos campos no lado do cliente
-        register()
+//        register()
     }
 
-    private fun register(){
-        _apiStatus.value = QueroAjudarApiStatus.LOADING
-        coroutineScope.launch {
-            when (val loginResponse = userRepository.postRegister(registerData)) {
-                is ResultWrapper.NetworkError -> onNetworkError()
-                is ResultWrapper.GenericError -> onGenericError(loginResponse)
-                is ResultWrapper.Success -> onSuccess(loginResponse.value)
-            }
-        }
-    }
+//    private fun register(){
+//        _apiStatus.value = ApiStatus.LOADING
+//        coroutineScope.launch {
+//            when (val loginResponse = userRepository.postRegister(registerData)) {
+//                is ResultWrapper.NetworkError -> onNetworkError()
+//                is ResultWrapper.GenericError -> onGenericError(loginResponse)
+//                is ResultWrapper.Success -> onSuccess(loginResponse.value)
+//            }
+//        }
+//    }
 
     private fun onNetworkError( ){
         Timber.i("API call network error")
-        _apiStatus.value = QueroAjudarApiStatus.NETWORK_ERROR
+        _apiStatus.value = ApiStatus.NETWORK_ERROR
     }
 
     private fun onGenericError(loginResponse: ResultWrapper.GenericError) {
         Timber.i("API call generic error: $loginResponse")
-        _apiStatus.value = QueroAjudarApiStatus.GENERIC_ERROR
+        _apiStatus.value = ApiStatus.GENERIC_ERROR
         if(loginResponse.error != null) {
             registerData.setApiValidationErrors(loginResponse.error.errors)
         }
@@ -63,7 +62,7 @@ class RegisterViewModel : ViewModel() {
     private fun onSuccess(value: SuccessResponse<String>) {
         Timber.i("API call success: $value")
         QueroAjudarPreferences.apiToken = value.data
-        _apiStatus.value = QueroAjudarApiStatus.DONE
+        _apiStatus.value = ApiStatus.DONE
     }
 
 }

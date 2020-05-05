@@ -6,15 +6,13 @@ import android.os.Build
 import android.text.Html
 import android.text.Spanned
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat.getColor
-import androidx.core.content.ContextCompat.getDrawable
 import androidx.databinding.BindingAdapter
 import com.br.queroajudar.R
-import com.br.queroajudar.network.QueroAjudarApiStatus
+import com.br.queroajudar.network.ApiStatus
 import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputLayout
 import timber.log.Timber
@@ -66,8 +64,8 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
 //}
 
 @BindingAdapter("pbApiStatus")
-fun bindApiStatusProgressBar(progressBar : ProgressBar, status:QueroAjudarApiStatus?){
-    if(status == QueroAjudarApiStatus.LOADING){
+fun bindApiStatusProgressBar(progressBar : ProgressBar, status:ApiStatus?){
+    if(status == ApiStatus.LOADING){
         progressBar.visibility = View.VISIBLE
     }
     else{
@@ -76,10 +74,10 @@ fun bindApiStatusProgressBar(progressBar : ProgressBar, status:QueroAjudarApiSta
 }
 
 @BindingAdapter("apiStatusLoading")
-fun bindApiStatusLoading(view : View, status:QueroAjudarApiStatus?){
+fun bindApiStatusLoading(view : View, status:ApiStatus?){
     Timber.i("bindApiStatusLoading $status")
     status.let {
-        if (it == QueroAjudarApiStatus.LOADING) {
+        if (it == ApiStatus.LOADING) {
             view.visibility = View.VISIBLE
         } else {
             view.visibility = View.GONE
@@ -88,10 +86,10 @@ fun bindApiStatusLoading(view : View, status:QueroAjudarApiStatus?){
 }
 
 @BindingAdapter("apiStatusNetworkError")
-fun bindApiStatusNetworkError(view : View, status:QueroAjudarApiStatus?){
+fun bindApiStatusNetworkError(view : View, status:ApiStatus?){
     Timber.i("bindApiStatusNetworkError $status")
     status?.let {
-        if (it == QueroAjudarApiStatus.NETWORK_ERROR) {
+        if (it == ApiStatus.NETWORK_ERROR) {
             view.visibility = View.VISIBLE
         } else {
             view.visibility = View.GONE
@@ -100,10 +98,10 @@ fun bindApiStatusNetworkError(view : View, status:QueroAjudarApiStatus?){
 }
 
 @BindingAdapter("apiStatusNetworkOverlay")
-fun bindApiStatusNetworkOverlay(view : View, status:QueroAjudarApiStatus?){
+fun bindApiStatusNetworkOverlay(view : View, status:ApiStatus?){
     Timber.i("bindApiStatusNetworkOverlay $status")
     status?.let {
-        if (it == QueroAjudarApiStatus.NETWORK_ERROR || it ==QueroAjudarApiStatus.LOADING) {
+        if (it == ApiStatus.NETWORK_ERROR || it ==ApiStatus.LOADING) {
             view.visibility = View.VISIBLE
         } else {
             view.visibility = View.GONE

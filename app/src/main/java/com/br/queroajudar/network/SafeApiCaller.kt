@@ -7,9 +7,10 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import java.io.IOException
+import javax.inject.Inject
 
-class SafeApiCaller{
-    suspend fun <T> safeApiCall(dispatcher: CoroutineDispatcher, apiCall: suspend () -> T): ResultWrapper<T> {
+class SafeApiCaller @Inject constructor(){
+    suspend fun <T> safeApiCall(dispatcher: CoroutineDispatcher, apiCall: suspend () -> T) : ResultWrapper<T> {
         return withContext(dispatcher) {
             try {
                 ResultWrapper.Success(apiCall.invoke())

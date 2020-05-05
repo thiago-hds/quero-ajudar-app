@@ -11,8 +11,7 @@ import com.br.queroajudar.databinding.RecommendedOrganizationsListBinding
 import com.br.queroajudar.databinding.VacancyItemBinding
 import com.br.queroajudar.model.Organization
 import com.br.queroajudar.model.Vacancy
-import com.br.queroajudar.network.QueroAjudarApiStatus
-import timber.log.Timber
+import com.br.queroajudar.network.ApiStatus
 
 
 class VacancyAdapter(private val clickListener : VacancyClickListener) : PagedListAdapter<
@@ -25,7 +24,7 @@ class VacancyAdapter(private val clickListener : VacancyClickListener) : PagedLi
     private val ORGANIZATIONS_LIST_POSITION = 5
 
     private var organizations = listOf<Organization>()
-    private var apiStatus = QueroAjudarApiStatus.LOADING
+    private var apiStatus = ApiStatus.LOADING
 
     private var differ : AsyncPagedListDiffer<Vacancy>
 
@@ -81,7 +80,7 @@ class VacancyAdapter(private val clickListener : VacancyClickListener) : PagedLi
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if(apiStatus != QueroAjudarApiStatus.DONE && position == itemCount - 1){
+        return if(apiStatus != ApiStatus.DONE && position == itemCount - 1){
             VIEW_TYPE_PROGRESS
         }
         else if(getItem(position) == null){
@@ -117,7 +116,7 @@ class VacancyAdapter(private val clickListener : VacancyClickListener) : PagedLi
         this.organizations = organizations
     }
 
-    fun setApiStatus(apiStatus : QueroAjudarApiStatus){
+    fun setApiStatus(apiStatus : ApiStatus){
         this.apiStatus = apiStatus
     }
 
@@ -167,7 +166,7 @@ class VacancyAdapter(private val clickListener : VacancyClickListener) : PagedLi
     class LoadingViewHolder private constructor(private val binding: LoadingItemBinding)
         : RecyclerView.ViewHolder(binding.root){
 
-        fun bind(apiStatus: QueroAjudarApiStatus) {
+        fun bind(apiStatus: ApiStatus) {
             binding.apiStatus = apiStatus
             binding.executePendingBindings()
         }

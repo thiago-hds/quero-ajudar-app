@@ -1,55 +1,48 @@
 package com.br.queroajudar.viewmodel
 
 import androidx.lifecycle.*
-import androidx.paging.LivePagedListBuilder
-import androidx.paging.PagedList
 import com.br.queroajudar.di.CoroutineScopeIO
 import com.br.queroajudar.model.Category
 import com.br.queroajudar.model.Organization
-import com.br.queroajudar.model.Vacancy
-import com.br.queroajudar.network.QueroAjudarApiStatus
+import com.br.queroajudar.network.ApiStatus
 import com.br.queroajudar.network.ResultWrapper
 import com.br.queroajudar.network.response.SuccessResponse
 import com.br.queroajudar.repository.OrganizationRepository
-import com.br.queroajudar.repository.QueroAjudarRepository
+import com.br.queroajudar.repository.CategoryRepository
 import com.br.queroajudar.repository.VacancyRepository
-import com.br.queroajudar.repository.datasource.factory.VacancyDataSourceFactory
-import com.br.queroajudar.util.Listing
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
 class VacanciesViewModel @Inject constructor(
-    private val globalRepository: QueroAjudarRepository,
+    private val categoryRepository: CategoryRepository,
     private val vacancyRepository: VacancyRepository,
     private val organizationRepository: OrganizationRepository,
     @CoroutineScopeIO private val coroutineScope: CoroutineScope
 ) : ViewModel(){
 
 
-    private val _getFiltersStatus = MutableLiveData<QueroAjudarApiStatus>()
-    val getFiltersStatus: LiveData<QueroAjudarApiStatus>
+    private val _getFiltersStatus = MutableLiveData<ApiStatus>()
+    val getFiltersStatus: LiveData<ApiStatus>
         get() = _getFiltersStatus
 
-    private var _getOrganizationsStatus = MutableLiveData<QueroAjudarApiStatus>()
-    val getOrganizationsStatus : LiveData<QueroAjudarApiStatus>
+    private var _getOrganizationsStatus = MutableLiveData<ApiStatus>()
+    val getOrganizationsStatus : LiveData<ApiStatus>
         get() = _getOrganizationsStatus
 
 
-    private var _causes = MutableLiveData<List<Category>>()
-    val causes : LiveData<List<Category>>
-        get() = _causes
+//    private var _causes = MutableLiveData<List<Category>>()
+//    val causes : LiveData<List<Category>>
+//        get() = _causes
+//
+//    private var _skills = MutableLiveData<List<Category>>()
+//    val skills : LiveData<List<Category>>
+//        get() = _skills
 
-    private var _skills = MutableLiveData<List<Category>>()
-    val skills : LiveData<List<Category>>
-        get() = _skills
-
-    private var _organizations = MutableLiveData<List<Organization>>()
-    val organizations : LiveData<List<Organization>>
-        get() = _organizations
+//    private var _organizations = MutableLiveData<List<Organization>>()
+//    val organizations : LiveData<List<Organization>>
+//        get() = _organizations
 
     private var _selectedCausesStr = MutableLiveData<String>()
     val selectedCausesStr : LiveData<String>
@@ -65,8 +58,8 @@ class VacanciesViewModel @Inject constructor(
     private var _selectedSkillsId = listOf<Int>()
 
     private var _endLoading = false
-    private var _getCausesStatus = QueroAjudarApiStatus.DONE
-    private var _getSkillsStatus = QueroAjudarApiStatus.DONE
+    private var _getCausesStatus = ApiStatus.DONE
+    private var _getSkillsStatus = ApiStatus.DONE
 
     // Escopo de Corotina
 //    private var viewModelJob = Job()
@@ -89,15 +82,21 @@ class VacanciesViewModel @Inject constructor(
     val vacanciesLoadInitialApiStatus = repoResult.loadInitialApiStatus
     val vacanciesLoadAfterApiStatus = repoResult.loadAfterApiStatus
 
+    val organizations = organizationRepository.organizations
+
+    val causes = categoryRepository.causes
+
+    val skills = categoryRepository.skills
+
 
     init{
-        _causes.value = mutableListOf()
-        _skills.value = mutableListOf()
+//        _causes.value = mutableListOf()
+//        _skills.value = mutableListOf()
 
-        _getFiltersStatus.value = QueroAjudarApiStatus.LOADING
+        _getFiltersStatus.value = ApiStatus.DONE
 
 //        initPaging()
-        loadOrganizations()
+//        loadOrganizations()
 //        initializedPagedListBuilder()
     }
 
@@ -142,10 +141,10 @@ class VacanciesViewModel @Inject constructor(
 
     fun onDrawerOpened(){
         // Carregar filtros
-        if(causes.value.isNullOrEmpty() || skills.value.isNullOrEmpty()){
-            loadCauses()
-            loadSkills()
-        }
+//        if(causes.value.isNullOrEmpty() || skills.value.isNullOrEmpty()){
+//            loadCauses()
+//            loadSkills()
+//        }
     }
 
     fun refresh() {
@@ -156,9 +155,9 @@ class VacanciesViewModel @Inject constructor(
         Timber.i("cause selected ${selectedItems.toString()}")
         _selectedCausesId = selectedItems
 
-        val selectedCauses = _causes.value?.filter { selectedItems.contains(it.id) }
-        val selectedCausesNames = selectedCauses?.map { it.name } ?: listOf()
-        _selectedCausesStr.value = selectedCausesNames.joinToString()
+//        val selectedCauses = _causes.value?.filter { selectedItems.contains(it.id) }
+//        val selectedCausesNames = selectedCauses?.map { it.name } ?: listOf()
+//        _selectedCausesStr.value = selectedCausesNames.joinToString()
 
         //vacancyRepository.setCauses(_selectedCausesId.joinToString())
         refresh()
@@ -174,9 +173,9 @@ class VacanciesViewModel @Inject constructor(
         Timber.i("skill selected $selectedItems")
         _selectedCausesId = selectedItems
 
-        val selectedSkills = _skills.value?.filter { selectedItems.contains(it.id) }
-        val selectedSkillsNames = selectedSkills?.map { it.name } ?: listOf()
-        _selectedSkillsStr.value = selectedSkillsNames.joinToString()
+//        val selectedSkills = _skills.value?.filter { selectedItems.contains(it.id) }
+//        val selectedSkillsNames = selectedSkills?.map { it.name } ?: listOf()
+//        _selectedSkillsStr.value = selectedSkillsNames.joinToString()
 
         //vacancyRepository.setSkills(_selectedSkillsId.joinToString())
         refresh()
@@ -188,71 +187,71 @@ class VacanciesViewModel @Inject constructor(
 //        strSelectedSkillsId =_selectedSkillsId.joinToString()
     }
 
-    private fun loadCauses(){
-        Timber.i("Loading causes")
-        _getCausesStatus = QueroAjudarApiStatus.LOADING
-        updateFiltersStatus()
-        coroutineScope.launch {
-            when (val getCausesResponse = globalRepository.getCauses()) {
-                is ResultWrapper.Success        -> onLoadCausesSuccess(getCausesResponse.value)
-                is ResultWrapper.NetworkError   -> _getCausesStatus = QueroAjudarApiStatus.NETWORK_ERROR
-                is ResultWrapper.GenericError   -> _getCausesStatus = QueroAjudarApiStatus.GENERIC_ERROR
-            }
-        }
-    }
+//    private fun loadCauses(){
+//        Timber.i("Loading causes")
+//        _getCausesStatus = ApiStatus.LOADING
+//        updateFiltersStatus()
+//        coroutineScope.launch {
+//            when (val getCausesResponse = globalRepository.getCauses()) {
+//                is ResultWrapper.Success        -> onLoadCausesSuccess(getCausesResponse.value)
+//                is ResultWrapper.NetworkError   -> _getCausesStatus = ApiStatus.NETWORK_ERROR
+//                is ResultWrapper.GenericError   -> _getCausesStatus = ApiStatus.GENERIC_ERROR
+//            }
+//        }
+//    }
+//
+//    private fun loadSkills(){
+//        Timber.i("Loading skills")
+//        _getSkillsStatus = ApiStatus.LOADING
+//        updateFiltersStatus()
+//        coroutineScope.launch {
+//            when (val getSkillsResponse = globalRepository.getSkills()) {
+//                is ResultWrapper.Success        -> onLoadSkillsSuccess(getSkillsResponse.value)
+//                is ResultWrapper.NetworkError   -> _getSkillsStatus = ApiStatus.NETWORK_ERROR
+//                is ResultWrapper.GenericError   -> _getSkillsStatus = ApiStatus.GENERIC_ERROR
+//            }
+//        }
+//    }
 
-    private fun loadSkills(){
-        Timber.i("Loading skills")
-        _getSkillsStatus = QueroAjudarApiStatus.LOADING
-        updateFiltersStatus()
-        coroutineScope.launch {
-            when (val getSkillsResponse = globalRepository.getSkills()) {
-                is ResultWrapper.Success        -> onLoadSkillsSuccess(getSkillsResponse.value)
-                is ResultWrapper.NetworkError   -> _getSkillsStatus = QueroAjudarApiStatus.NETWORK_ERROR
-                is ResultWrapper.GenericError   -> _getSkillsStatus = QueroAjudarApiStatus.GENERIC_ERROR
-            }
-        }
-    }
+//    private fun loadOrganizations(){
+//        Timber.i("Loading organizations")
+//        _getOrganizationsStatus.value = ApiStatus.LOADING
+//        coroutineScope.launch {
+//            when (val getOrganizationsResponse = organizationRepository.getOrganizations()) {
+//                is ResultWrapper.Success        -> onLoadOrganizationsSuccess(getOrganizationsResponse.value)
+//                is ResultWrapper.NetworkError   -> _getOrganizationsStatus.postValue(ApiStatus.NETWORK_ERROR)
+//                is ResultWrapper.GenericError   -> _getOrganizationsStatus.postValue(ApiStatus.GENERIC_ERROR)
+//            }
+//        }
+//    }
 
-    private fun loadOrganizations(){
-        Timber.i("Loading organizations")
-        _getOrganizationsStatus.value = QueroAjudarApiStatus.LOADING
-        coroutineScope.launch {
-            when (val getOrganizationsResponse = organizationRepository.getOrganizations()) {
-                is ResultWrapper.Success        -> onLoadOrganizationsSuccess(getOrganizationsResponse.value)
-                is ResultWrapper.NetworkError   -> _getOrganizationsStatus.value = QueroAjudarApiStatus.NETWORK_ERROR
-                is ResultWrapper.GenericError   -> _getOrganizationsStatus.value = QueroAjudarApiStatus.GENERIC_ERROR
-            }
-        }
-    }
+//    private fun onLoadCausesSuccess(response: SuccessResponse<List<Category>>) {
+//        Timber.i("Causes API call success: $response")
+//        _getCausesStatus = ApiStatus.DONE
+//        updateFiltersStatus()
+//        _causes.value = response.data
+//    }
+//
+//    private fun onLoadSkillsSuccess(response: SuccessResponse<List<Category>>) {
+//        Timber.i("Causes API call success: $response")
+//        _getSkillsStatus = ApiStatus.DONE
+//        updateFiltersStatus()
+//        _skills.value = response.data
+//    }
 
-    private fun onLoadCausesSuccess(response: SuccessResponse<List<Category>>) {
-        Timber.i("Causes API call success: $response")
-        _getCausesStatus = QueroAjudarApiStatus.DONE
-        updateFiltersStatus()
-        _causes.value = response.data
-    }
-
-    private fun onLoadSkillsSuccess(response: SuccessResponse<List<Category>>) {
-        Timber.i("Causes API call success: $response")
-        _getSkillsStatus = QueroAjudarApiStatus.DONE
-        updateFiltersStatus()
-        _skills.value = response.data
-    }
-
-    private fun onLoadOrganizationsSuccess(response: SuccessResponse<List<Organization>>) {
-        Timber.i("Organizations API call success: $response")
-        _getOrganizationsStatus.value = QueroAjudarApiStatus.DONE
-        _organizations.value = response.data
-    }
+//    private fun onLoadOrganizationsSuccess(response: SuccessResponse<List<Organization>>) {
+//        Timber.i("Organizations API call success: $response")
+//        _getOrganizationsStatus.value = ApiStatus.DONE
+//        _organizations.value = response.data
+//    }
 
     private fun updateFiltersStatus(){
-        if(_getCausesStatus == QueroAjudarApiStatus.LOADING
-            || _getSkillsStatus == QueroAjudarApiStatus.LOADING){
-            _getFiltersStatus.value = QueroAjudarApiStatus.LOADING
+        if(_getCausesStatus == ApiStatus.LOADING
+            || _getSkillsStatus == ApiStatus.LOADING){
+            _getFiltersStatus.value = ApiStatus.LOADING
         }
         else {
-            _getFiltersStatus.value = QueroAjudarApiStatus.DONE
+            _getFiltersStatus.value = ApiStatus.DONE
         }
     }
 }
