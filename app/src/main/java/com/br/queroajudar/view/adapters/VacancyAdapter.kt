@@ -11,7 +11,7 @@ import com.br.queroajudar.databinding.RecommendedOrganizationsListBinding
 import com.br.queroajudar.databinding.VacancyItemBinding
 import com.br.queroajudar.model.Organization
 import com.br.queroajudar.model.Vacancy
-import com.br.queroajudar.network.ApiStatus
+import com.br.queroajudar.network.ResultWrapper
 
 
 class VacancyAdapter(private val clickListener : VacancyClickListener) : PagedListAdapter<
@@ -24,11 +24,12 @@ class VacancyAdapter(private val clickListener : VacancyClickListener) : PagedLi
     private val ORGANIZATIONS_LIST_POSITION = 5
 
     private var organizations = listOf<Organization>()
-    private var apiStatus = ApiStatus.LOADING
+    private var resultWrapper: ResultWrapper<Any>
 
     private var differ : AsyncPagedListDiffer<Vacancy>
 
     init {
+        resultWrapper = ResultWrapper.Loading
 
         val adapterCallback = AdapterListUpdateCallback(this)
         differ = AsyncPagedListDiffer(
@@ -65,7 +66,7 @@ class VacancyAdapter(private val clickListener : VacancyClickListener) : PagedLi
                 holder.bind(organizations)
             }
             is LoadingViewHolder -> {
-                holder.bind(apiStatus)
+                holder.bind(resultWrapper)
             }
         }
     }
@@ -80,7 +81,7 @@ class VacancyAdapter(private val clickListener : VacancyClickListener) : PagedLi
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if(apiStatus != ApiStatus.DONE && position == itemCount - 1){
+        return if(resultWrapper !is ResultWrapper.Success && position == itemCount - 1){
             VIEW_TYPE_PROGRESS
         }
         else if(getItem(position) == null){
@@ -116,8 +117,8 @@ class VacancyAdapter(private val clickListener : VacancyClickListener) : PagedLi
         this.organizations = organizations
     }
 
-    fun setApiStatus(apiStatus : ApiStatus){
-        this.apiStatus = apiStatus
+    fun setResultWrapper(resultWrapper: ResultWrapper<Any>){
+        this.resultWrapper = resultWrapper
     }
 
     private fun toRealPosition(position: Int): Int {
@@ -166,8 +167,8 @@ class VacancyAdapter(private val clickListener : VacancyClickListener) : PagedLi
     class LoadingViewHolder private constructor(private val binding: LoadingItemBinding)
         : RecyclerView.ViewHolder(binding.root){
 
-        fun bind(apiStatus: ApiStatus) {
-            binding.apiStatus = apiStatus
+        fun bind(resultWrapper: ResultWrapper<Any>) {
+            binding.resultWrapper = resultWrapper
             binding.executePendingBindings()
         }
 

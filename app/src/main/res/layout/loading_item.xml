@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="apiStatus"
-            type="com.br.queroajudar.network.ApiStatus" />
+            name="resultWrapper"
+            type="com.br.queroajudar.network.ResultWrapper" />
     </data>
 
     <LinearLayout
@@ -20,7 +20,7 @@
             style="@style/progressBarStyle"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="@dimen/layout_margin_8dp"
-            app:apiStatusLoading="@{apiStatus}"
+            app:resultWrapperLoading="@{resultWrapper}"
             android:layout_gravity="center"
             tools:visibility="visible"/>
 
@@ -35,7 +35,7 @@
             android:layout_marginEnd="8dp"
             android:text="@string/tv_networkInfo"
             android:gravity="center"
-            app:apiStatusNetworkError="@{apiStatus}"
+            app:resultWrapperNetworkError="@{resultWrapper}"
             tools:visibility="gone"/>
 
     </LinearLayout>

@@ -9,9 +9,8 @@
         <variable
             name="viewModel"
             type="com.br.queroajudar.viewmodel.VacanciesViewModel"/>
-        <variable
-            name="isLoadingProgressVisible"
-            type="boolean"/>
+
+
     </data>
 
 <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
@@ -113,10 +112,33 @@
 
                 <include
                     android:id="@+id/vacancies_overlay_loading"
-                    tools:visibility="gone"
-                    app:loadingOverlayApiStatus="@{viewModel.vacanciesLoadInitialApiStatus}"
-                    layout="@layout/loading_overlay"/>
+                    layout="@layout/network_status_overlay"
+                    app:networkStatusOverlayResultWrapper="@{viewModel.vacanciesLoadInitialResultWrapper}"
+                    android:visibility="visible"
+                    />
 
+<!--            <FrameLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:animateLayoutChanges="true"-->
+<!--                android:elevation="1dp"-->
+<!--                android:clickable="true"-->
+<!--                android:focusable="true"-->
+<!--                android:background="@android:color/white"-->
+<!--                app:resultWrapperLoading="@{viewModel.vacanciesLoadInitialResultWrapper}"-->
+
+<!--                >-->
+
+
+<!--            <ProgressBar-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:indeterminate="true"-->
+<!--                android:indeterminateTint="@color/colorPrimary"-->
+<!--                android:visibility="visible"-->
+<!--                />-->
+<!--            </FrameLayout>-->
 
             <!--
                 <ImageView
@@ -142,12 +164,12 @@
             android:clickable="true"
             android:elevation="12dp">
 
-            <include
-                android:id="@+id/vacancies_filter_layout"
-                layout="@layout/vacancies_filter_layout"
-                app:selectedCausesStr="@{viewModel.selectedCausesStr}"
-                app:selectedSkillsStr="@{viewModel.selectedSkillsStr}"
-                app:vacanciesFilterApiStatus="@{viewModel.getFiltersStatus}" />
+<!--            <include-->
+<!--                android:id="@+id/vacancies_filter_layout"-->
+<!--                layout="@layout/vacancies_filter_layout"-->
+<!--                app:selectedCausesStr="@{viewModel.selectedCausesStr}"-->
+<!--                app:selectedSkillsStr="@{viewModel.selectedSkillsStr}"-->
+<!--                app:resultWrapper="@{viewModel.skills}" />-->
 
         </ScrollView>
 

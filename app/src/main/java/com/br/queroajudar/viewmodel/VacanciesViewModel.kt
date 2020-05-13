@@ -4,7 +4,7 @@ import androidx.lifecycle.*
 import com.br.queroajudar.di.CoroutineScopeIO
 import com.br.queroajudar.model.Category
 import com.br.queroajudar.model.Organization
-import com.br.queroajudar.network.ApiStatus
+//import com.br.queroajudar.network.ApiStatus
 import com.br.queroajudar.network.ResultWrapper
 import com.br.queroajudar.network.response.SuccessResponse
 import com.br.queroajudar.repository.OrganizationRepository
@@ -23,13 +23,13 @@ class VacanciesViewModel @Inject constructor(
 ) : ViewModel(){
 
 
-    private val _getFiltersStatus = MutableLiveData<ApiStatus>()
-    val getFiltersStatus: LiveData<ApiStatus>
-        get() = _getFiltersStatus
-
-    private var _getOrganizationsStatus = MutableLiveData<ApiStatus>()
-    val getOrganizationsStatus : LiveData<ApiStatus>
-        get() = _getOrganizationsStatus
+//    private val _getFiltersStatus = MutableLiveData<ApiStatus>()
+//    val getFiltersStatus: LiveData<ApiStatus>
+//        get() = _getFiltersStatus
+//
+//    private var _getOrganizationsStatus = MutableLiveData<ApiStatus>()
+//    val getOrganizationsStatus : LiveData<ApiStatus>
+//        get() = _getOrganizationsStatus
 
 
 //    private var _causes = MutableLiveData<List<Category>>()
@@ -58,8 +58,8 @@ class VacanciesViewModel @Inject constructor(
     private var _selectedSkillsId = listOf<Int>()
 
     private var _endLoading = false
-    private var _getCausesStatus = ApiStatus.DONE
-    private var _getSkillsStatus = ApiStatus.DONE
+//    private var _getCausesStatus = ApiStatus.DONE
+//    private var _getSkillsStatus = ApiStatus.DONE
 
     // Escopo de Corotina
 //    private var viewModelJob = Job()
@@ -79,8 +79,8 @@ class VacanciesViewModel @Inject constructor(
     private val repoResult = vacancyRepository.observeRemotePagedVacancies(coroutineScope,"","")
 
     val vacancies = repoResult.pagedList
-    val vacanciesLoadInitialApiStatus = repoResult.loadInitialApiStatus
-    val vacanciesLoadAfterApiStatus = repoResult.loadAfterApiStatus
+    val vacanciesLoadInitialResultWrapper = repoResult.loadInitialResultWrapper
+    val vacanciesLoadAfterResultWrapper = repoResult.loadAfterResultWrapper
 
     val organizations = organizationRepository.organizations
 
@@ -93,7 +93,7 @@ class VacanciesViewModel @Inject constructor(
 //        _causes.value = mutableListOf()
 //        _skills.value = mutableListOf()
 
-        _getFiltersStatus.value = ApiStatus.DONE
+//        _getFiltersStatus.value = ApiStatus.DONE
 
 //        initPaging()
 //        loadOrganizations()
@@ -245,13 +245,13 @@ class VacanciesViewModel @Inject constructor(
 //        _organizations.value = response.data
 //    }
 
-    private fun updateFiltersStatus(){
-        if(_getCausesStatus == ApiStatus.LOADING
-            || _getSkillsStatus == ApiStatus.LOADING){
-            _getFiltersStatus.value = ApiStatus.LOADING
-        }
-        else {
-            _getFiltersStatus.value = ApiStatus.DONE
-        }
-    }
+//    private fun updateFiltersStatus(){
+//        if(_getCausesStatus == ApiStatus.LOADING
+//            || _getSkillsStatus == ApiStatus.LOADING){
+//            _getFiltersStatus.value = ApiStatus.LOADING
+//        }
+//        else {
+//            _getFiltersStatus.value = ApiStatus.DONE
+//        }
+//    }
 }

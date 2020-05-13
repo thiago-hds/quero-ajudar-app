@@ -134,7 +134,7 @@
 <!--        <include-->
 <!--            android:id="@+id/register_overlay_loading"-->
 <!--            android:visibility="gone"-->
-<!--            layout="@layout/loading_overlay"/>-->
+<!--            layout="@layout/network_status_overlay"/>-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

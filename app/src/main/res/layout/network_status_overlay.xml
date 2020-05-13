@@ -3,9 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
-            name="loadingOverlayApiStatus"
-            type="com.br.queroajudar.network.ApiStatus" />
+            name="networkStatusOverlayResultWrapper"
+            type="com.br.queroajudar.network.ResultWrapper" />
     </data>
 
     <FrameLayout
@@ -16,14 +17,9 @@
         android:clickable="true"
         android:focusable="true"
         android:background="@android:color/white"
-        android:visibility="gone"
-        app:apiStatusNetworkOverlay="@{loadingOverlayApiStatus}">
+        android:visibility="visible"
+        app:resultWrapperNetworkStatusOverlay="@{networkStatusOverlayResultWrapper}">
 
-<!--        <FrameLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:alpha="1.0"-->
-<!--            android:background="@android:color/white"></FrameLayout>-->
 
         <ProgressBar
             android:layout_width="match_parent"
@@ -32,13 +28,13 @@
             android:indeterminate="true"
             android:indeterminateTint="@color/colorPrimary"
             android:visibility="visible"
-            app:apiStatusLoading="@{loadingOverlayApiStatus}"/>
+            app:resultWrapperLoading="@{networkStatusOverlayResultWrapper}" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:apiStatusNetworkError="@{loadingOverlayApiStatus}">
-
+            android:visibility="gone"
+            app:resultWrapperNetworkError="@{networkStatusOverlayResultWrapper}">
 
             <ImageView
                 android:id="@+id/iv_cloudOff"

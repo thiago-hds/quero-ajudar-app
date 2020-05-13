@@ -7,7 +7,6 @@ import androidx.lifecycle.map
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.br.queroajudar.network.ApiStatus
 import com.br.queroajudar.network.ResultWrapper
 import kotlinx.coroutines.Dispatchers
 

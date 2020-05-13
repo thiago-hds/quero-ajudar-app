@@ -33,11 +33,11 @@ class VacancyRepository @Inject constructor(
 
         return PagedListing(
             pagedList = livePagedList,
-            loadInitialApiStatus = Transformations.switchMap(dataSourceFactory.mutableLiveData) {
-                    dataSource -> dataSource.loadInitialApiStatus
+            loadInitialResultWrapper = Transformations.switchMap(dataSourceFactory.mutableLiveData) {
+                    dataSource -> dataSource.loadInitialResultWrapper
             },
-            loadAfterApiStatus = Transformations.switchMap(dataSourceFactory.mutableLiveData) {
-                    dataSource -> dataSource.loadAfterApiStatus
+            loadAfterResultWrapper = Transformations.switchMap(dataSourceFactory.mutableLiveData) {
+                    dataSource -> dataSource.loadAfterResultWrapper
             },
             refresh = {
                 dataSourceFactory.mutableLiveData.value?.invalidate()

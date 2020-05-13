@@ -3,10 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+
+
     <data>
+
+        <import type="com.br.queroajudar.network.ResultWrapper" />
         <variable
-            name="vacanciesFilterApiStatus"
-            type="com.br.queroajudar.network.ApiStatus" />
+            name="resultWrapper"
+            type="ResultWrapper" />
 
         <variable
             name="selectedCausesStr"
@@ -24,16 +28,16 @@
         android:layout_height="match_parent"
         tools:showIn="@layout/fragment_vacancies">
 
-        <include
-            layout="@layout/loading_overlay"
-            android:layout_height="0dp"
-            android:layout_width="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:loadingOverlayApiStatus="@{vacanciesFilterApiStatus}"
-            tools:visibility="gone" />
+<!--        <include-->
+<!--            layout="@layout/network_status_overlay"-->
+<!--            android:layout_height="0dp"-->
+<!--            android:layout_width="0dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:resultWrapperNetworkStatusOverlay="@{resultWrapper}"-->
+<!--            tools:visibility="gone" />-->
 
         <TextView
             android:id="@+id/tv_FilterBy"
