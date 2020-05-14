@@ -3,10 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="androidx.lifecycle.LiveData"/>
+        <import type="com.br.queroajudar.network.ResultWrapper" />
 
         <variable
-            name="networkStatusOverlayResultWrapper"
-            type="com.br.queroajudar.network.ResultWrapper" />
+            name="result"
+            type="ResultWrapper" />
     </data>
 
     <FrameLayout
@@ -17,8 +19,7 @@
         android:clickable="true"
         android:focusable="true"
         android:background="@android:color/white"
-        android:visibility="visible"
-        app:resultWrapperNetworkStatusOverlay="@{networkStatusOverlayResultWrapper}">
+        app:resultWrapperNetworkStatusOverlay="@{result}">
 
 
         <ProgressBar
@@ -27,14 +28,13 @@
             android:layout_gravity="center"
             android:indeterminate="true"
             android:indeterminateTint="@color/colorPrimary"
-            android:visibility="visible"
-            app:resultWrapperLoading="@{networkStatusOverlayResultWrapper}" />
+            app:resultWrapperLoading="@{result}" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"
-            app:resultWrapperNetworkError="@{networkStatusOverlayResultWrapper}">
+            app:resultWrapperNetworkError="@{result}">
 
             <ImageView
                 android:id="@+id/iv_cloudOff"

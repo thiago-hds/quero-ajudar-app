@@ -6,12 +6,6 @@
 
 
     <data>
-
-        <import type="com.br.queroajudar.network.ResultWrapper" />
-        <variable
-            name="resultWrapper"
-            type="ResultWrapper" />
-
         <variable
             name="selectedCausesStr"
             type="String" />

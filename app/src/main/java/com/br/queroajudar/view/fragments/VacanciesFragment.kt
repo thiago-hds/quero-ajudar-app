@@ -58,13 +58,11 @@ class VacanciesFragment : Fragment() {
         )
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-//        binding.resultWrapper = viewModel.vacanciesLoadInitialResultWrapper
-//        binding.resultWrapper = viewModel.vacancies
 
         setupVacanciesList()
         setupOrderBySpinner()
-//        setupFilters()
-//        setupListeners()
+        setupFilters()
+        setupListeners()
 
         return binding.root
     }
@@ -87,7 +85,7 @@ class VacanciesFragment : Fragment() {
 
         viewModel.organizations.observe(viewLifecycleOwner, Observer { result ->
             Timber.i("organizations list changed $result")
-//            binding.resultWrapper = result
+            binding.overlayNetworkStatus.result = result
             when(result){
                 is ResultWrapper.Success -> result.value.data?.let { adapter.setOrganizations(it) }
                 is ResultWrapper.GenericError -> { /*TODO*/}
@@ -134,98 +132,96 @@ class VacanciesFragment : Fragment() {
     }
 
 
-//    private fun setupFilters(){
-//        // Filtro de Causas
-//        val causeAdapter = CategoryAdapter()
-//        binding.vacanciesFilterLayout.causesListLayout.causes_recyclerView.adapter = causeAdapter
-//
-//        val causeTracker = setupSelectionTracker(
-//            binding.vacanciesFilterLayout.causesListLayout.causes_recyclerView,
-//            "causeSelection"
-//        ) {selectedCauses -> viewModel.onCauseItemSelected(selectedCauses)}
-//        causeAdapter.tracker = causeTracker
-//
-//        viewModel.causes.observe(viewLifecycleOwner, Observer { result ->
-//            when(result){
-//                is ResultWrapper.Success -> { result.value.data?.let{causeAdapter.submitList(it)}}
-//                is ResultWrapper.Loading -> {}
-//                is ResultWrapper.NetworkError -> {}
-//                is ResultWrapper.GenericError -> {}
-//            }
-//        })
-//
-//        // Filtro de Habilidades
-//        val skillAdapter = CategoryAdapter()
-//        binding.vacanciesFilterLayout.skillsListLayout.skills_recyclerView.adapter = skillAdapter
-//
-//        val skillTracker = setupSelectionTracker(
-//            binding.vacanciesFilterLayout.skillsListLayout.skills_recyclerView,
-//            "skillSelection"
-//        ) {selectedSkills -> viewModel.onSkillItemSelected(selectedSkills)}
-//        skillAdapter.tracker = skillTracker
-//
-////        viewModel.skills.observe(viewLifecycleOwner, Observer { skillList ->
-////            Timber.i("Skill list changed. Size is ${skillList.size}")
-////            skillList?.let {
-////                skillAdapter.submitList(it.toImmutableList())
-////                Timber.i("Skill list submitted")
-////            }
-////        })
-//
-//        viewModel.skills.observe(viewLifecycleOwner, Observer { result ->
-//            when(result){
-//                is ResultWrapper.Success -> { result.value.data?.let{skillAdapter.submitList(it)}}
-//                is ResultWrapper.Loading -> {}
-//                is ResultWrapper.NetworkError -> {}
-//                is ResultWrapper.GenericError -> {}
-//            }
-//        })
-//
-//    }
+    private fun setupFilters(){
+        // Filtro de Causas
+        val causeAdapter = CategoryAdapter()
+        binding.vacanciesFilterLayout.causesListLayout.causes_recyclerView.adapter = causeAdapter
 
-//    private fun setupListeners(){
-//        binding.vacanciesBtnFilters.setOnClickListener {
-//            binding.vacanciesDlFilters.openDrawer(GravityCompat.END)
-//        }
-//
-//        binding.vacanciesDlFilters.addDrawerListener(object : DrawerLayout.DrawerListener {
-//            override fun onDrawerStateChanged(newState: Int) {}
-//
-//            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {}
-//
-//            override fun onDrawerClosed(drawerView: View) {}
-//
-//            override fun onDrawerOpened(drawerView: View) {
-//                viewModel.onDrawerOpened()
+        val causeTracker = setupSelectionTracker(
+            binding.vacanciesFilterLayout.causesListLayout.causes_recyclerView,
+            "causeSelection"
+        ) {selectedCauses -> viewModel.onCauseItemSelected(selectedCauses)}
+        causeAdapter.tracker = causeTracker
+
+        viewModel.causes.observe(viewLifecycleOwner, Observer { result ->
+            when(result){
+                is ResultWrapper.Success -> { result.value.data?.let{causeAdapter.submitList(it)}}
+                is ResultWrapper.Loading -> {}
+                is ResultWrapper.NetworkError -> {}
+                is ResultWrapper.GenericError -> {}
+            }
+        })
+
+        // Filtro de Habilidades
+        val skillAdapter = CategoryAdapter()
+        binding.vacanciesFilterLayout.skillsListLayout.skills_recyclerView.adapter = skillAdapter
+
+        val skillTracker = setupSelectionTracker(
+            binding.vacanciesFilterLayout.skillsListLayout.skills_recyclerView,
+            "skillSelection"
+        ) {selectedSkills -> viewModel.onSkillItemSelected(selectedSkills)}
+        skillAdapter.tracker = skillTracker
+
+//        viewModel.skills.observe(viewLifecycleOwner, Observer { skillList ->
+//            Timber.i("Skill list changed. Size is ${skillList.size}")
+//            skillList?.let {
+//                skillAdapter.submitList(it.toImmutableList())
+//                Timber.i("Skill list submitted")
 //            }
-//
 //        })
-//
-//        binding.vacanciesFilterLayout.layoutExpandCauseFilter.setOnClickListener {
-//            isCauseFilterExpanded = expandOrCollapseFilterLayout(
-//                binding.vacanciesFilterLayout.ivExpandCauseFilterArrow,
-//                binding.vacanciesFilterLayout.causesListLayout,
-//                isCauseFilterExpanded)
-//        }
-//
-//        binding.vacanciesFilterLayout.layoutExpandSkillFilter.setOnClickListener {
-//            isSkillFilterExpanded = expandOrCollapseFilterLayout(
-//                binding.vacanciesFilterLayout.ivExpandSkillFilterArrow,
-//                binding.vacanciesFilterLayout.skillsListLayout,
-//                isSkillFilterExpanded)
-//        }
-//
-//        binding.vacanciesOverlayLoading.btnTryAgain.setOnClickListener {
-//            viewModel.onTryAgainClicked()
-//        }
-//    }
+
+        viewModel.skills.observe(viewLifecycleOwner, Observer { result ->
+            when(result){
+                is ResultWrapper.Success -> { result.value.data?.let{skillAdapter.submitList(it)}}
+                is ResultWrapper.Loading -> {}
+                is ResultWrapper.NetworkError -> {}
+                is ResultWrapper.GenericError -> {}
+            }
+        })
+
+    }
+
+    private fun setupListeners(){
+        binding.vacanciesBtnFilters.setOnClickListener {
+            binding.vacanciesDlFilters.openDrawer(GravityCompat.END)
+        }
+
+        binding.vacanciesDlFilters.addDrawerListener(object : DrawerLayout.DrawerListener {
+            override fun onDrawerStateChanged(newState: Int) {}
+
+            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {}
+
+            override fun onDrawerClosed(drawerView: View) {}
+
+            override fun onDrawerOpened(drawerView: View) {
+                viewModel.onDrawerOpened()
+            }
+        })
+
+        binding.vacanciesFilterLayout.layoutExpandCauseFilter.setOnClickListener {
+            isCauseFilterExpanded = expandOrCollapseFilterLayout(
+                binding.vacanciesFilterLayout.ivExpandCauseFilterArrow,
+                binding.vacanciesFilterLayout.causesListLayout,
+                isCauseFilterExpanded)
+        }
+
+        binding.vacanciesFilterLayout.layoutExpandSkillFilter.setOnClickListener {
+            isSkillFilterExpanded = expandOrCollapseFilterLayout(
+                binding.vacanciesFilterLayout.ivExpandSkillFilterArrow,
+                binding.vacanciesFilterLayout.skillsListLayout,
+                isSkillFilterExpanded)
+        }
+
+        binding.overlayNetworkStatus.btnTryAgain.setOnClickListener {
+            viewModel.onTryAgainClicked()
+        }
+    }
 
     private fun expandOrCollapseFilterLayout(ivArrow: ImageView, listLayout:View,
                                              isExpanded:Boolean) : Boolean {
+
         toggleViewRotation0to180(ivArrow, isExpanded)
-
         toggleViewExpansion2(listLayout,isExpanded)
-
         return !isExpanded
     }
 
@@ -263,7 +259,6 @@ class VacanciesFragment : Fragment() {
                 }
             }
         )
-
         return selectionTracker
     }
 }

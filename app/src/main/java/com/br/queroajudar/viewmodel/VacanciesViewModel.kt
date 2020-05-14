@@ -135,8 +135,7 @@ class VacanciesViewModel @Inject constructor(
     }
 
     fun onTryAgainClicked(){
-//        vacancyDataSourceFactory.mutableLiveData.value?.invalidate()
-//        vacancyRepository.refresh()
+        refresh()
     }
 
     fun onDrawerOpened(){

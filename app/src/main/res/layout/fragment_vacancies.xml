@@ -5,19 +5,10 @@
     tools:context=".view.fragments.VacanciesFragment">
 
     <data>
-        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="com.br.queroajudar.viewmodel.VacanciesViewModel"/>
-
-
     </data>
-
-<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:orientation="vertical"-->
-<!--        android:fitsSystemWindows="true">-->
 
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/vacancies_dl_filters"
@@ -48,27 +39,6 @@
                 app:layout_constraintEnd_toStartOf="@+id/vacancies_btn_filters"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/vacancies_btn_filters" />
-
-<!--            <com.google.android.material.textfield.TextInputLayout-->
-<!--                android:id="@+id/vacancies_dropdown_orderBy_layout"-->
-<!--                style="@style/small_dropdown_style"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="0dp"-->
-<!--                android:layout_marginStart="8dp"-->
-<!--                android:layout_marginEnd="64dp"-->
-<!--                app:layout_constraintBottom_toBottomOf="@+id/vacancies_btn_fiters"-->
-<!--                app:layout_constraintEnd_toStartOf="@+id/vacancies_btn_fiters"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="@+id/vacancies_btn_fiters">-->
-
-<!--                <AutoCompleteTextView-->
-<!--                    android:id="@+id/vacancies_dropdown_orderBy"-->
-<!--                    style="@style/small_textView_style"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:inputType="none" />-->
-
-<!--            </com.google.android.material.textfield.TextInputLayout>-->
 
             <Button
                 android:id="@+id/vacancies_btn_filters"
@@ -111,47 +81,9 @@
                 app:layout_constraintTop_toBottomOf="@+id/vacancies_btn_filters" />
 
                 <include
-                    android:id="@+id/vacancies_overlay_loading"
                     layout="@layout/network_status_overlay"
-                    app:networkStatusOverlayResultWrapper="@{viewModel.vacanciesLoadInitialResultWrapper}"
-                    android:visibility="visible"
-                    />
-
-<!--            <FrameLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:animateLayoutChanges="true"-->
-<!--                android:elevation="1dp"-->
-<!--                android:clickable="true"-->
-<!--                android:focusable="true"-->
-<!--                android:background="@android:color/white"-->
-<!--                app:resultWrapperLoading="@{viewModel.vacanciesLoadInitialResultWrapper}"-->
-
-<!--                >-->
-
-
-<!--            <ProgressBar-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:indeterminate="true"-->
-<!--                android:indeterminateTint="@color/colorPrimary"-->
-<!--                android:visibility="visible"-->
-<!--                />-->
-<!--            </FrameLayout>-->
-
-            <!--
-                <ImageView
-                    android:id="@+id/vacancies_iv_status"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:backgroundTint="@color/colorWhite"
-                    android:elevation="2dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:apiStatus="@{viewModel.apiStatus}" /> -->
+                    android:id="@+id/overlay_networkStatus"
+                    android:visibility="visible" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -164,17 +96,14 @@
             android:clickable="true"
             android:elevation="12dp">
 
-<!--            <include-->
-<!--                android:id="@+id/vacancies_filter_layout"-->
-<!--                layout="@layout/vacancies_filter_layout"-->
-<!--                app:selectedCausesStr="@{viewModel.selectedCausesStr}"-->
-<!--                app:selectedSkillsStr="@{viewModel.selectedSkillsStr}"-->
-<!--                app:resultWrapper="@{viewModel.skills}" />-->
+            <include
+                layout="@layout/vacancies_filter_layout"
+                android:id="@+id/vacancies_filter_layout"
+                app:selectedCausesStr="@{viewModel.selectedCausesStr}"
+                app:selectedSkillsStr="@{viewModel.selectedSkillsStr}" />
 
         </ScrollView>
 
     </androidx.drawerlayout.widget.DrawerLayout>
-
-<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
 
 </layout>

@@ -101,6 +101,8 @@ fun bindResultWrapperNetworkError(view : View, wrapper: ResultWrapper<Any>?){
 @BindingAdapter("resultWrapperNetworkStatusOverlay")
 fun bindApiStatusNetworkOverlay(view : View, wrapper: ResultWrapper<Any>?){
     Timber.i("resultWrapperNetworkStatusOverlay $wrapper")
+
+    Timber.i("vacanciesLoadInitialResultWrapper $wrapper")
     wrapper?.let {
         if (it is ResultWrapper.NetworkError || it is ResultWrapper.Loading) {
             view.visibility = View.VISIBLE

@@ -24,7 +24,7 @@ class VacancyAdapter(private val clickListener : VacancyClickListener) : PagedLi
     private val ORGANIZATIONS_LIST_POSITION = 5
 
     private var organizations = listOf<Organization>()
-    private var resultWrapper: ResultWrapper<Any>
+    private var resultWrapper: ResultWrapper<Any?>
 
     private var differ : AsyncPagedListDiffer<Vacancy>
 
@@ -117,7 +117,7 @@ class VacancyAdapter(private val clickListener : VacancyClickListener) : PagedLi
         this.organizations = organizations
     }
 
-    fun setResultWrapper(resultWrapper: ResultWrapper<Any>){
+    fun setResultWrapper(resultWrapper: ResultWrapper<Any?>){
         this.resultWrapper = resultWrapper
     }
 
@@ -167,7 +167,7 @@ class VacancyAdapter(private val clickListener : VacancyClickListener) : PagedLi
     class LoadingViewHolder private constructor(private val binding: LoadingItemBinding)
         : RecyclerView.ViewHolder(binding.root){
 
-        fun bind(resultWrapper: ResultWrapper<Any>) {
+        fun bind(resultWrapper: ResultWrapper<Any?>) {
             binding.resultWrapper = resultWrapper
             binding.executePendingBindings()
         }
