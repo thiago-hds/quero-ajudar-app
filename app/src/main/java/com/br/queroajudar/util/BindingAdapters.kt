@@ -102,7 +102,6 @@ fun bindResultWrapperNetworkError(view : View, wrapper: ResultWrapper<Any>?){
 fun bindApiStatusNetworkOverlay(view : View, wrapper: ResultWrapper<Any>?){
     Timber.i("resultWrapperNetworkStatusOverlay $wrapper")
 
-    Timber.i("vacanciesLoadInitialResultWrapper $wrapper")
     wrapper?.let {
         if (it is ResultWrapper.NetworkError || it is ResultWrapper.Loading) {
             view.visibility = View.VISIBLE
@@ -168,8 +167,6 @@ fun setHtmlTextValue(textView: TextView, htmlText: String?) {
     } else {
         Html.fromHtml(htmlText)
     }
-
-    Timber.i("$result")
     textView.text = result
 }
 

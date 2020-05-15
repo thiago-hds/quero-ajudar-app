@@ -20,8 +20,8 @@ class AppModule{
 
     @Singleton
     @Provides
-    fun provideApiService(@API okhttpClient: OkHttpClient, converterFactory: MoshiConverterFactory)
-            = provideService(okhttpClient, converterFactory, ApiService::class.java)
+    fun provideApiService(@API okHttpClient: OkHttpClient, converterFactory: MoshiConverterFactory)
+            = provideService(okHttpClient, converterFactory, ApiService::class.java)
 
     @API
     @Provides
@@ -53,11 +53,6 @@ class AppModule{
 
     @Provides
     fun provideKotlinJsonAdapterFactory() = KotlinJsonAdapterFactory()
-
-
-
-
-
 
     @CoroutineScopeIO
     @Provides

@@ -2,36 +2,24 @@ package com.br.queroajudar.repository
 
 import androidx.lifecycle.Transformations
 import androidx.paging.LivePagedListBuilder
-import com.br.queroajudar.model.Vacancy
 import com.br.queroajudar.repository.datasource.VacancyRemoteDataSource
 import com.br.queroajudar.repository.datasource.factory.VacancyPageDataSourceFactory
-import com.br.queroajudar.util.PagedListing
+import com.br.queroajudar.util.VacancyPagedListing
 import kotlinx.coroutines.CoroutineScope
 import javax.inject.Inject
 
 
-class VacancyRepository @Inject constructor(
-    private val remoteDataSource: VacancyRemoteDataSource
-) {
-
-
-//    fun observePagedVacancies(coroutineScope: CoroutineScope) = observeRemotePagedVacancies(coroutineScope)
-////        if (connectivityAvailable) observeRemotePagedSets(themeId, coroutineScope)
-////        else observeLocalPagedSets(themeId)
+class VacancyRepository @Inject constructor(private val remoteDataSource: VacancyRemoteDataSource) {
 
     fun observeRemotePagedVacancies(
-        coroutineScope: CoroutineScope,
-        skills: String,
-        causes: String
-    ): PagedListing<Vacancy> {
-        val dataSourceFactory = VacancyPageDataSourceFactory(coroutineScope, remoteDataSource,  skills, causes)
-//        dataSourceFactory.skills = skills
-//        dataSourceFactory.causes = causes
+        coroutineScope: CoroutineScope
+    ): VacancyPagedListing {
+        val dataSourceFactory = VacancyPageDataSourceFactory(coroutineScope, remoteDataSource)
 
         val livePagedList = LivePagedListBuilder(dataSourceFactory,
             VacancyPageDataSourceFactory.pagedListConfig()).build()
 
-        return PagedListing(
+        return VacancyPagedListing(
             pagedList = livePagedList,
             loadInitialResultWrapper = Transformations.switchMap(dataSourceFactory.mutableLiveData) {
                     dataSource -> dataSource.loadInitialResultWrapper
@@ -39,22 +27,14 @@ class VacancyRepository @Inject constructor(
             loadAfterResultWrapper = Transformations.switchMap(dataSourceFactory.mutableLiveData) {
                     dataSource -> dataSource.loadAfterResultWrapper
             },
-            refresh = {
+            size = Transformations.switchMap(dataSourceFactory.mutableLiveData){
+                dataSource -> dataSource.vacanciesSize
+            },
+            refresh = { causesIds: List<Int>, skillsIds: List<Int> ->
+                dataSourceFactory.causes = causesIds
+                dataSourceFactory.skills = skillsIds
                 dataSourceFactory.mutableLiveData.value?.invalidate()
             }
         )
     }
-
-//    fun setCauses(causes:String){
-//        dataSourceFactory.causes = causes
-//    }
-//
-//    fun setSkills(skills:String){
-//        dataSourceFactory.skills = skills
-//
-//    }
-//
-//    fun refresh(){
-//        dataSourceFactory.mutableLiveData.value?.invalidate()
-//    }
 }

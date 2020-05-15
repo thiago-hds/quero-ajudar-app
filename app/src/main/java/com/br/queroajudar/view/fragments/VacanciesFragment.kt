@@ -67,8 +67,6 @@ class VacanciesFragment : Fragment() {
         return binding.root
     }
 
-
-
     private fun setupVacanciesList(){
 
         val adapter = VacancyAdapter(VacancyClickListener { vacancyId ->
@@ -79,32 +77,31 @@ class VacanciesFragment : Fragment() {
         binding.rvVacancies.adapter = adapter
 
         viewModel.vacancies.observe(viewLifecycleOwner, Observer { vacanciesPagedList ->
-            Timber.i("vacancies observed $vacanciesPagedList")
+            Timber.i("vacancies changed $vacanciesPagedList")
             adapter.submitList(vacanciesPagedList)
         })
 
         viewModel.organizations.observe(viewLifecycleOwner, Observer { result ->
-            Timber.i("organizations list changed $result")
-            binding.overlayNetworkStatus.result = result
-            when(result){
-                is ResultWrapper.Success -> result.value.data?.let { adapter.setOrganizations(it) }
-                is ResultWrapper.GenericError -> { /*TODO*/}
-                is ResultWrapper.NetworkError -> {/*TODO*/}
+            Timber.i("organizations changed $result")
+
+            if(result is ResultWrapper.Success) {
+                result.value.data?.let { adapter.setOrganizations(it) }
             }
         })
 
-//        viewModel.vacanciesSize.observe(viewLifecycleOwner,Observer{ size ->
-//            Timber.i("vacancies size changed $size")
-//            showEmptyList(size == 0)
-//        })
-
-        viewModel.vacanciesLoadInitialResultWrapper.observe(viewLifecycleOwner, Observer {
-            Timber.i("vacanciesLoadInitialResultWrapper changed $it")
+        viewModel.vacanciesSize.observe(viewLifecycleOwner,Observer{ size ->
+            Timber.i("vacancies size changed $size")
+            showEmptyList(size == 0)
         })
 
-        viewModel.vacanciesLoadAfterResultWrapper.observe(viewLifecycleOwner, Observer {
-            Timber.i("getVacanciesStatus changed $it")
-            adapter.setResultWrapper(it)
+        viewModel.vacanciesLoadInitialResultWrapper.observe(viewLifecycleOwner, Observer { result ->
+            Timber.i("vacanciesLoadInitialResultWrapper changed $result")
+            binding.overlayNetworkStatus.result = result
+        })
+
+        viewModel.vacanciesLoadAfterResultWrapper.observe(viewLifecycleOwner, Observer { result ->
+            Timber.i("getVacanciesStatus changed $result")
+            adapter.setResultWrapper(result)
         })
     }
 
@@ -144,11 +141,8 @@ class VacanciesFragment : Fragment() {
         causeAdapter.tracker = causeTracker
 
         viewModel.causes.observe(viewLifecycleOwner, Observer { result ->
-            when(result){
-                is ResultWrapper.Success -> { result.value.data?.let{causeAdapter.submitList(it)}}
-                is ResultWrapper.Loading -> {}
-                is ResultWrapper.NetworkError -> {}
-                is ResultWrapper.GenericError -> {}
+            if(result is ResultWrapper.Success){
+                result.value.data?.let{causeAdapter.submitList(it)}
             }
         })
 
@@ -162,41 +156,17 @@ class VacanciesFragment : Fragment() {
         ) {selectedSkills -> viewModel.onSkillItemSelected(selectedSkills)}
         skillAdapter.tracker = skillTracker
 
-//        viewModel.skills.observe(viewLifecycleOwner, Observer { skillList ->
-//            Timber.i("Skill list changed. Size is ${skillList.size}")
-//            skillList?.let {
-//                skillAdapter.submitList(it.toImmutableList())
-//                Timber.i("Skill list submitted")
-//            }
-//        })
-
         viewModel.skills.observe(viewLifecycleOwner, Observer { result ->
-            when(result){
-                is ResultWrapper.Success -> { result.value.data?.let{skillAdapter.submitList(it)}}
-                is ResultWrapper.Loading -> {}
-                is ResultWrapper.NetworkError -> {}
-                is ResultWrapper.GenericError -> {}
+            if(result is ResultWrapper.Success){
+                result.value.data?.let{ skillAdapter.submitList(it) }
             }
         })
-
     }
 
     private fun setupListeners(){
         binding.vacanciesBtnFilters.setOnClickListener {
             binding.vacanciesDlFilters.openDrawer(GravityCompat.END)
         }
-
-        binding.vacanciesDlFilters.addDrawerListener(object : DrawerLayout.DrawerListener {
-            override fun onDrawerStateChanged(newState: Int) {}
-
-            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {}
-
-            override fun onDrawerClosed(drawerView: View) {}
-
-            override fun onDrawerOpened(drawerView: View) {
-                viewModel.onDrawerOpened()
-            }
-        })
 
         binding.vacanciesFilterLayout.layoutExpandCauseFilter.setOnClickListener {
             isCauseFilterExpanded = expandOrCollapseFilterLayout(
@@ -249,8 +219,7 @@ class VacanciesFragment : Fragment() {
                 override fun onSelectionChanged() {
                     super.onSelectionChanged()
                     if (selectionTracker.selection.size() > 0) {
-                        Timber.tag("QA.VacanciesFragment")
-                            .i("selection observer: ${selectionTracker.selection}")
+                        Timber.i("selection observer: ${selectionTracker.selection}")
                         val items = selectionTracker.selection.mapNotNull{
                             if(it >= 0) it.toInt() else null
                         }

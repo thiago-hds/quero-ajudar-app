@@ -23,6 +23,8 @@ class VacancyAdapter(private val clickListener : VacancyClickListener) : PagedLi
 
     private val ORGANIZATIONS_LIST_POSITION = 5
 
+    private var displayOrganizations = false
+
     private var organizations = listOf<Organization>()
     private var resultWrapper: ResultWrapper<Any?>
 
@@ -35,19 +37,34 @@ class VacancyAdapter(private val clickListener : VacancyClickListener) : PagedLi
         differ = AsyncPagedListDiffer(
             object : ListUpdateCallback {
                 override fun onChanged(position: Int, count: Int, payload: Any?) {
-                    adapterCallback.onChanged(position + 1, count, payload);
+                    if(displayOrganizations)
+                        adapterCallback.onChanged(position + 1, count, payload);
+                    else
+                        adapterCallback.onChanged(position,count,payload)
                 }
 
                 override fun onMoved(fromPosition: Int, toPosition: Int) {
-                    adapterCallback.onMoved(fromPosition + 1, toPosition + 1);
+                    if(displayOrganizations)
+                        adapterCallback.onMoved(fromPosition + 1, toPosition + 1);
+                    else
+                        adapterCallback.onMoved(fromPosition, toPosition);
                 }
 
                 override fun onInserted(position: Int, count: Int) {
-                    adapterCallback.onInserted(position + 1, count);
+                    if(displayOrganizations)
+                        adapterCallback.onInserted(position + 1, count);
+                    else{
+                        adapterCallback.onInserted(position, count);
+                    }
                 }
 
                 override fun onRemoved(position: Int, count: Int) {
-                    adapterCallback.onRemoved(position + 1, count);
+                    if(displayOrganizations) {
+                        adapterCallback.onRemoved(position + 1, count);
+                    }
+                    else{
+                        adapterCallback.onRemoved(position, count);
+                    }
                 }
             },
             AsyncDifferConfig.Builder(VacancyDiffCallback()).build()
@@ -93,12 +110,17 @@ class VacancyAdapter(private val clickListener : VacancyClickListener) : PagedLi
     }
 
     override fun getItem(position: Int): Vacancy? {
-        return if(position == ORGANIZATIONS_LIST_POSITION){
+        return if(displayOrganizations && position == ORGANIZATIONS_LIST_POSITION){
             null
         }
         else{
             differ.getItem(toRealPosition(position))
         }
+    }
+
+    private fun toRealPosition(position: Int): Int {
+        return if (displayOrganizations && position > ORGANIZATIONS_LIST_POSITION) position - 1
+        else position
     }
 
     override fun submitList(pagedList: PagedList<Vacancy>?) {
@@ -110,7 +132,7 @@ class VacancyAdapter(private val clickListener : VacancyClickListener) : PagedLi
     }
 
     override fun getItemCount(): Int {
-        return differ.itemCount + 1
+        return if(displayOrganizations) differ.itemCount + 1 else differ.itemCount
     }
 
     fun setOrganizations(organizations : List<Organization>){
@@ -121,9 +143,7 @@ class VacancyAdapter(private val clickListener : VacancyClickListener) : PagedLi
         this.resultWrapper = resultWrapper
     }
 
-    private fun toRealPosition(position: Int): Int {
-        return if (position < ORGANIZATIONS_LIST_POSITION) position else position - 1
-    }
+
 
     class ItemViewHolder private constructor(private val binding: VacancyItemBinding)
         : RecyclerView.ViewHolder(binding.root){

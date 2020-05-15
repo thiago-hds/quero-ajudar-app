@@ -11,11 +11,11 @@ import javax.inject.Inject
 
 class VacancyPageDataSourceFactory @Inject constructor(
     private val scope: CoroutineScope,
-    private val dataSource: VacancyRemoteDataSource,
-    val causes :String,
-    val skills :String)
+    private val dataSource: VacancyRemoteDataSource)
     : DataSource.Factory<Int, Vacancy>() {
 
+    var causes: List<Int> = listOf()
+    var skills: List<Int> = listOf()
 
     val mutableLiveData = MutableLiveData<VacancyPageDataSource>()
     lateinit var vacancyPageDataSource : VacancyPageDataSource
