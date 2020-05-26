@@ -7,7 +7,7 @@
 
         <variable
             name="category"
-            type="com.br.queroajudar.model.Category" />
+            type="com.br.queroajudar.data.Category" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

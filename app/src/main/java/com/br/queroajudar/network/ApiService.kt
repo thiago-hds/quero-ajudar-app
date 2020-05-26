@@ -1,11 +1,11 @@
 package com.br.queroajudar.network
 
-import com.br.queroajudar.model.Category
-import com.br.queroajudar.model.Organization
-import com.br.queroajudar.model.Vacancy
+import com.br.queroajudar.data.Category
+import com.br.queroajudar.data.Organization
+import com.br.queroajudar.data.Vacancy
 import com.br.queroajudar.network.response.SuccessResponse
-import com.br.queroajudar.model.formdata.LoginData
-import com.br.queroajudar.model.formdata.RegisterData
+import com.br.queroajudar.data.formdata.LoginData
+import com.br.queroajudar.data.formdata.RegisterData
 import retrofit2.http.*
 
 interface ApiService {

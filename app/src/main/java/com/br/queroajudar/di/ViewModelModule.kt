@@ -2,13 +2,11 @@ package com.br.queroajudar.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.br.queroajudar.viewmodel.VacanciesViewModel
-import com.br.queroajudar.viewmodel.ViewModelFactory
+import com.br.queroajudar.vacancies.VacanciesViewModel
+import com.br.queroajudar.util.ViewModelFactory
 import dagger.Binds
-import dagger.MapKey
 import dagger.Module
 import dagger.multibindings.IntoMap
-import kotlin.reflect.KClass
 
 @Suppress("unused")
 @Module

@@ -7,17 +7,17 @@
 
     <fragment
         android:id="@+id/vacanciesFragment"
-        android:name="com.br.queroajudar.view.fragments.VacanciesFragment"
+        android:name="com.br.queroajudar.vacancies.VacanciesFragment"
         android:label="@string/fragment_vacancies_label"
         tools:layout="@layout/fragment_vacancies" />
     <fragment
         android:id="@+id/favoritesFragment"
-        android:name="com.br.queroajudar.view.fragments.FavoritesFragment"
+        android:name="com.br.queroajudar.favorites.FavoritesFragment"
         android:label="@string/fragment_favorites_label"
         tools:layout="@layout/fragment_favorites" />
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.br.queroajudar.view.fragments.ProfileFragment"
+        android:name="com.br.queroajudar.profile.ProfileFragment"
         android:label="@string/fragment_profile_label"
         tools:layout="@layout/fragment_profile" />
 </navigation>

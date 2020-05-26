@@ -6,7 +6,7 @@
     <data>
         <variable
             name="organization"
-            type="com.br.queroajudar.model.Organization" />
+            type="com.br.queroajudar.data.Organization" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

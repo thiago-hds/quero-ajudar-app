@@ -99,7 +99,7 @@ fun bindResultWrapperNetworkError(view : View, wrapper: ResultWrapper<Any>?){
 }
 
 @BindingAdapter("resultWrapperNetworkStatusOverlay")
-fun bindApiStatusNetworkOverlay(view : View, wrapper: ResultWrapper<Any>?){
+fun bindResultWrapperNetworkOverlay(view : View, wrapper: ResultWrapper<Any>?){
     Timber.i("resultWrapperNetworkStatusOverlay $wrapper")
 
     wrapper?.let {
@@ -107,6 +107,20 @@ fun bindApiStatusNetworkOverlay(view : View, wrapper: ResultWrapper<Any>?){
             view.visibility = View.VISIBLE
         } else {
             view.visibility = View.GONE
+        }
+    }
+}
+
+@BindingAdapter("resultWrapperSizeZero")
+fun bindResultWrapperSizeZero(tv : TextView, wrapper: ResultWrapper<Any>?){
+    Timber.i("resultWrapperSizeZero $wrapper")
+
+    wrapper?.let {
+        if(it is ResultWrapper.Success && it.value is List<*> && it.value.size == 0){
+            tv.visibility = View.VISIBLE
+        }
+        else {
+            tv.visibility = View.GONE
         }
     }
 }

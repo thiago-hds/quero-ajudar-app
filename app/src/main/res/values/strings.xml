@@ -44,9 +44,11 @@
     <!-- vacancy_item.xml -->
     <string name="item_vacancy_by">por</string>
 
-    <!-- loading_item.xml -->
+    <!-- network_status_item.xmltem.xml -->
     <string name="tv_networkInfo">Não foi possível carregar outras vagas.
         Verifique sua conexão ou tente novamente mais tarde.
+    </string>
+    <string name="tv_noItemInfo">Nenhum item encontrado
     </string>
     
     <!-- recommended_organizations_list -->

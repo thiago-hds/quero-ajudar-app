@@ -2,7 +2,7 @@ package com.br.queroajudar.util
 
 import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
-import com.br.queroajudar.model.Vacancy
+import com.br.queroajudar.data.Vacancy
 import com.br.queroajudar.network.ResultWrapper
 
 /**

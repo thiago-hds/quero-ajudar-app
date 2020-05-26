@@ -2,6 +2,7 @@ package com.br.queroajudar.network
 
 import android.util.Log
 import com.br.queroajudar.network.response.ErrorResponse
+import com.br.queroajudar.network.response.SuccessResponse
 import com.squareup.moshi.Moshi
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -10,10 +11,11 @@ import java.io.IOException
 import javax.inject.Inject
 
 class SafeApiCaller @Inject constructor(){
-    suspend fun <T> safeApiCall(dispatcher: CoroutineDispatcher, apiCall: suspend () -> T) : ResultWrapper<T> {
+    suspend fun <T> safeApiCall(dispatcher: CoroutineDispatcher, apiCall: suspend () -> SuccessResponse<T>) : ResultWrapper<T> {
         return withContext(dispatcher) {
             try {
-                ResultWrapper.Success(apiCall.invoke())
+                var result = apiCall.invoke()
+                ResultWrapper.Success(result.data)
             } catch (throwable: Throwable) {
                 when (throwable) {
                     is IOException -> ResultWrapper.NetworkError

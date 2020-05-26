@@ -6,11 +6,11 @@
     <data>
         <variable
             name="vacancy"
-            type="com.br.queroajudar.model.Vacancy" />
+            type="com.br.queroajudar.data.Vacancy" />
         
         <variable
             name="clickListener"
-            type="com.br.queroajudar.view.adapters.VacancyClickListener" />
+            type="com.br.queroajudar.vacancies.VacancyClickListener" />
 
 
     </data>

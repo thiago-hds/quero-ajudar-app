@@ -2,12 +2,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.fragments.VacanciesFragment">
+    tools:context=".vacancies.VacanciesFragment">
 
     <data>
         <variable
             name="viewModel"
-            type="com.br.queroajudar.viewmodel.VacanciesViewModel"/>
+            type="com.br.queroajudar.vacancies.VacanciesViewModel"/>
     </data>
 
     <androidx.drawerlayout.widget.DrawerLayout
