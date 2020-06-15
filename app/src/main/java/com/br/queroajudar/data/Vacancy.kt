@@ -12,4 +12,5 @@ data class Vacancy(
     val image : String?,
     val organization: Organization,
     val address : Address
+
 )

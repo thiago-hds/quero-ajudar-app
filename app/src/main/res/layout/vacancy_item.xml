@@ -58,7 +58,7 @@
                 tools:text="@string/tools_vacancyItem_name" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/vacancyItem_btn_organization"
+                android:id="@+id/btnOrganization"
                 style="@style/small_rounded_outlined_button_style"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -66,21 +66,21 @@
                 android:layout_marginEnd="8dp"
                 android:gravity="start"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/vacancyItem_tv_by"
+                app:layout_constraintStart_toEndOf="@+id/tvBy"
                 app:layout_constraintTop_toBottomOf="@+id/vacancyItem_tv_name"
                 app:organizationNameFormatted="@{vacancy.organization.name}"
                 tools:text="@string/tools_vacancyItem_organizationName" />
 
             <TextView
-                android:id="@+id/vacancyItem_tv_by"
+                android:id="@+id/tvBy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="@string/item_vacancy_by"
                 style="@style/grey_textView_style_12sp"
-                app:layout_constraintBottom_toBottomOf="@+id/vacancyItem_btn_organization"
+                app:layout_constraintBottom_toBottomOf="@+id/btnOrganization"
                 app:layout_constraintStart_toEndOf="@+id/vacancyItem_iv_image"
-                app:layout_constraintTop_toTopOf="@+id/vacancyItem_btn_organization" />
+                app:layout_constraintTop_toTopOf="@+id/btnOrganization" />
 
             <TextView
                 android:id="@+id/vacancyItem_tv_location"
@@ -90,7 +90,7 @@
                 android:text="@{vacancy.address.location}"
                 style="@style/grey_textView_style_12sp"
                 app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintTop_toBottomOf="@+id/vacancyItem_btn_organization"
+                app:layout_constraintTop_toBottomOf="@+id/btnOrganization"
                 tools:text="@string/tools_vacancyItem_location" />
 
             <TextView

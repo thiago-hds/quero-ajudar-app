@@ -1,18 +1,19 @@
-package com.br.queroajudar.categories
+package com.br.queroajudar.data.source
 
+import com.br.queroajudar.categories.CategoriesRemoteDataSource
 import com.br.queroajudar.util.resultLiveData
 import javax.inject.Inject
 
-class CategoriesRepository @Inject constructor(
+class DefaultCategoriesRepository @Inject constructor(
     private val remoteDataSource: CategoriesRemoteDataSource
 ) {
 
 
-    val causes = resultLiveData(
+    fun getCauses() = resultLiveData(
         networkCall = {remoteDataSource.fetchCauses()}
     )
 
-    val skills = resultLiveData(
+    fun getSkills() = resultLiveData(
         networkCall = {remoteDataSource.fetchSkills()}
     )
 

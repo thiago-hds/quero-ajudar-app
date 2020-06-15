@@ -1,15 +1,20 @@
-package com.br.queroajudar.vacancies
+package com.br.queroajudar.data.source
 
 import androidx.lifecycle.Transformations
 import androidx.paging.LivePagedListBuilder
 import com.br.queroajudar.util.VacancyPagedListing
+import com.br.queroajudar.util.resultLiveData
+import com.br.queroajudar.vacancies.VacanciesPageDataSourceFactory
+import com.br.queroajudar.vacancies.VacanciesRemoteDataSource
 import kotlinx.coroutines.CoroutineScope
 import javax.inject.Inject
 
 
-class VacanciesRepository @Inject constructor(private val remoteDataSource: VacanciesRemoteDataSource) {
+class DefaultVacanciesRepository @Inject constructor(
+    private val remoteDataSource: VacanciesRemoteDataSource
+): VacanciesRepository {
 
-    fun observeRemotePagedVacancies(
+    override fun getPagedVacancies(
         coroutineScope: CoroutineScope
     ): VacancyPagedListing {
         val dataSourceFactory =
@@ -19,7 +24,8 @@ class VacanciesRepository @Inject constructor(private val remoteDataSource: Vaca
             )
 
         val livePagedList = LivePagedListBuilder(dataSourceFactory,
-            VacanciesPageDataSourceFactory.pagedListConfig()).build()
+            VacanciesPageDataSourceFactory.pagedListConfig()
+        ).build()
 
         return VacancyPagedListing(
             pagedList = livePagedList,
@@ -39,4 +45,8 @@ class VacanciesRepository @Inject constructor(private val remoteDataSource: Vaca
             }
         )
     }
+
+    fun getVacancy(id: Int) = resultLiveData(
+        networkCall = {remoteDataSource.fetchVacancy(id)}
+    )
 }

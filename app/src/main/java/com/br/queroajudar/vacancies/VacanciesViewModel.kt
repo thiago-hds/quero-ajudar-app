@@ -1,19 +1,26 @@
 package com.br.queroajudar.vacancies
 
 import androidx.lifecycle.*
+import androidx.paging.PagedList
+import com.br.queroajudar.data.Category
+import com.br.queroajudar.data.Organization
+import com.br.queroajudar.data.Vacancy
 import com.br.queroajudar.di.CoroutineScopeIO
 //import com.br.queroajudar.network.ApiStatus
 import com.br.queroajudar.network.ResultWrapper
-import com.br.queroajudar.organizations.OrganizationsRepository
-import com.br.queroajudar.categories.CategoriesRepository
+import com.br.queroajudar.data.source.DefaultOrganizationsRepository
+import com.br.queroajudar.data.source.DefaultCategoriesRepository
+import com.br.queroajudar.data.source.DefaultVacanciesRepository
+import com.br.queroajudar.data.source.VacanciesRepository
+import com.br.queroajudar.util.VacancyPagedListing
 import kotlinx.coroutines.CoroutineScope
 import timber.log.Timber
 import javax.inject.Inject
 
 class VacanciesViewModel @Inject constructor(
-    private val vacanciesRepository: VacanciesRepository,
-    private val categoriesRepository: CategoriesRepository,
-    private val organizationsRepository: OrganizationsRepository,
+    private val vacanciesRepository: DefaultVacanciesRepository,
+    private val categoriesRepository: DefaultCategoriesRepository,
+    private val organizationsRepository: DefaultOrganizationsRepository,
     @CoroutineScopeIO private val coroutineScope: CoroutineScope
 ) : ViewModel(){
 
@@ -29,18 +36,41 @@ class VacanciesViewModel @Inject constructor(
     private var _selectedCausesId = listOf<Int>()
     private var _selectedSkillsId = listOf<Int>()
 
-    private var repoResult = vacanciesRepository.observeRemotePagedVacancies(coroutineScope)
-    var vacancies = repoResult.pagedList
-    var vacanciesLoadInitialResultWrapper = repoResult.loadInitialResultWrapper
-    var vacanciesLoadAfterResultWrapper = repoResult.loadAfterResultWrapper
-    var vacanciesSize = repoResult.size
+    lateinit var pagedVacancies: VacancyPagedListing
+    lateinit var vacancies: LiveData<PagedList<Vacancy>>
+    lateinit var vacanciesLoadInitialResultWrapper: LiveData<ResultWrapper<Any>>
+    lateinit var vacanciesLoadAfterResultWrapper: LiveData<ResultWrapper<Any>>
 
-    val organizations = organizationsRepository.organizations
-    val causes = categoriesRepository.causes
-    val skills = categoriesRepository.skills
+    lateinit var organizations: LiveData<ResultWrapper<List<Organization>>>
+
+    lateinit var causes: LiveData<ResultWrapper<List<Category>>>
+    lateinit var skills: LiveData<ResultWrapper<List<Category>>>
+
+    init {
+        loadVacancies()
+        loadOrganizations()
+        loadCategories()
+    }
+
+    fun loadVacancies() {
+        pagedVacancies = vacanciesRepository.getPagedVacancies(coroutineScope)
+        vacancies = pagedVacancies.pagedList
+        vacanciesLoadInitialResultWrapper = pagedVacancies.loadInitialResultWrapper
+        vacanciesLoadAfterResultWrapper = pagedVacancies.loadAfterResultWrapper
+        //vacanciesSize = pagedVacancies.size
+    }
+
+    fun loadOrganizations(){
+        organizations = organizationsRepository.getOrganizations()
+    }
+
+    fun loadCategories(){
+        causes = categoriesRepository.getCauses()
+        skills = categoriesRepository.getSkills()
+    }
 
     private fun refresh() {
-        repoResult?.refresh?.invoke(_selectedCausesId, _selectedSkillsId)
+        pagedVacancies?.refresh?.invoke(_selectedCausesId, _selectedSkillsId)
     }
 
     /*

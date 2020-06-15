@@ -9,7 +9,11 @@
         android:id="@+id/vacanciesFragment"
         android:name="com.br.queroajudar.vacancies.VacanciesFragment"
         android:label="@string/fragment_vacancies_label"
-        tools:layout="@layout/fragment_vacancies" />
+        tools:layout="@layout/fragment_vacancies" >
+        <action
+            android:id="@+id/action_vacanciesFragment_to_vacancyDetailsFragment"
+            app:destination="@id/vacancyDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
         android:name="com.br.queroajudar.favorites.FavoritesFragment"
@@ -20,4 +24,13 @@
         android:name="com.br.queroajudar.profile.ProfileFragment"
         android:label="@string/fragment_profile_label"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/vacancyDetailsFragment"
+        android:name="com.br.queroajudar.vacancydetails.VacancyDetailsFragment"
+        android:label="fragment_vacancy_details"
+        tools:layout="@layout/fragment_vacancy_details" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
 </navigation>

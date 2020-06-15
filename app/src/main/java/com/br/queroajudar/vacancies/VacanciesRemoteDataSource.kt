@@ -18,4 +18,10 @@ class VacanciesRemoteDataSource @Inject constructor(
             service.getVacancies(page,causes?.joinToString(),skills?.joinToString())
         }
     }
+
+    suspend fun fetchVacancy(id: Int): ResultWrapper<Vacancy> {
+        return apiCaller.safeApiCall(Dispatchers.IO){
+            service.getVacancy(id)
+        }
+    }
 }

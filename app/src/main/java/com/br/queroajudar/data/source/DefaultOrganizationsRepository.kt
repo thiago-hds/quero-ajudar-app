@@ -1,15 +1,16 @@
-package com.br.queroajudar.organizations
+package com.br.queroajudar.data.source
 
+import com.br.queroajudar.organizations.OrganizationsRemoteDataSource
 import com.br.queroajudar.util.resultLiveData
 import javax.inject.Inject
 
-class OrganizationsRepository @Inject constructor(
+class DefaultOrganizationsRepository @Inject constructor(
     private val remoteDataSource: OrganizationsRemoteDataSource
 ){
 
     //val organizations = remoteDataSource.fetchOrganizations(1)
 
-    val organizations = resultLiveData(
+    fun getOrganizations() = resultLiveData(
         networkCall = {remoteDataSource.fetchOrganizations((1))}
     )
 

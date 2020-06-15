@@ -41,6 +41,13 @@
     <!-- ProfileFragment -->
     <string name="fragment_profile_label">Perfil</string>
 
+    <!-- VacancyDetailsFragment -->
+    <string name="vacancyDetails_by">por</string>
+    <string name="vacancyDetails_tvLabelDescription">Descrição</string>
+    <string name="vacancyDetails_tvLabelCauses">Causas</string>
+    <string name="vacancyDetails_tvLabelSkills">Habilidades</string>
+    <string name="vacancyDetails_tvLabelSchedule">Horários</string>
+
     <!-- vacancy_item.xml -->
     <string name="item_vacancy_by">por</string>
 
@@ -50,7 +57,7 @@
     </string>
     <string name="tv_noItemInfo">Nenhum item encontrado
     </string>
-    
+
     <!-- recommended_organizations_list -->
     <string name="recommendedOrganizationsList_tv_organizations">Instituições</string>
     <string name="recommendedOrganizationsList_btn_seeAll">Ver Todas</string>
@@ -79,6 +86,8 @@
     <string name="tools_causeItem_name">Animais</string>
     <string name="tools_skillItem_name">Artes e Cultura</string>
     <string name="tools_vacanciesFilterLayout_selectedCauses">Animais, Arte e Cultura, Combate à Pobreza</string>
+    <string name="tools_loremIpsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et massa vestibulum magna tempus porta. Ut in sollicitudin nunc, vitae consequat velit. Etiam sodales, eros vitae aliquam pulvinar, mauris nulla lobortis leo, in fringilla massa sem convallis tellus. Nunc aliquet feugiat pulvinar. Sed faucibus odio orci, et luctus dolor volutpat ut. Maecenas sit amet urna feugiat, accumsan mi finibus, pulvinar velit. Fusce finibus eros a justo mattis porta in vitae ligula. Phasellus malesuada tellus in orci iaculis dapibus. Maecenas non ornare turpis.</string>
+
 
 
 
