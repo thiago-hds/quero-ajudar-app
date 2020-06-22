@@ -24,8 +24,11 @@ class CategoryAdapter : ListAdapter<
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)!!
-        tracker?.let {
-            holder.bind(item, it.isSelected(item.id.toLong()))
+        if (tracker != null) {
+            holder.bind(item, tracker!!.isSelected(item.id.toLong()))
+        }
+        else{
+            holder.bind(item, true)
         }
     }
 

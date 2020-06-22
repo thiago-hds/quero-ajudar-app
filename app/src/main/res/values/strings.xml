@@ -45,8 +45,10 @@
     <string name="vacancyDetails_by">por</string>
     <string name="vacancyDetails_tvLabelDescription">Descrição</string>
     <string name="vacancyDetails_tvLabelCauses">Causas</string>
-    <string name="vacancyDetails_tvLabelSkills">Habilidades</string>
+    <string name="vacancyDetails_tvLabelSkills">Habilidades Necessárias</string>
     <string name="vacancyDetails_tvLabelSchedule">Horários</string>
+    <string name="vacancyDetails_tvLabelLocation">Local</string>
+    <string name="vacancyDetails_tvLabelContact">Contato</string>
 
     <!-- vacancy_item.xml -->
     <string name="item_vacancy_by">por</string>

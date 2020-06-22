@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.GridLayoutManager
 
 import com.br.queroajudar.R
 import com.br.queroajudar.categories.CategoryAdapter
@@ -55,6 +56,8 @@ class VacancyDetailsFragment : Fragment() {
     }
 
     fun setupVacancyDetails(){
+        binding.rvCauses.layoutManager = GridLayoutManager(activity,2)
+        binding.rvSkills.layoutManager = GridLayoutManager(activity,2)
 
         val causeAdapter = CategoryAdapter()
         val skillAdapter = CategoryAdapter()
@@ -62,17 +65,30 @@ class VacancyDetailsFragment : Fragment() {
         binding.rvCauses.adapter = causeAdapter
         binding.rvSkills.adapter = skillAdapter
 
-
         viewModel.vacancy.observe(viewLifecycleOwner, Observer { vacancyResult ->
             Timber.i("vacancy change observed $vacancyResult")
             if(vacancyResult is ResultWrapper.Success) {
                 binding.vacancy = vacancyResult.value
-                //vacancyResult.value. //TODO adicionar habilidades de causas em seus recyclerviews
 
+                vacancyResult.value.causes?.let { causeAdapter.submitList(it) }
+                vacancyResult.value.skills?.let { skillAdapter.submitList(it) }
+
+                setVisibility(binding.tvLabelCauses, vacancyResult.value.causes?.size > 0)
+                setVisibility(binding.rvCauses, vacancyResult.value.causes?.size > 0)
+
+                setVisibility(binding.tvLabelSkills, vacancyResult.value.skills?.size > 0)
+                setVisibility(binding.rvSkills, vacancyResult.value.skills?.size > 0)
             }
         })
+    }
 
-
+    private fun setVisibility(view:View, visibility: Boolean){
+        if(visibility){
+            view.visibility = View.VISIBLE
+        }
+        else{
+            view.visibility = View.GONE
+        }
     }
 
 }

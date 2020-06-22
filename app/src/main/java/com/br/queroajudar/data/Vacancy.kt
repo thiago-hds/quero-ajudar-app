@@ -11,6 +11,7 @@ data class Vacancy(
     val tasks : String,
     val image : String?,
     val organization: Organization,
-    val address : Address
-
+    val address : Address,
+    val causes: List<Category>,
+    val skills: List<Category>
 )

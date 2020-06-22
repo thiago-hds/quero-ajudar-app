@@ -38,4 +38,7 @@ interface ApiService {
         @Query("causes_id") causes: String?,
         @Query("skills_id") skills : String?
     ): SuccessResponse<List<Vacancy>>
+
+    @GET("vacancies/{id}")
+    suspend fun getVacancy(@Path("id") id: Int): SuccessResponse<Vacancy>
 }
