@@ -46,7 +46,7 @@
     <string name="vacancyDetails_tvLabelDescription">Descrição</string>
     <string name="vacancyDetails_tvLabelCauses">Causas</string>
     <string name="vacancyDetails_tvLabelSkills">Habilidades Necessárias</string>
-    <string name="vacancyDetails_tvLabelSchedule">Horários</string>
+    <string name="vacancyDetails_tvLabelTimeSchedule">Horários</string>
     <string name="vacancyDetails_tvLabelLocation">Local</string>
     <string name="vacancyDetails_tvLabelContact">Contato</string>
 

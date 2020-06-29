@@ -6,5 +6,5 @@ import com.squareup.moshi.JsonClass
 data class Organization(
     val id : Int,
     val name : String,
-    val logo : String
+    val logo : String?
 )

@@ -6,6 +6,7 @@ import com.br.queroajudar.data.Vacancy
 import com.br.queroajudar.network.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 class VacanciesPageDataSource @Inject constructor(
@@ -45,6 +46,8 @@ class VacanciesPageDataSource @Inject constructor(
             val getVacanciesResponse =
                 remoteDataSource.fetchVacancies(page, causes, skills)
             resultWrapperLiveData.postValue(getVacanciesResponse)
+
+            Timber.i("vacancies fetched %s", getVacanciesResponse)
 
             if(getVacanciesResponse is ResultWrapper.Success){
                 val vacancies = getVacanciesResponse.value

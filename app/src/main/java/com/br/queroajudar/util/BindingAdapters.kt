@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat.getColor
 import androidx.databinding.BindingAdapter
 import com.br.queroajudar.R
+import com.br.queroajudar.data.Vacancy
 import com.br.queroajudar.network.ResultWrapper
 import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputLayout
@@ -192,3 +193,4 @@ fun setFilterItemSelected(textView: TextView, isSelected : Boolean){
         textView.setBackgroundResource(R.drawable.appcolor_round_shape)
     }
 }
+

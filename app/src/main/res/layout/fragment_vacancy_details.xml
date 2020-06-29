@@ -145,15 +145,48 @@
                 tools:listitem="@layout/category_item" />
 
             <TextView
-                android:id="@+id/tvLabelSchedule"
+                android:id="@+id/tvLabelFrequency"
                 style="@style/grey_textView_style_14sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="@string/vacancyDetails_tvLabelSchedule"
+                android:text="@string/vacancyDetails_tvLabelTimeSchedule"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rvSkills" />
+
+            <TextView
+                android:id="@+id/tvFrequency"
+                style="@style/grey_textView_style_14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@{vacancy.formattedFrequency}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvLabelFrequency" />
+
+            <TextView
+                android:id="@+id/tvLabelTimetable"
+                style="@style/grey_textView_style_14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@{vacancy.formattedTime}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvFrequency" />
+
+            <TextView
+                android:id="@+id/tvTimetable"
+                style="@style/grey_textView_style_14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@{vacancy.formattedTime}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvLabelTimetable" />
 
             <TextView
                 android:id="@+id/tvLabelLocation"
@@ -164,7 +197,17 @@
                 android:layout_marginTop="8dp"
                 android:text="@string/vacancyDetails_tvLabelLocation"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvLabelSchedule" />
+                app:layout_constraintTop_toBottomOf="@+id/tvTimetable" />
+
+            <TextView
+                android:id="@+id/tvLocation"
+                style="@style/grey_textView_style_14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvLabelLocation" />
 
             <TextView
                 android:id="@+id/tvLabelContact"
@@ -175,7 +218,7 @@
                 android:layout_marginTop="8dp"
                 android:text="@string/vacancyDetails_tvLabelContact"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvLabelLocation" />
+                app:layout_constraintTop_toBottomOf="@+id/tvLocation" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

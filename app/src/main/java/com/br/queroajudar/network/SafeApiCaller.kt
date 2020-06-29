@@ -20,12 +20,13 @@ class SafeApiCaller @Inject constructor(){
                 when (throwable) {
                     is IOException -> ResultWrapper.NetworkError
                     is HttpException -> {
+                        Log.i("HttpException", "Error: $throwable.message")
                         val code = throwable.code()
                         val errorResponse = convertErrorBody(throwable)
                         ResultWrapper.GenericError(code, errorResponse)
                     }
                     else -> {
-                        Log.i("QueroAjudar", "Error: $throwable.message")
+                        Log.i("HttpException", "Error: $throwable.message")
                         ResultWrapper.GenericError(null, null)
                     }
                 }
