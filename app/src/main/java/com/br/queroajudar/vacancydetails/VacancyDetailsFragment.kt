@@ -16,6 +16,7 @@ import com.br.queroajudar.R
 import com.br.queroajudar.categories.CategoryAdapter
 import com.br.queroajudar.databinding.FragmentVacancyDetailsBinding
 import com.br.queroajudar.network.ResultWrapper
+import com.br.queroajudar.util.Constants.RECURRENT
 import com.br.queroajudar.vacancies.HomeActivity
 import com.br.queroajudar.vacancies.VacanciesViewModel
 import kotlinx.android.synthetic.main.vacancies_filter_layout.view.*
@@ -68,16 +69,20 @@ class VacancyDetailsFragment : Fragment() {
         viewModel.vacancy.observe(viewLifecycleOwner, Observer { vacancyResult ->
             Timber.i("vacancy change observed $vacancyResult")
             if(vacancyResult is ResultWrapper.Success) {
-                binding.vacancy = vacancyResult.value
+                val vacancy = vacancyResult.value
+                binding.vacancy = vacancy
 
-                vacancyResult.value.causes?.let { causeAdapter.submitList(it) }
-                vacancyResult.value.skills?.let { skillAdapter.submitList(it) }
+                vacancy.causes?.let { causeAdapter.submitList(it) }
+                vacancy.skills?.let { skillAdapter.submitList(it) }
 
-                setVisibility(binding.tvLabelCauses, vacancyResult.value.causes?.size > 0)
-                setVisibility(binding.rvCauses, vacancyResult.value.causes?.size > 0)
+                setVisibility(binding.tvLabelCauses, vacancy.causes?.size > 0)
+                setVisibility(binding.rvCauses, vacancy.causes?.size > 0)
 
-                setVisibility(binding.tvLabelSkills, vacancyResult.value.skills?.size > 0)
-                setVisibility(binding.rvSkills, vacancyResult.value.skills?.size > 0)
+                setVisibility(binding.tvLabelSkills, vacancy.skills?.size > 0)
+                setVisibility(binding.rvSkills, vacancy.skills?.size > 0)
+
+                setVisibility(binding.tvFrequency, vacancy.type == RECURRENT)
+
             }
         })
     }

@@ -71,7 +71,7 @@
 
             <TextView
                 android:id="@+id/tvLabelDescription"
-                style="@style/grey_textView_style_14sp"
+                style="@style/grey_textView_style_16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -82,7 +82,7 @@
 
             <TextView
                 android:id="@+id/tvDescription"
-                style="@style/grey_textView_style_12sp"
+                style="@style/grey_textView_style_roboto"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -96,7 +96,7 @@
 
             <TextView
                 android:id="@+id/tvLabelCauses"
-                style="@style/grey_textView_style_14sp"
+                style="@style/grey_textView_style_16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -121,7 +121,7 @@
 
             <TextView
                 android:id="@+id/tvLabelSkills"
-                style="@style/grey_textView_style_14sp"
+                style="@style/grey_textView_style_16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -129,6 +129,7 @@
                 android:text="@string/vacancyDetails_tvLabelSkills"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rvCauses" />
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvSkills"
@@ -144,74 +145,124 @@
                 tools:itemCount="4"
                 tools:listitem="@layout/category_item" />
 
+
+
+
             <TextView
-                android:id="@+id/tvLabelFrequency"
-                style="@style/grey_textView_style_14sp"
+                android:id="@+id/tvLabelTimetable"
+                style="@style/grey_textView_style_16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="@string/vacancyDetails_tvLabelTimeSchedule"
+                android:text="@string/vacancyDetails_tvLabelTimetable"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rvSkills" />
 
             <TextView
                 android:id="@+id/tvFrequency"
-                style="@style/grey_textView_style_14sp"
+                style="@style/grey_textView_style_roboto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
                 android:text="@{vacancy.formattedFrequency}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvLabelFrequency" />
-
-            <TextView
-                android:id="@+id/tvLabelTimetable"
-                style="@style/grey_textView_style_14sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="@{vacancy.formattedTime}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvFrequency" />
-
-            <TextView
-                android:id="@+id/tvTimetable"
-                style="@style/grey_textView_style_14sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="@{vacancy.formattedTime}"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvLabelTimetable" />
 
+            <ImageView
+                android:id="@+id/ivDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:tint="@color/colorGrey"
+                app:layout_constraintBottom_toBottomOf="@+id/tvDate"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvDate"
+                app:srcCompat="@drawable/ic_today_black_24dp" />
+
+            <TextView
+                android:id="@+id/tvDate"
+                style="@style/grey_textView_style_roboto"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="@{vacancy.formattedTime}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ivDate"
+                app:layout_constraintTop_toBottomOf="@+id/tvLabelTimetable"
+                tools:text="22/01/2021" />
+
+            <ImageView
+                android:id="@+id/ivTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:tint="@color/colorGrey"
+                app:layout_constraintBottom_toBottomOf="@+id/tvTime"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvTime"
+                app:srcCompat="@drawable/ic_access_time_black_24dp" />
+
+            <TextView
+                android:id="@+id/tvTime"
+                style="@style/grey_textView_style_roboto"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="@{vacancy.formattedTime}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ivTime"
+                app:layout_constraintTop_toBottomOf="@+id/tvDate"
+                tools:text="15:00" />
+
             <TextView
                 android:id="@+id/tvLabelLocation"
-                style="@style/grey_textView_style_14sp"
+                style="@style/grey_textView_style_16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/vacancyDetails_tvLabelLocation"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTimetable" />
+                app:layout_constraintTop_toBottomOf="@+id/tvTime" />
 
-            <TextView
-                android:id="@+id/tvLocation"
-                style="@style/grey_textView_style_14sp"
+            <ImageView
+                android:id="@+id/ivLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:tint="@color/colorGrey"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvLabelLocation" />
+                app:layout_constraintTop_toTopOf="@+id/tvLocation"
+                app:layout_constraintBottom_toBottomOf="@+id/tvLocation"
+                app:srcCompat="@drawable/ic_baseline_my_location_24" />
+
+            <TextView
+                android:id="@+id/tvLocation"
+                style="@style/grey_textView_style_roboto"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="@{vacancy.formattedLocation}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ivLocation"
+                app:layout_constraintTop_toBottomOf="@+id/tvLabelLocation"
+                tools:text="Rua das Goiabeiras, 333 - Novo Oriente - Belo Horizonte - MG" />
 
             <TextView
                 android:id="@+id/tvLabelContact"
-                style="@style/grey_textView_style_14sp"
+                style="@style/grey_textView_style_16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -219,6 +270,84 @@
                 android:text="@string/vacancyDetails_tvLabelContact"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvLocation" />
+
+            <ImageView
+                android:id="@+id/ivPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:tint="@color/colorGrey"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvPhone"
+                app:layout_constraintBottom_toBottomOf="@+id/tvPhone"
+                app:srcCompat="@drawable/ic_baseline_phone_24" />
+
+            <TextView
+                android:id="@+id/tvPhone"
+                style="@style/grey_textView_style_roboto"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text=""
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ivPhone"
+                app:layout_constraintTop_toBottomOf="@+id/tvLabelContact"
+                tools:text="(99) 99999-9999 " />
+
+            <ImageView
+                android:id="@+id/ivEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:tint="@color/colorGrey"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvEmail"
+                app:layout_constraintBottom_toBottomOf="@+id/tvEmail"
+                app:srcCompat="@drawable/ic_baseline_email_24" />
+
+            <TextView
+                android:id="@+id/tvEmail"
+                style="@style/grey_textView_style_roboto"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text=""
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ivEmail"
+                app:layout_constraintTop_toBottomOf="@+id/tvPhone"
+                tools:text="contato@ong.com.br" />
+
+            <ImageView
+                android:id="@+id/ivWebsite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:tint="@color/colorGrey"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvWebsite"
+                app:layout_constraintBottom_toBottomOf="@+id/tvWebsite"
+                app:srcCompat="@drawable/ic_baseline_web_24" />
+
+            <TextView
+                android:id="@+id/tvWebsite"
+                style="@style/grey_textView_style_roboto"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text=""
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ivWebsite"
+                app:layout_constraintTop_toBottomOf="@+id/tvEmail"
+                tools:text="www.ong.com.br" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -111,6 +111,16 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="grey_textView_style_16sp" parent="grey_textView_style">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="grey_textView_style_roboto">
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textColor">@color/colorGrey</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
     <style name="icon_textView_style">
         <item name="android:layout_width">30dp</item>
         <item name="android:layout_height">30dp</item>

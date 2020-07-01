@@ -42,11 +42,13 @@
     <string name="fragment_profile_label">Perfil</string>
 
     <!-- VacancyDetailsFragment -->
+    <string name="fragment_vacancy_details_label">Vaga</string>
     <string name="vacancyDetails_by">por</string>
     <string name="vacancyDetails_tvLabelDescription">Descrição</string>
     <string name="vacancyDetails_tvLabelCauses">Causas</string>
     <string name="vacancyDetails_tvLabelSkills">Habilidades Necessárias</string>
-    <string name="vacancyDetails_tvLabelTimeSchedule">Horários</string>
+    <string name="vacancyDetails_tvLabelFrequency">Frequência</string>
+    <string name="vacancyDetails_tvLabelTimetable">Horário</string>
     <string name="vacancyDetails_tvLabelLocation">Local</string>
     <string name="vacancyDetails_tvLabelContact">Contato</string>
 
