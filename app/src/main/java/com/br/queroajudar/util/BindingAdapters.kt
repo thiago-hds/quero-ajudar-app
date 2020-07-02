@@ -6,7 +6,6 @@ import android.os.Build
 import android.text.Html
 import android.text.Spanned
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -48,6 +47,16 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
     }
 }
 
+@BindingAdapter("phones")
+fun bindPhones(txtView: TextView, phones: List<String>?){
+    phones?.let {phones->
+        var text = ""
+        for (phone in phones) {
+            text += formatPhoneNumber(phone) + "\n"
+        }
+        txtView.text = text
+    }
+}
 //@BindingAdapter("ivApiStatus")
 //fun bindApiStatusImageView(statusImageView: ImageView, status: QueroAjudarApiStatus?) {
 //    when (status) {

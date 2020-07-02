@@ -17,6 +17,7 @@ import com.br.queroajudar.categories.CategoryAdapter
 import com.br.queroajudar.databinding.FragmentVacancyDetailsBinding
 import com.br.queroajudar.network.ResultWrapper
 import com.br.queroajudar.util.Constants.RECURRENT
+import com.br.queroajudar.util.Constants.UNIQUE_EVENT
 import com.br.queroajudar.vacancies.HomeActivity
 import com.br.queroajudar.vacancies.VacanciesViewModel
 import kotlinx.android.synthetic.main.vacancies_filter_layout.view.*
@@ -56,7 +57,7 @@ class VacancyDetailsFragment : Fragment() {
         return binding.root
     }
 
-    fun setupVacancyDetails(){
+    private fun setupVacancyDetails(){
         binding.rvCauses.layoutManager = GridLayoutManager(activity,2)
         binding.rvSkills.layoutManager = GridLayoutManager(activity,2)
 
@@ -75,25 +76,25 @@ class VacancyDetailsFragment : Fragment() {
                 vacancy.causes?.let { causeAdapter.submitList(it) }
                 vacancy.skills?.let { skillAdapter.submitList(it) }
 
-                setVisibility(binding.tvLabelCauses, vacancy.causes?.size > 0)
-                setVisibility(binding.rvCauses, vacancy.causes?.size > 0)
+                if(vacancy.causes?.size > 0){
+                    binding.tvLabelCauses.visibility = View.GONE
+                    binding.rvCauses.visibility = View.GONE
+                }
 
-                setVisibility(binding.tvLabelSkills, vacancy.skills?.size > 0)
-                setVisibility(binding.rvSkills, vacancy.skills?.size > 0)
+                if(vacancy.skills?.size > 0){
+                    binding.tvLabelSkills.visibility = View.GONE
+                    binding.rvSkills.visibility = View.GONE
+                }
 
-                setVisibility(binding.tvFrequency, vacancy.type == RECURRENT)
+                if(vacancy.type == RECURRENT){
+                    binding.ivDate.visibility = View.GONE
+                    binding.tvDate.visibility = View.GONE
+                }
+                else{
+                    binding.tvFrequency.visibility = View.GONE
+                }
 
             }
         })
     }
-
-    private fun setVisibility(view:View, visibility: Boolean){
-        if(visibility){
-            view.visibility = View.VISIBLE
-        }
-        else{
-            view.visibility = View.GONE
-        }
-    }
-
 }

@@ -41,6 +41,10 @@ object Constants {
         return name
     }
 
+    fun formatPhoneNumber(phone: String): String{
+        return "(${phone.substring(0,2)}) ${phone.substring(2)}"
+    }
+
 //operator fun <T> MutableLiveData<ArrayList<T>>.plusAssign(values: List<T>) {
 //    val value = this.value ?: arrayListOf()
 //    value.addAll(values)
