@@ -118,7 +118,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/register_btn_nextStep"
+            android:id="@+id/btnEnroll"
             style="@style/rounded_contained_button_style"
             android:layout_width="0dp"
             android:layout_height="@dimen/btn_height_60dp"

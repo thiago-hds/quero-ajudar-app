@@ -83,7 +83,8 @@
                 <include
                     layout="@layout/network_status_overlay"
                     android:id="@+id/overlay_networkStatus"
-                    android:visibility="visible" />
+                    android:visibility="visible"
+                    tools:visibility="gone"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

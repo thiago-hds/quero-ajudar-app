@@ -53,6 +53,7 @@ class VacancyDetailsFragment : Fragment() {
         binding.viewModel = viewModel
 
         setupVacancyDetails()
+        setupListeners()
 
         return binding.root
     }
@@ -69,6 +70,7 @@ class VacancyDetailsFragment : Fragment() {
 
         viewModel.vacancy.observe(viewLifecycleOwner, Observer { vacancyResult ->
             Timber.i("vacancy change observed $vacancyResult")
+            binding.overlayNetworkStatus.result = vacancyResult
             if(vacancyResult is ResultWrapper.Success) {
                 val vacancy = vacancyResult.value
                 binding.vacancy = vacancy
@@ -96,5 +98,11 @@ class VacancyDetailsFragment : Fragment() {
 
             }
         })
+    }
+
+    private fun setupListeners(){
+        binding.overlayNetworkStatus.btnTryAgain.setOnClickListener {
+            // TODO
+        }
     }
 }

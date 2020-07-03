@@ -51,6 +51,7 @@
     <string name="vacancyDetails_tvLabelTimetable">Horário</string>
     <string name="vacancyDetails_tvLabelLocation">Local</string>
     <string name="vacancyDetails_tvLabelContact">Contato</string>
+    <string name="vacancyDetails_btnEnroll"> Inscrever-se </string>
 
     <!-- vacancy_item.xml -->
     <string name="item_vacancy_by">por</string>

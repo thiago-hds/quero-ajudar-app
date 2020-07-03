@@ -2,6 +2,7 @@ package com.br.queroajudar.vacancies
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -32,8 +33,30 @@ class HomeActivity : AppCompatActivity() {
 
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setupNav()
+    }
+
+    private fun setupNav(){
         navController = this.findNavController(R.id.activity_home_navhost)
         setupActionBarWithNavController(this, navController)
         binding.activityHomeNavigationView.setupWithNavController(navController)
+
+        navController.addOnDestinationChangedListener{ _, destination, _ ->
+            when(destination.id){
+                R.id.vacanciesFragment -> setBottomNavVisibility(true)
+                R.id.favoritesFragment -> setBottomNavVisibility(true)
+                R.id.profileFragment -> setBottomNavVisibility(true)
+                else -> setBottomNavVisibility(false)
+            }
+        }
+    }
+
+    private fun setBottomNavVisibility(visibility: Boolean){
+        if(visibility){
+            binding.activityHomeNavigationView.visibility = View.VISIBLE
+        }
+        else {
+            binding.activityHomeNavigationView.visibility = View.GONE
+        }
     }
 }
