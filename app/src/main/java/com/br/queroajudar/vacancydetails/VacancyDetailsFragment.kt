@@ -2,10 +2,8 @@ package com.br.queroajudar.vacancydetails
 
 import android.content.Context
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -52,13 +50,33 @@ class VacancyDetailsFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
+        setHasOptionsMenu(true)
+
         setupVacancyDetails()
         setupListeners()
 
         return binding.root
     }
 
-    private fun setupVacancyDetails(){
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater?.inflate(R.menu.vacancy_menu,menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean  = when (item.itemId) {
+        R.id.favorite_vacancy -> {
+            //TODO
+            true
+        }
+        else -> {
+            // If we got here, the user's action was not recognized.
+            // Invoke the superclass to handle it.
+            super.onOptionsItemSelected(item)
+        }
+    }
+
+
+        private fun setupVacancyDetails(){
         binding.rvCauses.layoutManager = GridLayoutManager(activity,2)
         binding.rvSkills.layoutManager = GridLayoutManager(activity,2)
 
