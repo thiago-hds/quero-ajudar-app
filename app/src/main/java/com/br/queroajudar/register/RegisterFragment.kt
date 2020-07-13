@@ -1,6 +1,7 @@
 package com.br.queroajudar.register
 
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,25 +14,36 @@ import androidx.navigation.fragment.findNavController
 
 import com.br.queroajudar.R
 import com.br.queroajudar.databinding.FragmentRegisterBinding
+import com.br.queroajudar.login.LoginViewModel
+import com.br.queroajudar.vacancies.HomeActivity
+import javax.inject.Inject
 
 /**
  * A simple [Fragment] subclass.
  */
 class RegisterFragment : Fragment() {
 
-    private val registerViewModel: RegisterViewModel by lazy {
-        ViewModelProvider(this).get(RegisterViewModel::class.java)
-    }
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    private lateinit var viewModel : RegisterViewModel
 
     private lateinit var binding : FragmentRegisterBinding
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (activity as MainActivity).mainComponent.inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        viewModel = ViewModelProvider(this, viewModelFactory)[RegisterViewModel::class.java]
+
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_register, container, false)
-        binding.viewModel = registerViewModel
+        binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
         setApiStatusObserver()

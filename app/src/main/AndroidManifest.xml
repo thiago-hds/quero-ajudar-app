@@ -14,15 +14,16 @@
         android:theme="@style/AppTheme"
         android:hardwareAccelerated="true">
 
-        <activity android:name=".vacancies.HomeActivity">
+        <activity android:name=".register.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".register.MainActivity">
+        <activity android:name=".vacancies.HomeActivity">
         </activity>
+
 
     </application>
 

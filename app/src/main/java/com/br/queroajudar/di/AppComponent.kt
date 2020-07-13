@@ -12,5 +12,7 @@ interface AppComponent {
 //    }
 
     // Expose HomeComponent factory from the graph
+    fun mainComponent(): MainComponent.Factory
     fun homeComponent(): HomeComponent.Factory
+
 }

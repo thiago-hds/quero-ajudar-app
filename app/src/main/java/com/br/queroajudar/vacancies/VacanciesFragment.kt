@@ -13,7 +13,6 @@ import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.selection.*
 import androidx.recyclerview.widget.RecyclerView
@@ -24,10 +23,10 @@ import com.br.queroajudar.categories.CategoryDetailsLookup
 import com.br.queroajudar.categories.CategoryItemKeyProvider
 import com.br.queroajudar.databinding.FragmentVacanciesBinding
 import com.br.queroajudar.network.ResultWrapper
+import com.br.queroajudar.register.MainActivity
 import com.br.queroajudar.util.enable
 import com.br.queroajudar.util.toggleViewExpansion2
 import com.br.queroajudar.util.toggleViewRotation0to180
-import com.br.queroajudar.vacancydetails.VacancyDetailsFragment
 import kotlinx.android.synthetic.main.vacancies_filter_layout.view.*
 import timber.log.Timber
 import javax.inject.Inject

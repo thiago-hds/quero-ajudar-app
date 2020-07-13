@@ -1,40 +1,60 @@
 package com.br.queroajudar.login
 
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 
 import com.br.queroajudar.R
 import com.br.queroajudar.databinding.FragmentLoginBinding
+import com.br.queroajudar.network.ResultWrapper
+import com.br.queroajudar.register.MainActivity
+import com.br.queroajudar.vacancies.HomeActivity
+import com.br.queroajudar.vacancies.VacanciesFragmentDirections
+import com.br.queroajudar.vacancies.VacanciesViewModel
+import javax.inject.Inject
 
 /**
  * A simple [Fragment] subclass.
  */
 class LoginFragment : Fragment() {
 
-    private val loginViewModel: LoginViewModel by lazy {
-        ViewModelProvider(this).get(LoginViewModel::class.java)
-    }
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    private lateinit var viewModel : LoginViewModel
 
     lateinit var binding : FragmentLoginBinding
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (activity as MainActivity).mainComponent.inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        viewModel = ViewModelProvider(this, viewModelFactory)[LoginViewModel::class.java]
+
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
 
         binding.lifecycleOwner = this
-        binding.viewModel = loginViewModel
+        binding.viewModel = viewModel
 
         setupLoadingProgressBarVisibility()
+        setupLisnenters()
 
         return binding.root
     }
@@ -56,15 +76,25 @@ class LoginFragment : Fragment() {
 //        })
     }
 
-    private fun showLoadingOverlay(){
-        //binding.loginOverlayLoading.visibility = View.VISIBLE
-    }
-    private fun hideLoadingOverlay(){
-        //binding.loginOverlayLoading.visibility = View.GONE
-    }
+    private fun setupLisnenters(){
+        binding.loginBtnEnter.setOnClickListener {
+            val user = viewModel.doLogin()
+            user?.observe(viewLifecycleOwner, Observer{ status ->
+                if (status is ResultWrapper.GenericError){
+                    status.error?.errors?.let { viewModel.showErrors(it) }
+                }
+                else if(status is ResultWrapper.Success){
+                    status.value.token?.let { token ->
+                        viewModel.saveToken(token)
 
-    private fun showNetworkErrorMessage(){
-        Toast.makeText(context, R.string.error_connection, Toast.LENGTH_LONG).show()
+                        val action
+                                = LoginFragmentDirections.actionLoginFragmentToHomeActivity()
+                        findNavController().navigate(action)
+                    }
+                }
+            })
+        }
+
     }
 
 }

@@ -2,6 +2,8 @@ package com.br.queroajudar.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.br.queroajudar.login.LoginViewModel
+import com.br.queroajudar.register.RegisterViewModel
 import com.br.queroajudar.vacancies.VacanciesViewModel
 import com.br.queroajudar.util.ViewModelFactory
 import com.br.queroajudar.vacancydetails.VacancyDetailsViewModel
@@ -18,6 +20,16 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
+    @ViewModelKey(RegisterViewModel::class)
+    internal abstract fun registerViewModel(viewModel: RegisterViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(LoginViewModel::class)
+    internal abstract fun loginViewModel(viewModel: LoginViewModel): ViewModel
+
+    @Binds
+    @IntoMap
     @ViewModelKey(VacanciesViewModel::class)
     internal abstract fun vacanciesViewModel(viewModel: VacanciesViewModel): ViewModel
 
@@ -25,5 +37,6 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(VacancyDetailsViewModel::class)
     internal abstract fun vacancyDetailsViewModel(viewModel: VacancyDetailsViewModel): ViewModel
+
 
 }

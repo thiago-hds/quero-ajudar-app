@@ -2,17 +2,19 @@ package com.br.queroajudar.register
 
 import androidx.lifecycle.ViewModel
 import com.br.queroajudar.data.formdata.RegisterData
+import com.br.queroajudar.di.CoroutineScopeIO
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import javax.inject.Inject
 
-class RegisterViewModel : ViewModel() {
+class RegisterViewModel @Inject constructor(
+    private val userRepository: UserRepository,
+    @CoroutineScopeIO private val coroutineScope: CoroutineScope
+) : ViewModel(){
+
     private val registerData : RegisterData = RegisterData()
-    private val userRepository : UserRepository =
-        UserRepository()
 
-    private var viewModelJob = Job()
-    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
 //    private val _apiStatus = MutableLiveData<ApiStatus>()
 //    val apiStatus: LiveData<ApiStatus>

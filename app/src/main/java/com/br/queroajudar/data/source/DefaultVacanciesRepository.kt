@@ -49,4 +49,5 @@ class DefaultVacanciesRepository @Inject constructor(
     fun getVacancy(id: Int) = resultLiveData(
         networkCall = {remoteDataSource.fetchVacancy(id)}
     )
+
 }

@@ -2,6 +2,7 @@ package com.br.queroajudar.network
 
 import com.br.queroajudar.data.Category
 import com.br.queroajudar.data.Organization
+import com.br.queroajudar.data.User
 import com.br.queroajudar.data.Vacancy
 import com.br.queroajudar.network.response.SuccessResponse
 import com.br.queroajudar.data.formdata.LoginData
@@ -21,10 +22,10 @@ interface ApiService {
     suspend fun getSkills(): SuccessResponse<List<Category>>
 
     @POST("login")
-    suspend fun postLogin(@Body data: LoginData): SuccessResponse<String>
+    suspend fun postLogin(@Body data: LoginData): SuccessResponse<User>
 
     @POST("register")
-    suspend fun postRegister(@Body data: RegisterData): SuccessResponse<String>
+    suspend fun postRegister(@Body data: RegisterData): SuccessResponse<User>
 
     @GET("organizations")
     suspend fun getOrganizations(
