@@ -7,13 +7,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 
 
 import com.br.queroajudar.R
 import com.br.queroajudar.databinding.FragmentStartBinding
+import com.br.queroajudar.login.LoginFragmentDirections
+import com.br.queroajudar.util.QueroAjudarPreferences
 
 
 class StartFragment : Fragment() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        //TODO consultar validar do token com o servidor
+        QueroAjudarPreferences.apiToken?.let {
+            goToHomeAcitivty()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,6 +43,11 @@ class StartFragment : Fragment() {
         )
 
         return binding.root
+    }
+
+    private fun goToHomeAcitivty(){
+        val action = StartFragmentDirections.actionStartFragmentToHomeActivity()
+        findNavController().navigate(action)
     }
 
 }

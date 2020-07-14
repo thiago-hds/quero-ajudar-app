@@ -19,6 +19,7 @@ import com.br.queroajudar.util.Constants.RECURRENT
 import com.br.queroajudar.util.Constants.UNIQUE_EVENT
 import com.br.queroajudar.vacancies.HomeActivity
 import com.br.queroajudar.vacancies.VacanciesViewModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.vacancies_filter_layout.view.*
 import timber.log.Timber
 import javax.inject.Inject
@@ -66,7 +67,16 @@ class VacancyDetailsFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean  = when (item.itemId) {
         R.id.favorite_vacancy -> {
-            //TODO
+            val response = viewModel.favoriteVacancy()
+            response.observe(viewLifecycleOwner, Observer {result ->
+                if(result is ResultWrapper.Success){
+                    Snackbar.make(binding.root, R.string.fragment_favorites_label, Snackbar.LENGTH_SHORT)
+                    //TODO mudar cor do botao de favoritar
+                }
+                else{
+                    Toast.makeText(activity, R.string.app_name, Toast.LENGTH_SHORT)
+                }
+            })
             true
         }
         else -> {

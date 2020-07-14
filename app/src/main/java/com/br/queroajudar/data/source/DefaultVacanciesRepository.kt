@@ -50,4 +50,7 @@ class DefaultVacanciesRepository @Inject constructor(
         networkCall = {remoteDataSource.fetchVacancy(id)}
     )
 
+    fun favoriteVacancy(id: Int) = resultLiveData(
+        networkCall = {remoteDataSource.favoriteVacancy(id)}
+    )
 }

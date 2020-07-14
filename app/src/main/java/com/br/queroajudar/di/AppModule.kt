@@ -25,13 +25,13 @@ class AppModule{
 
     @API
     @Provides
-    fun provideOkHttpClient(interceptor: HttpLoggingInterceptor,
-                            authenticator: TokenAuthenticator): OkHttpClient
+    fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor,
+                            authInterceptor: AuthInterceptor): OkHttpClient
             = OkHttpClient.Builder()
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
-            .addInterceptor(interceptor)
-            .authenticator(authenticator)
+            .addInterceptor(loggingInterceptor)
+            .addInterceptor(authInterceptor)
             .build()
 
     @Provides
@@ -44,6 +44,9 @@ class AppModule{
             Timber.i(message)
         }
     }).setLevel(HttpLoggingInterceptor.Level.BODY)
+
+    @Provides
+    fun provideAuthInterceptor() : AuthInterceptor = AuthInterceptor()
 
     @Provides
     fun provideMoshi(adapterFactory: KotlinJsonAdapterFactory): Moshi

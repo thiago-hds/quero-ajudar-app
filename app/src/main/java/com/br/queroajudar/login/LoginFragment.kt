@@ -19,9 +19,11 @@ import com.br.queroajudar.R
 import com.br.queroajudar.databinding.FragmentLoginBinding
 import com.br.queroajudar.network.ResultWrapper
 import com.br.queroajudar.register.MainActivity
+import com.br.queroajudar.util.QueroAjudarPreferences
 import com.br.queroajudar.vacancies.HomeActivity
 import com.br.queroajudar.vacancies.VacanciesFragmentDirections
 import com.br.queroajudar.vacancies.VacanciesViewModel
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -86,6 +88,7 @@ class LoginFragment : Fragment() {
                 else if(status is ResultWrapper.Success){
                     status.value.token?.let { token ->
                         viewModel.saveToken(token)
+                        Timber.i("token: ${QueroAjudarPreferences.apiToken}")
 
                         val action
                                 = LoginFragmentDirections.actionLoginFragmentToHomeActivity()

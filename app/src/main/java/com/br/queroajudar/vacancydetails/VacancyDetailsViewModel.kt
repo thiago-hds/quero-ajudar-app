@@ -21,4 +21,8 @@ class VacancyDetailsViewModel @Inject constructor(
     var id by Delegates.notNull<Int>()
 
     val vacancy by lazy { repository.getVacancy(id) }
+
+    fun favoriteVacancy(): LiveData<ResultWrapper<String>> {
+        return repository.favoriteVacancy(id)
+    }
 }
