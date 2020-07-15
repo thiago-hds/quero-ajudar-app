@@ -52,6 +52,15 @@
     <string name="vacancyDetails_tvLabelLocation">Local</string>
     <string name="vacancyDetails_tvLabelContact">Contato</string>
     <string name="vacancyDetails_btnEnroll"> Inscrever-se </string>
+    <string name="vacancyDetails_favorite_success">
+        A vaga foi incluída em seus favoritos
+    </string>
+    <string name="vacancyDetails_unfavorite_success">
+        A vaga foi removida de seus favoritos
+    </string>
+    <string name="vacancyDetails_favorite_error">
+        Não foi possível incluir a vaga como favorito
+    </string>
 
     <!-- vacancy_item.xml -->
     <string name="item_vacancy_by">por</string>

@@ -33,6 +33,8 @@ class VacancyDetailsFragment : Fragment() {
 
     private val args: VacancyDetailsFragmentArgs by navArgs()
 
+    lateinit var menu: Menu
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         (activity as HomeActivity).homeComponent.inject(this)
@@ -63,19 +65,39 @@ class VacancyDetailsFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater?.inflate(R.menu.vacancy_menu,menu)
+        this.menu = menu
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean  = when (item.itemId) {
         R.id.favorite_vacancy -> {
             val response = viewModel.favoriteVacancy()
+            item.isEnabled = false
             response.observe(viewLifecycleOwner, Observer {result ->
+                Timber.i("favoriteVacancy response $result")
                 if(result is ResultWrapper.Success){
-                    Snackbar.make(binding.root, R.string.fragment_favorites_label, Snackbar.LENGTH_SHORT)
-                    //TODO mudar cor do botao de favoritar
+                    val strId: Int
+                    val iconId: Int
+                    if (result.value){
+                        strId = R.string.vacancyDetails_favorite_success
+                        iconId = R.drawable.ic_favorite_24dp
+                    }
+                    else{
+                        strId = R.string.vacancyDetails_unfavorite_success
+                        iconId = R.drawable.ic_baseline_favorite_border_24
+                    }
+                    item.setIcon(iconId)
+
+                    Snackbar.make(
+                        binding.root, strId,
+                        Snackbar.LENGTH_SHORT
+                    ).show()
                 }
-                else{
-                    Toast.makeText(activity, R.string.app_name, Toast.LENGTH_SHORT)
+                else if(result is ResultWrapper.NetworkError || result is ResultWrapper.GenericError){
+                    Toast.makeText(
+                        activity, R.string.vacancyDetails_favorite_error, Toast.LENGTH_SHORT
+                    ).show()
                 }
+                item.isEnabled = true
             })
             true
         }
@@ -87,7 +109,7 @@ class VacancyDetailsFragment : Fragment() {
     }
 
 
-        private fun setupVacancyDetails(){
+    private fun setupVacancyDetails(){
         binding.rvCauses.layoutManager = GridLayoutManager(activity,2)
         binding.rvSkills.layoutManager = GridLayoutManager(activity,2)
 
@@ -124,6 +146,11 @@ class VacancyDetailsFragment : Fragment() {
                 else{
                     binding.tvFrequency.visibility = View.GONE
                 }
+
+                if(vacancy.favourited){
+                    menu.findItem(R.id.favorite_vacancy).setIcon(R.drawable.ic_favorite_24dp)
+                }
+                menu.findItem(R.id.favorite_vacancy).isVisible = true
 
             }
         })

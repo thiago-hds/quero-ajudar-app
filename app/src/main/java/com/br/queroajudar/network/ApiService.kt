@@ -44,5 +44,5 @@ interface ApiService {
     suspend fun getVacancy(@Path("id") id: Int): SuccessResponse<Vacancy>
 
     @POST("vacancies/{id}/favorite")
-    suspend fun postFavoriteVacancy(@Path("id") id: Int): SuccessResponse<String>
+    suspend fun postFavoriteVacancy(@Path("id") id: Int): SuccessResponse<Boolean>
 }

@@ -25,7 +25,7 @@ class VacanciesRemoteDataSource @Inject constructor(
         }
     }
 
-    suspend fun favoriteVacancy(id: Int): ResultWrapper<String> {
+    suspend fun favoriteVacancy(id: Int): ResultWrapper<Boolean> {
         return apiCaller.safeApiCall(Dispatchers.IO){
             service.postFavoriteVacancy(id)
         }

@@ -22,7 +22,7 @@ class VacancyDetailsViewModel @Inject constructor(
 
     val vacancy by lazy { repository.getVacancy(id) }
 
-    fun favoriteVacancy(): LiveData<ResultWrapper<String>> {
+    fun favoriteVacancy(): LiveData<ResultWrapper<Boolean>> {
         return repository.favoriteVacancy(id)
     }
 }

@@ -77,7 +77,6 @@ class VacanciesFragment : Fragment() {
 
         val adapter =
             VacancyAdapter(VacancyClickListener { vacancyId ->
-                Toast.makeText(context, "$vacancyId", Toast.LENGTH_LONG).show()
                 val action
                     = VacanciesFragmentDirections.actionVacanciesFragmentToVacancyDetailsFragment(vacancyId)
                 findNavController().navigate(action)

@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <item
         android:id="@+id/favorite_vacancy"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_favorite_border_24"
+        android:iconTint="@color/colorWhite"
         android:title="Salvar como favorito"
-        android:visible="true"
+        android:visible="false"
+        tools:visible="true"
         app:showAsAction="always" />
 </menu>
