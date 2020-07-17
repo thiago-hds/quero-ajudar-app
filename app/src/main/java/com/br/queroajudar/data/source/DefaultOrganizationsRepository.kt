@@ -8,10 +8,16 @@ class DefaultOrganizationsRepository @Inject constructor(
     private val remoteDataSource: OrganizationsRemoteDataSource
 ){
 
-    //val organizations = remoteDataSource.fetchOrganizations(1)
-
     fun getOrganizations() = resultLiveData(
         networkCall = {remoteDataSource.fetchOrganizations((1))}
+    )
+
+    fun getOrganization(id: Int) = resultLiveData(
+        networkCall = {remoteDataSource.fetchOrganization(id)}
+    )
+
+    fun favoriteOrganization(id: Int) = resultLiveData(
+        networkCall = {remoteDataSource.favoriteOrganization(id)}
     )
 
 }

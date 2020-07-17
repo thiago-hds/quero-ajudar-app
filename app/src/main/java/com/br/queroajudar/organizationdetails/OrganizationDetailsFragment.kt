@@ -1,37 +1,37 @@
-package com.br.queroajudar.vacancydetails
+package com.br.queroajudar.organizationdetails
 
 import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
-
 import com.br.queroajudar.R
 import com.br.queroajudar.categories.CategoryAdapter
+import com.br.queroajudar.databinding.FragmentOrganizationDetailsBinding
 import com.br.queroajudar.databinding.FragmentVacancyDetailsBinding
 import com.br.queroajudar.network.ResultWrapper
-import com.br.queroajudar.util.Constants.RECURRENT
+import com.br.queroajudar.util.Constants
 import com.br.queroajudar.vacancies.HomeActivity
-import com.br.queroajudar.vacancies.VacanciesFragmentDirections
+import com.br.queroajudar.organizationdetails.OrganizationDetailsFragmentArgs
+import com.br.queroajudar.vacancydetails.VacancyDetailsViewModel
 import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber
 import javax.inject.Inject
 
-class VacancyDetailsFragment : Fragment() {
+class OrganizationDetailsFragment : Fragment() {
+
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var viewModel : VacancyDetailsViewModel
+    private lateinit var viewModel : OrganizationDetailsViewModel
 
-    lateinit var binding : FragmentVacancyDetailsBinding
+    lateinit var binding : FragmentOrganizationDetailsBinding
 
-    private val args: VacancyDetailsFragmentArgs by navArgs()
+    private val args: OrganizationDetailsFragmentArgs by navArgs()
 
     lateinit var menu: Menu
 
@@ -44,11 +44,11 @@ class VacancyDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
 
-        viewModel = ViewModelProvider(this, viewModelFactory)[VacancyDetailsViewModel::class.java]
+        viewModel = ViewModelProvider(this, viewModelFactory)[OrganizationDetailsViewModel::class.java]
         viewModel.id = args.id
 
         binding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_vacancy_details, container, false
+            inflater, R.layout.fragment_organization_details, container, false
         )
 
         binding.lifecycleOwner = this
@@ -111,52 +111,29 @@ class VacancyDetailsFragment : Fragment() {
 
     private fun setupVacancyDetails(){
         binding.rvCauses.layoutManager = GridLayoutManager(activity,2)
-        binding.rvSkills.layoutManager = GridLayoutManager(activity,2)
 
         val causeAdapter = CategoryAdapter()
-        val skillAdapter = CategoryAdapter()
 
         binding.rvCauses.adapter = causeAdapter
-        binding.rvSkills.adapter = skillAdapter
 
-        viewModel.vacancy.observe(viewLifecycleOwner, Observer { vacancyResult ->
-            Timber.i("vacancy change observed $vacancyResult")
-            binding.overlayNetworkStatus.result = vacancyResult
-            if(vacancyResult is ResultWrapper.Success) {
-                val vacancy = vacancyResult.value
-                binding.vacancy = vacancy
+        viewModel.organization.observe(viewLifecycleOwner, Observer { organizationResult ->
+            Timber.i("organization change observed $organizationResult")
+            binding.overlayNetworkStatus.result = organizationResult
+            if(organizationResult is ResultWrapper.Success) {
+                val organization = organizationResult.value
+                binding.organization = organization
 
-                vacancy.causes?.let { causeAdapter.submitList(it) }
-                vacancy.skills?.let { skillAdapter.submitList(it) }
+                organization.causes?.let { causeAdapter.submitList(it) }
 
-                if(vacancy.causes?.size > 0){
+                if(organization.causes?.size > 0){
                     binding.tvLabelCauses.visibility = View.GONE
                     binding.rvCauses.visibility = View.GONE
                 }
 
-                if(vacancy.skills?.size > 0){
-                    binding.tvLabelSkills.visibility = View.GONE
-                    binding.rvSkills.visibility = View.GONE
-                }
-
-                if(vacancy.type == RECURRENT){
-                    binding.ivDate.visibility = View.GONE
-                    binding.tvDate.visibility = View.GONE
-                }
-                else{
-                    binding.tvFrequency.visibility = View.GONE
-                }
-
-                if(vacancy.favourited){
+                if(organization.favourited){
                     menu.findItem(R.id.favorite_vacancy).setIcon(R.drawable.ic_favorite_24dp)
                 }
                 menu.findItem(R.id.favorite_vacancy).isVisible = true
-
-                binding.btnOrganization.setOnClickListener {
-                    val action =
-                        VacancyDetailsFragmentDirections.actionVacancyDetailsFragmentToOrganizationDetailsFragment(vacancy.organization.id)
-                    findNavController().navigate(action)
-                }
 
             }
         })
@@ -166,9 +143,5 @@ class VacancyDetailsFragment : Fragment() {
         binding.overlayNetworkStatus.btnTryAgain.setOnClickListener {
             // TODO
         }
-
-
     }
-
-
 }

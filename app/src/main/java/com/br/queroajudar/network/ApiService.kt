@@ -32,6 +32,11 @@ interface ApiService {
         @Query("page") page : Int
     ) : SuccessResponse<List<Organization>>
 
+    @GET("organizations/{id}")
+    suspend fun getOrganization(@Path("id") id: Int): SuccessResponse<Organization>
+
+    @POST("organizations/{id}/favorite")
+    suspend fun postFavoriteOrganization(@Path("id") id: Int): SuccessResponse<Boolean>
 
     @GET("vacancies")
     suspend fun getVacancies(

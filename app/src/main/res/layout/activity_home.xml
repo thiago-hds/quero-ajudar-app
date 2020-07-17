@@ -32,6 +32,6 @@
         app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
         android:theme="@style/Widget.BottomNavigationView"
         android:visibility="visible"
-        app:menu="@menu/bottom_navigation_menu"/>
+        app:menu="@menu/menu_bottom_navigation"/>
 
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package com.br.queroajudar.di
 
+import com.br.queroajudar.organizationdetails.OrganizationDetailsFragment
 import com.br.queroajudar.vacancies.VacanciesFragment
 import com.br.queroajudar.vacancydetails.VacancyDetailsFragment
 import dagger.Subcomponent
@@ -15,4 +16,5 @@ interface HomeComponent{
 
     fun inject(fragment: VacanciesFragment)
     fun inject(fragment: VacancyDetailsFragment)
+    fun inject(fragment: OrganizationDetailsFragment)
 }

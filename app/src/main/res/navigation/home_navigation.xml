@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_vacanciesFragment_to_vacancyDetailsFragment"
             app:destination="@id/vacancyDetailsFragment" />
+        <action
+            android:id="@+id/action_vacanciesFragment_to_organizationDetailsFragment"
+            app:destination="@id/organizationDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
@@ -29,6 +32,17 @@
         android:name="com.br.queroajudar.vacancydetails.VacancyDetailsFragment"
         android:label="@string/fragment_vacancy_details_label"
         tools:layout="@layout/fragment_vacancy_details">
+        <argument
+            android:name="id"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_vacancyDetailsFragment_to_organizationDetailsFragment"
+            app:destination="@id/organizationDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/organizationDetailsFragment"
+        android:name="com.br.queroajudar.organizationdetails.OrganizationDetailsFragment"
+        android:label="OrganizationDetailsFragment" >
         <argument
             android:name="id"
             app:argType="integer" />

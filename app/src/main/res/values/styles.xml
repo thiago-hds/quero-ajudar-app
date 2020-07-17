@@ -144,21 +144,20 @@
     </style>
 
 
+    <!--    <style name="icon_textView_style.unselected" parent="icon_textView_style">-->
+    <!--        <item name="android:textColor">@color/colorPrimary</item>-->
+    <!--        <item name="android:background">@drawable/white_round_shape</item>-->
+    <!--    </style>-->
 
-<!--    <style name="icon_textView_style.unselected" parent="icon_textView_style">-->
-<!--        <item name="android:textColor">@color/colorPrimary</item>-->
-<!--        <item name="android:background">@drawable/white_round_shape</item>-->
-<!--    </style>-->
 
-
-<!--    <style name="icon_textView_style.selected" parent="icon_textView_style">-->
-<!--        <item name="android:textColor">@color/colorWhite</item>-->
-<!--        <item name="android:background">@drawable/appcolor_round_shape</item>-->
-<!--    </style>-->
+    <!--    <style name="icon_textView_style.selected" parent="icon_textView_style">-->
+    <!--        <item name="android:textColor">@color/colorWhite</item>-->
+    <!--        <item name="android:background">@drawable/appcolor_round_shape</item>-->
+    <!--    </style>-->
 
     <!-- Spinner -->
     <style name="spinner_style">
-<!--        <item name="android:background">@drawable/white_round_shape</item>-->
+        <!--        <item name="android:background">@drawable/white_round_shape</item>-->
     </style>
 
     <!-- Bottom Navigation -->
@@ -175,7 +174,6 @@
         <item name="android:indeterminate">true</item>
         <item name="android:indeterminateTint">@color/colorPrimary</item>
     </style>
-
 
 
 </resources>
