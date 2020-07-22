@@ -53,7 +53,7 @@ class VacanciesViewModel @Inject constructor(
     }
 
     fun loadVacancies() {
-        pagedVacancies = vacanciesRepository.getPagedVacancies(coroutineScope)
+        pagedVacancies = vacanciesRepository.getPagedVacancies(coroutineScope, null)
         vacancies = pagedVacancies.pagedList
         vacanciesLoadInitialResultWrapper = pagedVacancies.loadInitialResultWrapper
         vacanciesLoadAfterResultWrapper = pagedVacancies.loadAfterResultWrapper
@@ -70,7 +70,7 @@ class VacanciesViewModel @Inject constructor(
     }
 
     private fun refresh() {
-        pagedVacancies?.refresh?.invoke(_selectedCausesId, _selectedSkillsId)
+        pagedVacancies?.refresh?.invoke(_selectedCausesId, _selectedSkillsId, null)
     }
 
     /*

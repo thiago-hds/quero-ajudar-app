@@ -12,10 +12,12 @@ class VacanciesRemoteDataSource @Inject constructor(
     private val apiCaller: SafeApiCaller
 ) {
 
-    suspend fun fetchVacancies(page: Int, causes: List<Int>? = null, skills: List<Int>? = null): ResultWrapper<List<Vacancy>> {
+    suspend fun fetchVacancies(page: Int,
+                               causes: List<Int>? = null, skills: List<Int>? = null,
+                               organizationId: Int?): ResultWrapper<List<Vacancy>> {
 
         return apiCaller.safeApiCall(Dispatchers.IO) {
-            service.getVacancies(page,causes?.joinToString(),skills?.joinToString())
+            service.getVacancies(page,causes?.joinToString(),skills?.joinToString(), organizationId)
         }
     }
 

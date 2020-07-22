@@ -42,7 +42,8 @@ interface ApiService {
     suspend fun getVacancies(
         @Query("page") page : Int?,
         @Query("causes_id") causes: String?,
-        @Query("skills_id") skills : String?
+        @Query("skills_id") skills : String?,
+        @Query("organization_id") organizationId: Int?
     ): SuccessResponse<List<Vacancy>>
 
     @GET("vacancies/{id}")

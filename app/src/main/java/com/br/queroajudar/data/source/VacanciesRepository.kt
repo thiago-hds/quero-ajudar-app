@@ -6,6 +6,7 @@ import kotlinx.coroutines.CoroutineScope
 
 interface VacanciesRepository {
     fun getPagedVacancies(
-        coroutineScope: CoroutineScope
+        coroutineScope: CoroutineScope,
+        organizationId: Int? = null
     ): VacancyPagedListing
 }

@@ -42,7 +42,7 @@
     <fragment
         android:id="@+id/organizationDetailsFragment"
         android:name="com.br.queroajudar.organizationdetails.OrganizationDetailsFragment"
-        android:label="OrganizationDetailsFragment" >
+        android:label="@string/fragment_organization_details_label">
         <argument
             android:name="id"
             app:argType="integer" />

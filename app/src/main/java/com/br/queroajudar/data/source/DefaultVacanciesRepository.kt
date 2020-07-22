@@ -15,12 +15,14 @@ class DefaultVacanciesRepository @Inject constructor(
 ): VacanciesRepository {
 
     override fun getPagedVacancies(
-        coroutineScope: CoroutineScope
+        coroutineScope: CoroutineScope,
+        organizationId : Int?
     ): VacancyPagedListing {
         val dataSourceFactory =
             VacanciesPageDataSourceFactory(
                 coroutineScope,
-                remoteDataSource
+                remoteDataSource,
+                organizationId
             )
 
         val livePagedList = LivePagedListBuilder(dataSourceFactory,
@@ -38,7 +40,7 @@ class DefaultVacanciesRepository @Inject constructor(
             size = Transformations.switchMap(dataSourceFactory.mutableLiveData){
                 dataSource -> dataSource.vacanciesSize
             },
-            refresh = { causesIds: List<Int>, skillsIds: List<Int> ->
+            refresh = { causesIds: List<Int>, skillsIds: List<Int>, organizationId: Int? ->
                 dataSourceFactory.causes = causesIds
                 dataSourceFactory.skills = skillsIds
                 dataSourceFactory.mutableLiveData.value?.invalidate()

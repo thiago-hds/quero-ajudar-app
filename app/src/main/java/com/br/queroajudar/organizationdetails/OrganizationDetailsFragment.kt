@@ -8,22 +8,26 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.br.queroajudar.R
 import com.br.queroajudar.categories.CategoryAdapter
 import com.br.queroajudar.databinding.FragmentOrganizationDetailsBinding
-import com.br.queroajudar.databinding.FragmentVacancyDetailsBinding
 import com.br.queroajudar.network.ResultWrapper
-import com.br.queroajudar.util.Constants
 import com.br.queroajudar.vacancies.HomeActivity
-import com.br.queroajudar.organizationdetails.OrganizationDetailsFragmentArgs
-import com.br.queroajudar.vacancydetails.VacancyDetailsViewModel
+import com.br.queroajudar.vacancies.VacanciesFragmentDirections
+import com.br.queroajudar.vacancies.VacancyAdapter
+import com.br.queroajudar.vacancies.VacancyClickListener
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.tabs.TabLayout
 import timber.log.Timber
 import javax.inject.Inject
 
 class OrganizationDetailsFragment : Fragment() {
+
+    private val TAB_INFORMATION = 0
+    private val TAB_VACANCIES   = 1
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -56,7 +60,8 @@ class OrganizationDetailsFragment : Fragment() {
 
         setHasOptionsMenu(true)
 
-        setupVacancyDetails()
+        setupOrganizationDetails()
+        setupVacanciesList()
         setupListeners()
 
         return binding.root
@@ -70,7 +75,7 @@ class OrganizationDetailsFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean  = when (item.itemId) {
         R.id.favorite_vacancy -> {
-            val response = viewModel.favoriteVacancy()
+            val response = viewModel.favoriteOrganization()
             item.isEnabled = false
             response.observe(viewLifecycleOwner, Observer {result ->
                 Timber.i("favoriteVacancy response $result")
@@ -109,7 +114,7 @@ class OrganizationDetailsFragment : Fragment() {
     }
 
 
-    private fun setupVacancyDetails(){
+    private fun setupOrganizationDetails(){
         binding.rvCauses.layoutManager = GridLayoutManager(activity,2)
 
         val causeAdapter = CategoryAdapter()
@@ -125,7 +130,7 @@ class OrganizationDetailsFragment : Fragment() {
 
                 organization.causes?.let { causeAdapter.submitList(it) }
 
-                if(organization.causes?.size > 0){
+                if(organization.causes?.size == 0){
                     binding.tvLabelCauses.visibility = View.GONE
                     binding.rvCauses.visibility = View.GONE
                 }
@@ -139,9 +144,68 @@ class OrganizationDetailsFragment : Fragment() {
         })
     }
 
+    private fun setupVacanciesList(){
+
+        val adapter =
+            VacancyAdapter(VacancyClickListener { vacancyId ->
+                val action
+                        = VacanciesFragmentDirections.actionVacanciesFragmentToVacancyDetailsFragment(vacancyId)
+                findNavController().navigate(action)
+            })
+
+        binding.rvVacancies.adapter = adapter
+
+        viewModel.vacancies.observe(viewLifecycleOwner, Observer { vacanciesPagedList ->
+            Timber.i("vacancies change observed $vacanciesPagedList")
+            adapter.submitList(vacanciesPagedList)
+        })
+
+//        viewModel.organizations.observe(viewLifecycleOwner, Observer { result ->
+//            Timber.i("organizations change observed $result")
+//            if(result is ResultWrapper.Success) {
+//                adapter.setOrganizations(result.value)
+//            }
+//        })
+
+//        viewModel.vacanciesSize.observe(viewLifecycleOwner,Observer{ size ->
+//            Timber.i("vacanciesSize change observed: $size")
+//            showEmptyList(size == 0)
+//        })
+
+//        viewModel.vacanciesLoadInitialResultWrapper.observe(viewLifecycleOwner, Observer { result ->
+//            Timber.i("vacanciesLoadInitialResultWrapper change observed $result")
+//            binding.overlayNetworkStatus.result = result
+//        })
+//
+//        viewModel.vacanciesLoadAfterResultWrapper.observe(viewLifecycleOwner, Observer { result ->
+//            Timber.i("vacanciesLoadAfterResultWrapper change observed $result")
+//            adapter.setResultWrapper(result)
+//        })
+    }
+
     private fun setupListeners(){
         binding.overlayNetworkStatus.btnTryAgain.setOnClickListener {
             // TODO
         }
+
+        binding.tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                Timber.i("Tab selected ${tab?.position}")
+                if(tab?.position == TAB_INFORMATION){
+                    binding.layoutInfo.visibility = View.VISIBLE
+                    binding.layoutVacancies.visibility = View.GONE
+                }
+                else if (tab?.position == TAB_VACANCIES){
+                    binding.layoutVacancies.visibility = View.VISIBLE
+                    binding.layoutInfo.visibility = View.GONE
+                }
+            }
+
+        })
+
     }
 }
