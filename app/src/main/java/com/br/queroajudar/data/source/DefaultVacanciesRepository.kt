@@ -40,9 +40,38 @@ class DefaultVacanciesRepository @Inject constructor(
             size = Transformations.switchMap(dataSourceFactory.mutableLiveData){
                 dataSource -> dataSource.vacanciesSize
             },
-            refresh = { causesIds: List<Int>, skillsIds: List<Int>, organizationId: Int? ->
-                dataSourceFactory.causes = causesIds
-                dataSourceFactory.skills = skillsIds
+            refresh = { causesIds: List<Int>?, skillsIds: List<Int>?, organizationId: Int? ->
+                causesIds?.let { dataSourceFactory.causes = it }
+                skillsIds?.let{ dataSourceFactory.skills = it }
+                dataSourceFactory.mutableLiveData.value?.invalidate()
+            }
+        )
+    }
+
+    fun getFavoritePagedVacancies(coroutineScope: CoroutineScope): VacancyPagedListing {
+        val dataSourceFactory =
+            VacanciesPageDataSourceFactory(
+                coroutineScope,
+                remoteDataSource,
+                getFavorites = true
+            )
+
+        val livePagedList = LivePagedListBuilder(dataSourceFactory,
+            VacanciesPageDataSourceFactory.pagedListConfig()
+        ).build()
+
+        return VacancyPagedListing(
+            pagedList = livePagedList,
+            loadInitialResultWrapper = Transformations.switchMap(dataSourceFactory.mutableLiveData) {
+                    dataSource -> dataSource.loadInitialResultWrapper
+            },
+            loadAfterResultWrapper = Transformations.switchMap(dataSourceFactory.mutableLiveData) {
+                    dataSource -> dataSource.loadAfterResultWrapper
+            },
+            size = Transformations.switchMap(dataSourceFactory.mutableLiveData){
+                    dataSource -> dataSource.vacanciesSize
+            },
+            refresh = { causesIds: List<Int>?, skillsIds: List<Int>?, organizationId: Int? ->
                 dataSourceFactory.mutableLiveData.value?.invalidate()
             }
         )

@@ -13,7 +13,8 @@ import javax.inject.Inject
 class VacanciesPageDataSourceFactory @Inject constructor(
     private val scope: CoroutineScope,
     private val dataSource: VacanciesRemoteDataSource,
-    private val organizationId: Int? = null)
+    private val organizationId: Int? = null,
+    private val getFavorites: Boolean? = false)
     : DataSource.Factory<Int, Vacancy>() {
 
     var causes: List<Int> = listOf()
@@ -31,6 +32,7 @@ class VacanciesPageDataSourceFactory @Inject constructor(
                 skills,
                 organizationId
             )
+        vacanciesPageDataSource.getFavorites = false
         mutableLiveData.postValue(vacanciesPageDataSource)
         return vacanciesPageDataSource
     }

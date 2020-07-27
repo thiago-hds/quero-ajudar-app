@@ -14,5 +14,5 @@ data class VacancyPagedListing(
     val size : LiveData<Int>,
     val loadInitialResultWrapper: LiveData<ResultWrapper<Any>>,
     val loadAfterResultWrapper: LiveData<ResultWrapper<Any>>,
-    val refresh: (List<Int>, List<Int>, Int?) -> Unit
+    val refresh: (List<Int>?, List<Int>?, Int?) -> Unit
 )

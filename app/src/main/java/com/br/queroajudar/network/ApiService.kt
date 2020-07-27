@@ -35,8 +35,11 @@ interface ApiService {
     @GET("organizations/{id}")
     suspend fun getOrganization(@Path("id") id: Int): SuccessResponse<Organization>
 
-    @POST("organizations/{id}/favorite")
+    @POST("favorites/organizations/{id}/favorite")
     suspend fun postFavoriteOrganization(@Path("id") id: Int): SuccessResponse<Boolean>
+
+    @GET("favorites/organizations")
+    suspend fun getFavoriteOrganizations(): SuccessResponse<List<Organization>>
 
     @GET("vacancies")
     suspend fun getVacancies(
@@ -49,6 +52,9 @@ interface ApiService {
     @GET("vacancies/{id}")
     suspend fun getVacancy(@Path("id") id: Int): SuccessResponse<Vacancy>
 
-    @POST("vacancies/{id}/favorite")
+    @POST("favorites/vacancies/{id}/favorite")
     suspend fun postFavoriteVacancy(@Path("id") id: Int): SuccessResponse<Boolean>
+
+    @GET("favorites/vacancies")
+    suspend fun getFavoriteVacancies(): SuccessResponse<List<Vacancy>>
 }

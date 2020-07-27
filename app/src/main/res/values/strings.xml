@@ -38,6 +38,13 @@
     <!-- FavoritesFragment -->
     <string name="fragment_favorites_label">Favoritos</string>
 
+    <!-- FavoriteVacanciesFragment -->
+    <string name="favoriteVacancies_title">Vagas</string>
+
+    <!-- FavoriteOrganizationsFragment -->
+    <string name="favoriteOrganizations_title">Instituições</string>
+
+
     <!-- ProfileFragment -->
     <string name="fragment_profile_label">Perfil</string>
 

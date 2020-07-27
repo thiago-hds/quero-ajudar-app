@@ -21,6 +21,8 @@ class VacanciesPageDataSource @Inject constructor(
     val loadAfterResultWrapper = MutableLiveData<ResultWrapper<Any>>()
     val vacanciesSize = MutableLiveData<Int>()
 
+    var getFavorites = false
+
 
     override fun loadInitial(
         params: LoadInitialParams<Int>,
@@ -45,8 +47,12 @@ class VacanciesPageDataSource @Inject constructor(
 
         scope.launch {
             resultWrapperLiveData.postValue(ResultWrapper.Loading)
-            val getVacanciesResponse =
+            val getVacanciesResponse = if (getFavorites){
+                remoteDataSource.fetchFavoriteVacancies(page)
+            }
+            else {
                 remoteDataSource.fetchVacancies(page, causes, skills, organizationId)
+            }
             resultWrapperLiveData.postValue(getVacanciesResponse)
 
             Timber.i("vacancies fetched %s", getVacanciesResponse)
