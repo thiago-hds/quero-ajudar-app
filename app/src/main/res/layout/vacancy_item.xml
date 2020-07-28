@@ -12,7 +12,6 @@
             name="clickListener"
             type="com.br.queroajudar.vacancies.VacancyClickListener" />
 
-
     </data>
 
     <androidx.cardview.widget.CardView

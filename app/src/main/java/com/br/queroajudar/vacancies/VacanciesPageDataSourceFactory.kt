@@ -24,15 +24,16 @@ class VacanciesPageDataSourceFactory @Inject constructor(
     lateinit var vacanciesPageDataSource : VacanciesPageDataSource
 
     override fun create(): DataSource<Int, Vacancy> {
-        vacanciesPageDataSource =
-            VacanciesPageDataSource(
+        vacanciesPageDataSource = VacanciesPageDataSource(
                 scope,
                 dataSource,
                 causes,
                 skills,
                 organizationId
-            )
-        vacanciesPageDataSource.getFavorites = false
+        )
+        if (getFavorites != null) {
+            vacanciesPageDataSource.getFavorites = getFavorites
+        }
         mutableLiveData.postValue(vacanciesPageDataSource)
         return vacanciesPageDataSource
     }

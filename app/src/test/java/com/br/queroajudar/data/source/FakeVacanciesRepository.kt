@@ -2,13 +2,13 @@ package com.br.queroajudar.data.source
 
 import androidx.annotation.VisibleForTesting
 import com.br.queroajudar.data.Vacancy
-import com.br.queroajudar.util.VacancyPagedListing
+import com.br.queroajudar.util.ItemPagedListing
 import kotlinx.coroutines.CoroutineScope
 
-class FakeVacanciesRepository: VacanciesRepository{
-    val vacancyList = mutableListOf<Vacancy>()
-
-    override fun getPagedVacancies(coroutineScope: CoroutineScope): VacancyPagedListing {
+//class FakeVacanciesRepository: VacanciesRepository{
+//    val vacancyList = mutableListOf<Vacancy>()
+//
+//    override fun getPagedVacancies(coroutineScope: CoroutineScope): ItemPagedListing {
         //TODO
 //        return VacancyPagedListing(
 //            pagedList = livePagedList,
@@ -27,12 +27,12 @@ class FakeVacanciesRepository: VacanciesRepository{
 //                dataSourceFactory.mutableLiveData.value?.invalidate()
 //            }
 //        )
-    }
-
-    @VisibleForTesting
-    fun addVacancies(vararg vacancies: Vacancy) {
-        for (vacancy in vacancies) {
-            vacancyList.add(vacancy)
-        }
-    }
-}
+//    }
+//
+//    @VisibleForTesting
+//    fun addVacancies(vararg vacancies: Vacancy) {
+//        for (vacancy in vacancies) {
+//            vacancyList.add(vacancy)
+//        }
+//    }
+//}

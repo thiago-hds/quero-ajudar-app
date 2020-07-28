@@ -47,4 +47,20 @@
             android:name="id"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/favoriteVacanciesFragment"
+        android:name="com.br.queroajudar.favorites.FavoriteVacanciesFragment"
+        android:label="FavoriteVacanciesFragment" >
+        <action
+            android:id="@+id/action_favoriteVacanciesFragment_to_vacancyDetailsFragment"
+            app:destination="@id/vacancyDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoriteOrganizationsFragment"
+        android:name="com.br.queroajudar.favorites.FavoriteOrganizationsFragment"
+        android:label="FavoriteOrganizationsFragment" >
+        <action
+            android:id="@+id/action_favoriteOrganizationsFragment_to_organizationDetailsFragment"
+            app:destination="@id/organizationDetailsFragment" />
+    </fragment>
 </navigation>

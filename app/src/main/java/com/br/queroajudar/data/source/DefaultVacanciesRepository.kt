@@ -2,7 +2,8 @@ package com.br.queroajudar.data.source
 
 import androidx.lifecycle.Transformations
 import androidx.paging.LivePagedListBuilder
-import com.br.queroajudar.util.VacancyPagedListing
+import com.br.queroajudar.data.Vacancy
+import com.br.queroajudar.util.ItemPagedListing
 import com.br.queroajudar.util.resultLiveData
 import com.br.queroajudar.vacancies.VacanciesPageDataSourceFactory
 import com.br.queroajudar.vacancies.VacanciesRemoteDataSource
@@ -17,19 +18,19 @@ class DefaultVacanciesRepository @Inject constructor(
     override fun getPagedVacancies(
         coroutineScope: CoroutineScope,
         organizationId : Int?
-    ): VacancyPagedListing {
+    ): ItemPagedListing<Vacancy> {
         val dataSourceFactory =
             VacanciesPageDataSourceFactory(
                 coroutineScope,
                 remoteDataSource,
-                organizationId
+                organizationId = organizationId
             )
 
         val livePagedList = LivePagedListBuilder(dataSourceFactory,
             VacanciesPageDataSourceFactory.pagedListConfig()
         ).build()
 
-        return VacancyPagedListing(
+        return ItemPagedListing(
             pagedList = livePagedList,
             loadInitialResultWrapper = Transformations.switchMap(dataSourceFactory.mutableLiveData) {
                     dataSource -> dataSource.loadInitialResultWrapper
@@ -48,7 +49,7 @@ class DefaultVacanciesRepository @Inject constructor(
         )
     }
 
-    fun getFavoritePagedVacancies(coroutineScope: CoroutineScope): VacancyPagedListing {
+    fun getPagedFavoriteVacancies(coroutineScope: CoroutineScope): ItemPagedListing<Vacancy> {
         val dataSourceFactory =
             VacanciesPageDataSourceFactory(
                 coroutineScope,
@@ -60,7 +61,7 @@ class DefaultVacanciesRepository @Inject constructor(
             VacanciesPageDataSourceFactory.pagedListConfig()
         ).build()
 
-        return VacancyPagedListing(
+        return ItemPagedListing(
             pagedList = livePagedList,
             loadInitialResultWrapper = Transformations.switchMap(dataSourceFactory.mutableLiveData) {
                     dataSource -> dataSource.loadInitialResultWrapper

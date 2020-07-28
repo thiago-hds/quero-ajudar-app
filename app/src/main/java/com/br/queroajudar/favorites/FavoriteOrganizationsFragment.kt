@@ -1,60 +1,93 @@
 package com.br.queroajudar.favorites
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.br.queroajudar.R
+import com.br.queroajudar.databinding.FragmentFavoriteOrganizationsBinding
+import com.br.queroajudar.organizations.OrganizationClickListener
+import com.br.queroajudar.organizations.OrganizationsAdapter
+import com.br.queroajudar.vacancies.HomeActivity
+import com.br.queroajudar.vacancies.VacanciesViewModel
+import com.br.queroajudar.vacancies.VacancyAdapter
+import com.br.queroajudar.vacancies.VacancyClickListener
+import timber.log.Timber
+import javax.inject.Inject
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [FavoriteOrganizationsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class FavoriteOrganizationsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    private lateinit var viewModel : FavoriteOrganizationsViewModel
+
+    lateinit var binding: FragmentFavoriteOrganizationsBinding
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (activity as HomeActivity).homeComponent.inject(this)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_favorite_organizations, container, false)
+
+        viewModel = ViewModelProvider(this, viewModelFactory)[FavoriteOrganizationsViewModel::class.java]
+
+
+        binding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_favorite_organizations, container, false
+        )
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
+
+        setupOrganizationsList()
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment FavoriteOrganizationsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FavoriteOrganizationsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun setupOrganizationsList(){
+
+        val adapter = OrganizationsAdapter(OrganizationClickListener { organizationId ->
+//            val action= FavoriteVacanciesFragmentDirections
+//                .actionFavoriteVacanciesFragmentToVacancyDetailsFragment(organizationId)
+//            findNavController().navigate(action)
+        })
+
+        binding.rvOrganizations.adapter = adapter
+
+        viewModel.organizations.observe(viewLifecycleOwner, Observer { organizationsPagedList ->
+            Timber.i("vacancies change observed $organizationsPagedList")
+            adapter.submitList(organizationsPagedList)
+        })
+
+//        viewModel.organizations.observe(viewLifecycleOwner, Observer { result ->
+//            Timber.i("organizations change observed $result")
+//            if(result is ResultWrapper.Success) {
+//                adapter.setOrganizations(result.value)
+//            }
+//        })
+
+//        viewModel.vacanciesSize.observe(viewLifecycleOwner,Observer{ size ->
+//            Timber.i("vacanciesSize change observed: $size")
+//            showEmptyList(size == 0)
+//        })
+
+        viewModel.organizationsLoadInitialResultWrapper.observe(viewLifecycleOwner, Observer { result ->
+            Timber.i("vacanciesLoadInitialResultWrapper change observed $result")
+            //binding.overlayNetworkStatus.result = result
+        })
+
+        viewModel.organizationsLoadAfterResultWrapper.observe(viewLifecycleOwner, Observer { result ->
+            Timber.i("vacanciesLoadAfterResultWrapper change observed $result")
+            adapter.setResultWrapper(result)
+        })
     }
 }

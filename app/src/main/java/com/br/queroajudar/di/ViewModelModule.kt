@@ -2,6 +2,8 @@ package com.br.queroajudar.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.br.queroajudar.favorites.FavoriteOrganizationsViewModel
+import com.br.queroajudar.favorites.FavoriteVacanciesViewModel
 import com.br.queroajudar.login.LoginViewModel
 import com.br.queroajudar.organizationdetails.OrganizationDetailsViewModel
 import com.br.queroajudar.register.RegisterViewModel
@@ -43,6 +45,18 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(OrganizationDetailsViewModel::class)
     internal abstract fun organizationDetailsViewModel(viewModel: OrganizationDetailsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FavoriteVacanciesViewModel::class)
+    internal abstract fun favoriteVacanciesViewModel(viewModel: FavoriteVacanciesViewModel): ViewModel
+
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FavoriteOrganizationsViewModel::class)
+    internal abstract fun favoriteOrganizationsViewModel(viewModel: FavoriteOrganizationsViewModel): ViewModel
+
 
 
 }

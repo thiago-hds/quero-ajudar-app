@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="organization"
+            type="com.br.queroajudar.data.Organization" />
+
+        <variable
+            name="clickListener"
+            type="com.br.queroajudar.organizations.OrganizationClickListener" />
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/organization_cardview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:onClick="@{() -> clickListener.onClick(organization)}"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="2dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true"
+        app:contentPadding="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/vacancyItem_iv_image"
+                android:layout_width="100dp"
+                android:layout_height="0dp"
+                android:cropToPadding="true"
+                app:imageUrl="@{organization.logo}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0"
+                tools:srcCompat="@drawable/ic_work_black_24dp" />
+
+            <TextView
+                android:id="@+id/vacancyItem_tv_name"
+                style="@style/primaryColor_textView_style_16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:text="@{organization.name}"
+                app:layout_constraintStart_toEndOf="@+id/vacancyItem_iv_image"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/tools_vacancyItem_name" />
+
+            <TextView
+                android:id="@+id/vacancyItem_tv_location"
+                style="@style/grey_textView_style_12sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="8dp"
+                android:text="@{organization.name}"
+                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintTop_toBottomOf="@+id/vacancyItem_tv_name"
+                tools:text="@string/tools_vacancyItem_location" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:tint="@color/colorGrey"
+                app:layout_constraintBottom_toBottomOf="@+id/vacancyItem_tv_location"
+                app:layout_constraintStart_toEndOf="@+id/vacancyItem_iv_image"
+                app:layout_constraintTop_toTopOf="@+id/vacancyItem_tv_location"
+                app:srcCompat="@drawable/ic_location_on_black_24dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>
+

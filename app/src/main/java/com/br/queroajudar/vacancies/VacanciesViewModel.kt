@@ -11,8 +11,7 @@ import com.br.queroajudar.network.ResultWrapper
 import com.br.queroajudar.data.source.DefaultOrganizationsRepository
 import com.br.queroajudar.data.source.DefaultCategoriesRepository
 import com.br.queroajudar.data.source.DefaultVacanciesRepository
-import com.br.queroajudar.data.source.VacanciesRepository
-import com.br.queroajudar.util.VacancyPagedListing
+import com.br.queroajudar.util.ItemPagedListing
 import kotlinx.coroutines.CoroutineScope
 import timber.log.Timber
 import javax.inject.Inject
@@ -36,7 +35,7 @@ class VacanciesViewModel @Inject constructor(
     private var _selectedCausesId = listOf<Int>()
     private var _selectedSkillsId = listOf<Int>()
 
-    lateinit var pagedVacancies: VacancyPagedListing
+    lateinit var pagedVacancies: ItemPagedListing<Vacancy>
     lateinit var vacancies: LiveData<PagedList<Vacancy>>
     lateinit var vacanciesLoadInitialResultWrapper: LiveData<ResultWrapper<Any>>
     lateinit var vacanciesLoadAfterResultWrapper: LiveData<ResultWrapper<Any>>
@@ -60,11 +59,11 @@ class VacanciesViewModel @Inject constructor(
         //vacanciesSize = pagedVacancies.size
     }
 
-    fun loadOrganizations(){
+    private fun loadOrganizations(){
         organizations = organizationsRepository.getOrganizations()
     }
 
-    fun loadCategories(){
+    private fun loadCategories(){
         causes = categoriesRepository.getCauses()
         skills = categoriesRepository.getSkills()
     }

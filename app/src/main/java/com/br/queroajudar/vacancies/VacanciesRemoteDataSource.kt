@@ -23,7 +23,7 @@ class VacanciesRemoteDataSource @Inject constructor(
 
     suspend fun fetchFavoriteVacancies(page:Int): ResultWrapper<List<Vacancy>>{
         return apiCaller.safeApiCall(Dispatchers.IO){
-            service.getFavoriteVacancies()
+            service.getFavoriteVacancies(page)
         }
     }
 

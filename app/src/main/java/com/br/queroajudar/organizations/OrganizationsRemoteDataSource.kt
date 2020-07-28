@@ -17,9 +17,14 @@ class OrganizationsRemoteDataSource @Inject constructor(
 
 ) {
 
-    suspend fun fetchOrganizations(page: Int = 1) =
+    suspend fun fetchOrganizations(page: Int = 1, causes: List<Int>? = null, skills: List<Int>? = null) =
         apiCaller.safeApiCall(Dispatchers.IO) {
             service.getOrganizations(page)
+        }
+
+    suspend fun fetchFavoriteOrganizations(page: Int = 1) =
+        apiCaller.safeApiCall(Dispatchers.IO) {
+            service.getFavoriteOrganizations(page)
         }
 
     suspend fun fetchOrganization(id: Int): ResultWrapper<Organization> {

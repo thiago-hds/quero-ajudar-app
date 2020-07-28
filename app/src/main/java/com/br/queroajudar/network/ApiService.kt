@@ -39,7 +39,7 @@ interface ApiService {
     suspend fun postFavoriteOrganization(@Path("id") id: Int): SuccessResponse<Boolean>
 
     @GET("favorites/organizations")
-    suspend fun getFavoriteOrganizations(): SuccessResponse<List<Organization>>
+    suspend fun getFavoriteOrganizations(@Query("page") page : Int?): SuccessResponse<List<Organization>>
 
     @GET("vacancies")
     suspend fun getVacancies(
@@ -56,5 +56,5 @@ interface ApiService {
     suspend fun postFavoriteVacancy(@Path("id") id: Int): SuccessResponse<Boolean>
 
     @GET("favorites/vacancies")
-    suspend fun getFavoriteVacancies(): SuccessResponse<List<Vacancy>>
+    suspend fun getFavoriteVacancies(@Query("page") page : Int?): SuccessResponse<List<Vacancy>>
 }
