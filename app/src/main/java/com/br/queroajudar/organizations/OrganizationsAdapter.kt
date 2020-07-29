@@ -54,7 +54,7 @@ class OrganizationsAdapter(private val clickListener : OrganizationClickListener
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if(resultWrapper !is ResultWrapper.Success && position == itemCount - 1){
+        return if(resultWrapper !is ResultWrapper.Success && position == itemCount){
             VIEW_TYPE_STATUS
         }
         else {

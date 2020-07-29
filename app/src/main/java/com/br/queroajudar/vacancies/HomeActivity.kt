@@ -38,7 +38,12 @@ class HomeActivity : AppCompatActivity() {
 
     private fun setupNav(){
         navController = this.findNavController(R.id.activity_home_navhost)
-        setupActionBarWithNavController(this, navController)
+
+        val appBarConfiguration = AppBarConfiguration(setOf(
+            R.id.vacanciesFragment, R.id.favoritesFragment, R.id.profileFragment
+        ))
+
+        setupActionBarWithNavController(this, navController, appBarConfiguration)
         binding.activityHomeNavigationView.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener{ _, destination, _ ->

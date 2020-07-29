@@ -64,7 +64,7 @@ class FavoriteOrganizationsFragment : Fragment() {
         binding.rvOrganizations.adapter = adapter
 
         viewModel.organizations.observe(viewLifecycleOwner, Observer { organizationsPagedList ->
-            Timber.i("vacancies change observed $organizationsPagedList")
+            Timber.i("organizations change observed $organizationsPagedList")
             adapter.submitList(organizationsPagedList)
         })
 
@@ -81,12 +81,12 @@ class FavoriteOrganizationsFragment : Fragment() {
 //        })
 
         viewModel.organizationsLoadInitialResultWrapper.observe(viewLifecycleOwner, Observer { result ->
-            Timber.i("vacanciesLoadInitialResultWrapper change observed $result")
+            Timber.i("organizationsLoadInitialResultWrapper change observed $result")
             //binding.overlayNetworkStatus.result = result
         })
 
         viewModel.organizationsLoadAfterResultWrapper.observe(viewLifecycleOwner, Observer { result ->
-            Timber.i("vacanciesLoadAfterResultWrapper change observed $result")
+            Timber.i("organizationsLoadAfterResultWrapper change observed $result")
             adapter.setResultWrapper(result)
         })
     }
