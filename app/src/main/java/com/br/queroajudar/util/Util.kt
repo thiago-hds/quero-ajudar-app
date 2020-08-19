@@ -1,5 +1,7 @@
 package com.br.queroajudar.util
 
+import android.content.Context
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
@@ -7,6 +9,7 @@ import androidx.lifecycle.map
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.br.queroajudar.R
 import com.br.queroajudar.data.Vacancy
 import com.br.queroajudar.network.ResultWrapper
 import kotlinx.coroutines.Dispatchers
@@ -110,3 +113,6 @@ object Constants {
         }
 
 
+    fun showNetworkErrorMessage(context: Context?){
+        Toast.makeText(context, R.string.error_connection, Toast.LENGTH_LONG).show()
+    }

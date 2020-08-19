@@ -1,8 +1,12 @@
 package com.br.queroajudar.register
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import com.br.queroajudar.data.User
 import com.br.queroajudar.data.formdata.RegisterData
 import com.br.queroajudar.di.CoroutineScopeIO
+import com.br.queroajudar.network.ResultWrapper
+import com.br.queroajudar.util.QueroAjudarPreferences
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -13,32 +17,22 @@ class RegisterViewModel @Inject constructor(
     @CoroutineScopeIO private val coroutineScope: CoroutineScope
 ) : ViewModel(){
 
-    private val registerData : RegisterData = RegisterData()
+
+    val registerData : RegisterData = RegisterData()
+    lateinit var user: LiveData<ResultWrapper<User>>
 
 
 //    private val _apiStatus = MutableLiveData<ApiStatus>()
 //    val apiStatus: LiveData<ApiStatus>
 //        get() = _apiStatus
 
-    fun getRegister(): RegisterData? {
-        return registerData
-    }
-
-    fun onButtonSendClick() {
-        //TODO validação dos campos no lado do cliente
-//        register()
-    }
-
-//    private fun register(){
-//        _apiStatus.value = ApiStatus.LOADING
-//        coroutineScope.launch {
-//            when (val loginResponse = userRepository.postRegister(registerData)) {
-//                is ResultWrapper.NetworkError -> onNetworkError()
-//                is ResultWrapper.GenericError -> onGenericError(loginResponse)
-//                is ResultWrapper.Success -> onSuccess(loginResponse.value)
-//            }
-//        }
+//    fun getRegister(): RegisterData? {
+//        return registerData
 //    }
+
+    fun register(): LiveData<ResultWrapper<User>> {
+        return userRepository.postRegister(registerData)
+    }
 
 //    private fun onNetworkError( ){
 //        Timber.i("API call network error")
@@ -58,5 +52,9 @@ class RegisterViewModel @Inject constructor(
 //        QueroAjudarPreferences.apiToken = value.data
 //        _apiStatus.value = ApiStatus.DONE
 //    }
+
+    fun saveApiToken(token: String){
+        QueroAjudarPreferences.apiToken = token
+    }
 
 }

@@ -2,14 +2,11 @@ package com.br.queroajudar.login
 
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -20,9 +17,6 @@ import com.br.queroajudar.databinding.FragmentLoginBinding
 import com.br.queroajudar.network.ResultWrapper
 import com.br.queroajudar.register.MainActivity
 import com.br.queroajudar.util.QueroAjudarPreferences
-import com.br.queroajudar.vacancies.HomeActivity
-import com.br.queroajudar.vacancies.VacanciesFragmentDirections
-import com.br.queroajudar.vacancies.VacanciesViewModel
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -56,7 +50,7 @@ class LoginFragment : Fragment() {
         binding.viewModel = viewModel
 
         setupLoadingProgressBarVisibility()
-        setupLisnenters()
+        setupListeners()
 
         return binding.root
     }
@@ -78,7 +72,7 @@ class LoginFragment : Fragment() {
 //        })
     }
 
-    private fun setupLisnenters(){
+    private fun setupListeners(){
         binding.loginBtnEnter.setOnClickListener {
             val user = viewModel.doLogin()
             user?.observe(viewLifecycleOwner, Observer{ status ->

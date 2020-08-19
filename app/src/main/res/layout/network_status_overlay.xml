@@ -3,9 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
+        <!-- ResultWrapper -->
         <variable
             name="result"
             type="com.br.queroajudar.network.ResultWrapper" />
+
+        <!-- indica se foi uma ação do usuario que resultou na animação de loading
+            nesse caso o fundo deve ser preto e semi transparente -->
+        <variable
+            name="isUserAction"
+            type="boolean" />
     </data>
 
     <FrameLayout
@@ -15,9 +23,14 @@
         android:elevation="2dp"
         android:clickable="true"
         android:focusable="true"
-        android:background="@android:color/white"
-        app:resultWrapperNetworkStatusOverlay="@{result}">
+        app:resultWrapperNetworkStatusOverlay="@{result}"
+        app:isUserAction="@{isUserAction}">
 
+        <LinearLayout
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:background="@{isUserAction ? @android:color/black : @android:color/white}"
+            android:alpha="@{isUserAction? 0.4f : 1.0f}"/>
 
         <ProgressBar
             android:layout_width="match_parent"
@@ -31,7 +44,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"
-            app:resultWrapperNetworkError="@{result}">
+            app:resultWrapperNetworkError="@{result}"
+            app:isUserAction="@{isUserAction}">
 
             <ImageView
                 android:id="@+id/iv_cloudOff"

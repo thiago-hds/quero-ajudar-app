@@ -40,6 +40,11 @@ class LoginData () : BaseFormData(){
         return password.length in 6 until 10
     }
 
+    override fun resetErrorFields() {
+        emailError.set("")
+        passwordError.set("")
+    }
+
     override fun getErrorFieldByName(name : String) : ObservableField<String>? {
         return when(name){
             "email"     -> emailError

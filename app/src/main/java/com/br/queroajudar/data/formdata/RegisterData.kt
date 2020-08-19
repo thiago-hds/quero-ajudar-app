@@ -2,8 +2,9 @@ package com.br.queroajudar.data.formdata
 
 import androidx.databinding.ObservableField
 import com.squareup.moshi.Json
+import javax.inject.Inject
 
-class RegisterData () : BaseFormData() {
+class RegisterData @Inject constructor() : BaseFormData() {
 
     @Json(name="first_name")
     var firstName: String = ""
@@ -21,6 +22,12 @@ class RegisterData () : BaseFormData() {
     @Transient
     var passwordError = ObservableField<String>()
 
+    override fun resetErrorFields() {
+        firstNameError.set("")
+        lastNameError.set("")
+        emailError.set("")
+        passwordError.set("")
+    }
 
     override fun getErrorFieldByName(name: String): ObservableField<String>? {
         return when(name){

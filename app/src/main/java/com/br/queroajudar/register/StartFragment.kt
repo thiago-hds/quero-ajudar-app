@@ -23,7 +23,7 @@ class StartFragment : Fragment() {
 
         //TODO consultar validar do token com o servidor
         QueroAjudarPreferences.apiToken?.let {
-            goToHomeAcitivty()
+            goToHomeActivity()
         }
     }
 
@@ -45,7 +45,7 @@ class StartFragment : Fragment() {
         return binding.root
     }
 
-    private fun goToHomeAcitivty(){
+    private fun goToHomeActivity(){
         val action = StartFragmentDirections.actionStartFragmentToHomeActivity()
         findNavController().navigate(action)
     }

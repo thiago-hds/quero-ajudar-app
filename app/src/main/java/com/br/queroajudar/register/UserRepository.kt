@@ -17,8 +17,6 @@ class UserRepository @Inject constructor(
     private val remoteDataSource: UserRemoteDataSource
 ) {
 
-    private val  apiCaller : SafeApiCaller = SafeApiCaller()
-
     fun postRegister(data : RegisterData) = resultLiveData(
         networkCall = {remoteDataSource.register(data)}
     )

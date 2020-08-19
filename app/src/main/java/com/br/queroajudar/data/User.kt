@@ -10,6 +10,6 @@ data class User(
     val last_name : String,
     val email : String,
     @Json(name="date_of_birth") val dateOfBirth : String,
-    val status : String,
+    val status : Int,
     val token : String?
 )

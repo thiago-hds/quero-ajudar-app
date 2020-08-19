@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_vacanciesFragment_to_organizationDetailsFragment"
             app:destination="@id/organizationDetailsFragment" />
+        <action
+            android:id="@+id/action_vacanciesFragment_to_causesFragment"
+            app:destination="@id/causesFragment" />
     </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
@@ -63,4 +66,8 @@
             android:id="@+id/action_favoriteOrganizationsFragment_to_organizationDetailsFragment"
             app:destination="@id/organizationDetailsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/causesFragment"
+        android:name="com.br.queroajudar.causes.CausesFragment"
+        android:label="CausesFragment" />
 </navigation>

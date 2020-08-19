@@ -1,5 +1,6 @@
 package com.br.queroajudar.di
 
+import com.br.queroajudar.causes.CausesFragment
 import com.br.queroajudar.favorites.FavoriteOrganizationsFragment
 import com.br.queroajudar.favorites.FavoriteVacanciesFragment
 import com.br.queroajudar.organizationdetails.OrganizationDetailsFragment
@@ -16,6 +17,7 @@ interface HomeComponent{
     }
 
 
+    fun inject(fragment: CausesFragment)
     fun inject(fragment: VacanciesFragment)
     fun inject(fragment: VacancyDetailsFragment)
     fun inject(fragment: OrganizationDetailsFragment)

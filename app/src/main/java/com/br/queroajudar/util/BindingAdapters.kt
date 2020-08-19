@@ -96,11 +96,11 @@ fun bindResultWrapperLoading(view : View, wrapper: ResultWrapper<Any>?){
     }
 }
 
-@BindingAdapter("resultWrapperNetworkError")
-fun bindResultWrapperNetworkError(view : View, wrapper: ResultWrapper<Any>?){
+@BindingAdapter("resultWrapperNetworkError", "isUserAction")
+fun bindResultWrapperNetworkError(view : View, wrapper: ResultWrapper<Any>?, isUserAction: Boolean){
     Timber.i("resultWrapperNetworkError $wrapper")
     wrapper?.let {
-        if (it is ResultWrapper.NetworkError) {
+        if (it is ResultWrapper.NetworkError && !isUserAction) {
             view.visibility = View.VISIBLE
         } else {
             view.visibility = View.GONE
@@ -108,12 +108,12 @@ fun bindResultWrapperNetworkError(view : View, wrapper: ResultWrapper<Any>?){
     }
 }
 
-@BindingAdapter("resultWrapperNetworkStatusOverlay")
-fun bindResultWrapperNetworkOverlay(view : View, wrapper: ResultWrapper<Any>?){
+@BindingAdapter("resultWrapperNetworkStatusOverlay", "isUserAction")
+fun bindResultWrapperNetworkOverlay(view : View, wrapper: ResultWrapper<Any>?, isUserAction: Boolean){
     Timber.i("resultWrapperNetworkStatusOverlay $wrapper")
 
     wrapper?.let {
-        if (it is ResultWrapper.NetworkError || it is ResultWrapper.Loading) {
+        if ((it is ResultWrapper.NetworkError && !isUserAction) || it is ResultWrapper.Loading) {
             view.visibility = View.VISIBLE
         } else {
             view.visibility = View.GONE

@@ -33,7 +33,7 @@
             android:layout_marginEnd="16dp"
             android:hint="@string/register_et_name"
             app:errorEnabled="true"
-            error="@{viewModel.register.firstNameError}"
+            error="@{viewModel.registerData.firstNameError}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/register_til_lastName"
             app:layout_constraintHorizontal_bias="0.5"
@@ -42,7 +42,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/register_et_firstName"
-                android:text="@={viewModel.register.firstName}"
+                android:text="@={viewModel.registerData.firstName}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -56,7 +56,7 @@
             android:layout_marginEnd="16dp"
             android:hint="@string/register_et_lastName"
             app:errorEnabled="true"
-            error="@{viewModel.register.lastNameError}"
+            error="@{viewModel.registerData.lastNameError}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/register_til_firstName"
@@ -64,7 +64,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/register_et_lastName"
-                android:text="@={viewModel.register.lastName}"
+                android:text="@={viewModel.registerData.lastName}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -73,7 +73,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/register_til_email"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            error="@{viewModel.register.emailError}"
+            error="@{viewModel.registerData.emailError}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -89,14 +89,14 @@
                 android:id="@+id/register_et_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@={viewModel.register.email}" />
+                android:text="@={viewModel.registerData.email}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/register_til_password"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            error="@{viewModel.register.passwordError}"
+            error="@{viewModel.registerData.passwordError}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -113,28 +113,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:text="@={viewModel.register.password}" />
+                android:text="@={viewModel.registerData.password}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnEnroll"
+            android:id="@+id/btnRegister"
             style="@style/rounded_contained_button_style"
             android:layout_width="0dp"
             android:layout_height="@dimen/btn_height_60dp"
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
-            android:onClick="@{() -> viewModel.onButtonSendClick()}"
-            android:text="@string/register_btn_nextStep"
+            android:text="@string/register_btn_register"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/register_til_password" />
 
-<!--        <include-->
-<!--            android:id="@+id/register_overlay_loading"-->
-<!--            android:visibility="gone"-->
-<!--            layout="@layout/network_status_overlay"/>-->
-
+        <include
+            layout="@layout/network_status_overlay"
+            android:id="@+id/overlay_networkStatus"
+            android:visibility="gone" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

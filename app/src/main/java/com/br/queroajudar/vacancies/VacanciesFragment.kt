@@ -52,6 +52,13 @@ class VacanciesFragment : Fragment() {
         (activity as HomeActivity).homeComponent.inject(this)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        //TODO colocar condicao
+        goToCausesFragment()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -238,5 +245,9 @@ class VacanciesFragment : Fragment() {
             binding.rvVacancies.visibility = View.VISIBLE
             binding.tvRvVacanciesEmpty.visibility = View.GONE
         }
+    }
+
+    private fun goToCausesFragment(){
+        findNavController().navigate(R.id.action_vacanciesFragment_to_causesFragment)
     }
 }
