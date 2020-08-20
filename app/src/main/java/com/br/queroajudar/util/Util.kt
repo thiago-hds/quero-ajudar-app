@@ -37,6 +37,10 @@ object Constants {
     const val SPECIFIC_ADDRESS = "specific_address"
     const val REMOTE = "remote"
     const val NEGOTIABLE = "negotiable"
+
+    //category_type
+    const val CAUSE_TYPE = 1
+    const val SKILL_TYPE = 2
 }
 
     fun convertOrganizationNameToFormatted(name: String): String {

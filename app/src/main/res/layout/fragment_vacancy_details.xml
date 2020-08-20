@@ -360,7 +360,7 @@
 
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnEnroll"
+            android:id="@+id/btnConfirm"
             style="@style/cut_contained_button_style"
             android:layout_width="0dp"
             android:layout_height="@dimen/btn_height_60dp"

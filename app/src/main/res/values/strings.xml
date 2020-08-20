@@ -77,8 +77,9 @@
     <string name="organizationDetails_tvLabelContact">Contato</string>
     <string name="organizationDetails_tvLabelAbout">Sobre</string>
 
-    <!-- CausesFragment -->
-    <string name="causes_tvHint">Selecione suas causas</string>
+    <!-- SelectCategoriesFragment -->
+    <string name="selectCategories_tvHint">Selecione suas causas</string>
+    <string name="selectCategories_btnConfirm"> Confirmar </string>
 
 
     <!-- vacancy_item.xml -->

@@ -27,6 +27,12 @@ import javax.inject.Inject
 class VacancyDetailsFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject
+    lateinit var skillAdapter: CategoryAdapter
+    @Inject
+    lateinit var causeAdapter: CategoryAdapter
+
+
     private lateinit var viewModel : VacancyDetailsViewModel
 
     lateinit var binding : FragmentVacancyDetailsBinding
@@ -113,8 +119,6 @@ class VacancyDetailsFragment : Fragment() {
         binding.rvCauses.layoutManager = GridLayoutManager(activity,2)
         binding.rvSkills.layoutManager = GridLayoutManager(activity,2)
 
-        val causeAdapter = CategoryAdapter()
-        val skillAdapter = CategoryAdapter()
 
         binding.rvCauses.adapter = causeAdapter
         binding.rvSkills.adapter = skillAdapter

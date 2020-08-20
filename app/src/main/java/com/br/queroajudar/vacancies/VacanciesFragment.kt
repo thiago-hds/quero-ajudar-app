@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -23,7 +22,6 @@ import com.br.queroajudar.categories.CategoryDetailsLookup
 import com.br.queroajudar.categories.CategoryItemKeyProvider
 import com.br.queroajudar.databinding.FragmentVacanciesBinding
 import com.br.queroajudar.network.ResultWrapper
-import com.br.queroajudar.register.MainActivity
 import com.br.queroajudar.util.enable
 import com.br.queroajudar.util.toggleViewExpansion2
 import com.br.queroajudar.util.toggleViewRotation0to180
@@ -56,7 +54,7 @@ class VacanciesFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         //TODO colocar condicao
-        goToCausesFragment()
+        goToSelectCategoriesFragment()
     }
 
     override fun onCreateView(
@@ -247,7 +245,7 @@ class VacanciesFragment : Fragment() {
         }
     }
 
-    private fun goToCausesFragment(){
-        findNavController().navigate(R.id.action_vacanciesFragment_to_causesFragment)
+    private fun goToSelectCategoriesFragment(){
+        findNavController().navigate(R.id.action_vacanciesFragment_to_selectCategoriesFragment)
     }
 }

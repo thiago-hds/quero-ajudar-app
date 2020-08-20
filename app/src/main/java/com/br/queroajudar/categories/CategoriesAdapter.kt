@@ -11,9 +11,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.br.queroajudar.databinding.CategoryItemBinding
 import com.br.queroajudar.data.Category
+import javax.inject.Inject
 
-class CategoryAdapter : ListAdapter<
-        Category, CategoryAdapter.ViewHolder>(
+class CategoryAdapter @Inject constructor() : ListAdapter<Category, CategoryAdapter.ViewHolder>(
     CategoryDiffCallback()
 ) {
     var tracker: SelectionTracker<Long>? = null
