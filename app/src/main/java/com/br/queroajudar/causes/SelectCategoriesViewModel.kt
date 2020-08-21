@@ -2,24 +2,22 @@ package com.br.queroajudar.causes
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.br.queroajudar.data.Category
 import com.br.queroajudar.data.source.DefaultCategoriesRepository
 import com.br.queroajudar.network.ResultWrapper
 //import com.br.queroajudar.network.ApiStatus
-import kotlinx.coroutines.Job
 import javax.inject.Inject
 import kotlin.properties.Delegates
 
 class SelectCategoriesViewModel @Inject constructor(
-    categoriesRepository: DefaultCategoriesRepository
+    private val categoriesRepository: DefaultCategoriesRepository
 ) : ViewModel() {
 
     var categoryType by Delegates.notNull<Int>()
     val categories by lazy { categoriesRepository.getCategoriesByType(categoryType) }
 
 
-    fun onSendClick(){
-        //TODO
+    fun sendSelectedCategories(selectedItems: List<Int>?): LiveData<ResultWrapper<Boolean>>? {
+        return categoriesRepository.postCategoriesByType(categoryType, selectedItems)
     }
 
 

@@ -74,5 +74,8 @@
             android:name="categoryType"
             app:argType="integer"
             android:defaultValue="1" />
+        <action
+            android:id="@+id/action_selectCategoriesFragment_self"
+            app:destination="@id/selectCategoriesFragment" />
     </fragment>
 </navigation>

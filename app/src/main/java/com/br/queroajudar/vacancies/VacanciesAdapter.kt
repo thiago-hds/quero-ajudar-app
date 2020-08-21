@@ -206,7 +206,9 @@ class VacancyAdapter(private val clickListener : VacancyClickListener) : PagedLi
         companion object {
             fun from(parent: ViewGroup): LoadingViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = NetworkStatusItemBinding.inflate(layoutInflater, parent, false)
+                val binding = NetworkStatusItemBinding.inflate(
+                    layoutInflater, parent, false
+                )
                 return LoadingViewHolder(
                     binding
                 )

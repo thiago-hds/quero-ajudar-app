@@ -13,4 +13,12 @@ class CategoriesRemoteDataSource @Inject constructor(
     suspend fun fetchCauses() = apiCaller.safeApiCall(Dispatchers.IO) { service.getCauses()}
 
     suspend fun fetchSkills() = apiCaller.safeApiCall(Dispatchers.IO) { service.getSkills()}
+
+    suspend fun postUserCauses(causesIds: List<Int>) = apiCaller.safeApiCall(Dispatchers.IO){
+        service.postUpdateUserCauses(causesIds)
+    }
+
+    suspend fun postUserSkills(skillsIds: List<Int>) = apiCaller.safeApiCall(Dispatchers.IO) {
+        service.postUpdateUserSkills(skillsIds)
+    }
 }

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.selection.SelectionPredicates
 import androidx.recyclerview.selection.SelectionTracker
@@ -19,10 +20,12 @@ import com.br.queroajudar.categories.CategoryAdapter
 import com.br.queroajudar.categories.CategoryDetailsLookup
 import com.br.queroajudar.categories.CategoryItemKeyProvider
 import com.br.queroajudar.databinding.FragmentSelectCategoriesBinding
+import com.br.queroajudar.favorites.FavoriteVacanciesFragmentDirections
 import com.br.queroajudar.network.ResultWrapper
+import com.br.queroajudar.util.Constants.SKILL_TYPE
 import com.br.queroajudar.util.enable
+import com.br.queroajudar.util.showNetworkErrorMessage
 import com.br.queroajudar.vacancies.HomeActivity
-import com.br.queroajudar.vacancydetails.VacancyDetailsFragmentArgs
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -64,6 +67,7 @@ class SelectCategoriesFragment : Fragment() {
 
         setupCategoriesList()
         setupObservers()
+        setupListeners()
 
         return binding.root
     }
@@ -97,6 +101,33 @@ class SelectCategoriesFragment : Fragment() {
                 adapter.submitList(result.value)
             }
         })
+    }
+
+    private fun setupListeners(){
+        binding.btnConfirm.setOnClickListener{
+            Timber.i("btnConfirm click event")
+
+            val selectedItems = adapter.tracker?.selection?.mapNotNull{
+                if(it >= 0) it.toInt() else null
+            }
+
+            val result = viewModel.sendSelectedCategories(selectedItems)
+            result?.observe(viewLifecycleOwner, Observer { result ->
+
+                when (result){
+                    is ResultWrapper.GenericError,ResultWrapper.NetworkError  ->
+                        showNetworkErrorMessage(context)
+                    is ResultWrapper.Success -> {
+                        goToSelectSkillsActivity()
+                    }
+                }
+            })
+        }
+    }
+
+    private fun goToSelectSkillsActivity(){
+        findNavController().navigate(SelectCategoriesFragmentDirections
+            .actionSelectCategoriesFragmentSelf(SKILL_TYPE))
     }
 
 }

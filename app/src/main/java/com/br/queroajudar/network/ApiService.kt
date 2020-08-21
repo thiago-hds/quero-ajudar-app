@@ -21,6 +21,12 @@ interface ApiService {
     @GET("skills")
     suspend fun getSkills(): SuccessResponse<List<Category>>
 
+    @POST("causes/update-user-causes")
+    suspend fun postUpdateUserCauses(@Query("causes_ids") causes_ids: List<Int>): SuccessResponse<Boolean>
+
+    @POST("causes/update-user-skills")
+    suspend fun postUpdateUserSkills(@Query("skills_ids") skills_ids: List<Int>): SuccessResponse<Boolean>
+
     @POST("login")
     suspend fun postLogin(@Body data: LoginData): SuccessResponse<User>
 

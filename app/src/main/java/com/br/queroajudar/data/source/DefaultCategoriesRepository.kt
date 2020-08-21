@@ -21,6 +21,16 @@ class DefaultCategoriesRepository @Inject constructor(
         }
     }
 
+    fun postCategoriesByType(categoryType: Int, selectedItems: List<Int>?): LiveData<ResultWrapper<Boolean>>? {
+
+        val items: List<Int> = selectedItems ?: listOf()
+        return when(categoryType) {
+            CAUSE_TYPE  -> postCauses(items)
+            SKILL_TYPE  ->postSkills(items)
+            else        -> null
+        }
+    }
+
     fun getCauses() = resultLiveData(
         networkCall = {remoteDataSource.fetchCauses()}
     )
@@ -29,14 +39,14 @@ class DefaultCategoriesRepository @Inject constructor(
         networkCall = {remoteDataSource.fetchSkills()}
     )
 
+    fun postCauses(causesIds: List<Int>) = resultLiveData(
+        networkCall = {remoteDataSource.postUserCauses(causesIds)}
+    )
 
-//    suspend fun getCauses() : ResultWrapper<SuccessResponse<List<Category>>> {
-//        return apiCaller.safeApiCall(Dispatchers.IO) { QueroAjudarApi.retrofitService.getCauses()}
-//    }
-//
-//    suspend fun getSkills() : ResultWrapper<SuccessResponse<List<Category>>> {
-//        return apiCaller.safeApiCall(Dispatchers.IO) { QueroAjudarApi.retrofitService.getSkills()}
-//    }
+    fun postSkills(skillsIds: List<Int>) = resultLiveData(
+        networkCall = {remoteDataSource.postUserSkills(skillsIds)}
+    )
+
 
 
 }
