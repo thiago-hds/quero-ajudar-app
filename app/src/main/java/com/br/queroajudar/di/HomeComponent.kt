@@ -1,9 +1,10 @@
 package com.br.queroajudar.di
 
-import com.br.queroajudar.causes.SelectCategoriesFragment
+import com.br.queroajudar.categories.SelectCategoriesFragment
 import com.br.queroajudar.favorites.FavoriteOrganizationsFragment
 import com.br.queroajudar.favorites.FavoriteVacanciesFragment
 import com.br.queroajudar.organizationdetails.OrganizationDetailsFragment
+import com.br.queroajudar.profile.ProfileFragment
 import com.br.queroajudar.vacancies.VacanciesFragment
 import com.br.queroajudar.vacancydetails.VacancyDetailsFragment
 import dagger.Subcomponent
@@ -23,4 +24,5 @@ interface HomeComponent{
     fun inject(fragment: OrganizationDetailsFragment)
     fun inject(fragment: FavoriteVacanciesFragment)
     fun inject(fragment: FavoriteOrganizationsFragment)
+    fun inject(fragment: ProfileFragment)
 }

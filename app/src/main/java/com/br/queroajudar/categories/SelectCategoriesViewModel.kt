@@ -1,4 +1,4 @@
-package com.br.queroajudar.causes
+package com.br.queroajudar.categories
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

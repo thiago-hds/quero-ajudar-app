@@ -12,7 +12,7 @@ import retrofit2.http.*
 interface ApiService {
 
     companion object {
-        const val BASE_URL = "http://192.168.1.102:8000/api/"
+        const val BASE_URL = "http://192.168.1.14:8000/api/"
     }
 
     @GET("causes")
@@ -22,10 +22,10 @@ interface ApiService {
     suspend fun getSkills(): SuccessResponse<List<Category>>
 
     @POST("causes/update-user-causes")
-    suspend fun postUpdateUserCauses(@Query("causes_ids") causes_ids: List<Int>): SuccessResponse<Boolean>
+    suspend fun postUpdateUserCauses(@Query("causes_ids[]") causes_ids: List<Int>): SuccessResponse<Boolean>
 
-    @POST("causes/update-user-skills")
-    suspend fun postUpdateUserSkills(@Query("skills_ids") skills_ids: List<Int>): SuccessResponse<Boolean>
+    @POST("skills/update-user-skills")
+    suspend fun postUpdateUserSkills(@Query("skills_ids[]") skills_ids: List<Int>): SuccessResponse<Boolean>
 
     @POST("login")
     suspend fun postLogin(@Body data: LoginData): SuccessResponse<User>
@@ -63,4 +63,7 @@ interface ApiService {
 
     @GET("favorites/vacancies")
     suspend fun getFavoriteVacancies(@Query("page") page : Int?): SuccessResponse<List<Vacancy>>
+
+    @GET("profile")
+    suspend fun getProfile(): SuccessResponse<User>
 }

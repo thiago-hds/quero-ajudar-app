@@ -68,7 +68,7 @@
     </fragment>
     <fragment
         android:id="@+id/selectCategoriesFragment"
-        android:name="com.br.queroajudar.causes.SelectCategoriesFragment"
+        android:name="com.br.queroajudar.categories.SelectCategoriesFragment"
         android:label="SelectCategoriesFragment" >
         <argument
             android:name="categoryType"

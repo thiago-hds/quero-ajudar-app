@@ -1,4 +1,4 @@
-package com.br.queroajudar.causes
+package com.br.queroajudar.categories
 
 import android.content.Context
 import android.os.Bundle
@@ -16,11 +16,9 @@ import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
 
 import com.br.queroajudar.R
-import com.br.queroajudar.categories.CategoryAdapter
-import com.br.queroajudar.categories.CategoryDetailsLookup
-import com.br.queroajudar.categories.CategoryItemKeyProvider
+import com.br.queroajudar.categories.SelectCategoriesFragmentArgs
+import com.br.queroajudar.categories.SelectCategoriesFragmentDirections
 import com.br.queroajudar.databinding.FragmentSelectCategoriesBinding
-import com.br.queroajudar.favorites.FavoriteVacanciesFragmentDirections
 import com.br.queroajudar.network.ResultWrapper
 import com.br.queroajudar.util.Constants.SKILL_TYPE
 import com.br.queroajudar.util.enable
@@ -126,8 +124,11 @@ class SelectCategoriesFragment : Fragment() {
     }
 
     private fun goToSelectSkillsActivity(){
-        findNavController().navigate(SelectCategoriesFragmentDirections
-            .actionSelectCategoriesFragmentSelf(SKILL_TYPE))
+        findNavController().navigate(
+            SelectCategoriesFragmentDirections.actionSelectCategoriesFragmentSelf(
+                SKILL_TYPE
+            )
+        )
     }
 
 }

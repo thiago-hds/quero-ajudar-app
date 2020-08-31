@@ -6,13 +6,13 @@
     <data>
         <variable
             name="viewModel"
-            type="com.br.queroajudar.causes.SelectCategoriesViewModel" />
+            type="com.br.queroajudar.categories.SelectCategoriesViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".causes.SelectCategoriesFragment">
+        tools:context=".categories.SelectCategoriesFragment">
 
         <TextView
             android:id="@+id/tvHint"
