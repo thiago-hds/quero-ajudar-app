@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -33,7 +32,7 @@ class RegisterFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (activity as MainActivity).mainComponent.inject(this)
+        (activity as AthenticationActivity).mainComponent.inject(this)
     }
 
     override fun onCreateView(
@@ -73,14 +72,15 @@ class RegisterFragment : Fragment() {
                         showNetworkErrorMessage(context)
                     is ResultWrapper.Success -> {
                         result.value.token?.let { it1 -> viewModel.saveApiToken(it1) }
-                        goToHomeActivity()
+                        goToSelectCausesFragment()
                     }
                 }
             })
         }
     }
 
-    private fun goToHomeActivity(){
-        findNavController().navigate(R.id.action_registerDataFragment_to_homeActivity)
+    private fun goToSelectCausesFragment(){
+        findNavController().navigate(R.id.action_registerDataFragment_to_selectCategoriesFragment2)
     }
+
 }

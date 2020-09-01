@@ -26,7 +26,6 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var navController: NavController
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         homeComponent = (application as QueroAjudarApplication).appComponent.homeComponent().create()
         super.onCreate(savedInstanceState)

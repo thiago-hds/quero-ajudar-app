@@ -16,9 +16,6 @@
         <action
             android:id="@+id/action_vacanciesFragment_to_organizationDetailsFragment"
             app:destination="@id/organizationDetailsFragment" />
-        <action
-            android:id="@+id/action_vacanciesFragment_to_selectCategoriesFragment"
-            app:destination="@id/selectCategoriesFragment" />
     </fragment>
     <fragment
         android:id="@+id/favoritesFragment"

@@ -16,8 +16,7 @@
 
         <activity
             android:name=".splash.SplashActivity"
-            android:label="@string/title_activity_splash"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.Launcher" >
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,8 +25,7 @@
         </activity>
 
         <activity
-            android:name=".register.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:name=".register.AthenticationActivity" />
 
         <activity android:name=".vacancies.HomeActivity" />
     </application>

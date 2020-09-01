@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/start_navigation"
+    android:id="@+id/authentication_navigation"
     app:startDestination="@id/startFragment">
 
     <fragment
@@ -24,9 +24,6 @@
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left" />
-        <action
-            android:id="@+id/action_startFragment_to_homeActivity"
-            app:destination="@id/homeActivity" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -43,12 +40,27 @@
         android:label="fragment_register_data"
         tools:layout="@layout/fragment_register" >
         <action
-            android:id="@+id/action_registerDataFragment_to_homeActivity"
-            app:destination="@id/homeActivity" />
+            android:id="@+id/action_registerDataFragment_to_selectCategoriesFragment2"
+            app:destination="@id/selectCategoriesFragment2" />
     </fragment>
     <activity
         android:id="@+id/homeActivity"
         android:name="com.br.queroajudar.vacancies.HomeActivity"
         android:label="activity_home"
         tools:layout="@layout/activity_home" />
+    <fragment
+        android:id="@+id/selectCategoriesFragment2"
+        android:name="com.br.queroajudar.categories.SelectCategoriesFragment"
+        android:label="SelectCategoriesFragment" >
+        <action
+            android:id="@+id/action_selectCategoriesFragment2_to_homeActivity"
+            app:destination="@id/homeActivity" />
+        <action
+            android:id="@+id/action_selectCategoriesFragment2_self"
+            app:destination="@id/selectCategoriesFragment2" />
+        <argument
+            android:name="categoryType"
+            app:argType="integer"
+            android:defaultValue="1" />
+    </fragment>
 </navigation>

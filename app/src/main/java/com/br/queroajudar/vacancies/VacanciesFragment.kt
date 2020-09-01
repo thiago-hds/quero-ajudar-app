@@ -50,13 +50,6 @@ class VacanciesFragment : Fragment() {
         (activity as HomeActivity).homeComponent.inject(this)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        //TODO colocar condicao
-        goToSelectCategoriesFragment()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -245,7 +238,4 @@ class VacanciesFragment : Fragment() {
         }
     }
 
-    private fun goToSelectCategoriesFragment(){
-        findNavController().navigate(R.id.action_vacanciesFragment_to_selectCategoriesFragment)
-    }
 }

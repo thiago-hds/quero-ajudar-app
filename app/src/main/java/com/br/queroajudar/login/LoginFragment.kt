@@ -15,7 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.br.queroajudar.R
 import com.br.queroajudar.databinding.FragmentLoginBinding
 import com.br.queroajudar.network.ResultWrapper
-import com.br.queroajudar.register.MainActivity
+import com.br.queroajudar.register.AthenticationActivity
 import com.br.queroajudar.util.QueroAjudarPreferences
 import timber.log.Timber
 import javax.inject.Inject
@@ -33,7 +33,7 @@ class LoginFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (activity as MainActivity).mainComponent.inject(this)
+        (activity as AthenticationActivity).mainComponent.inject(this)
     }
 
     override fun onCreateView(
@@ -49,27 +49,9 @@ class LoginFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        setupLoadingProgressBarVisibility()
         setupListeners()
 
         return binding.root
-    }
-
-    private fun setupLoadingProgressBarVisibility(){
-//        loginViewModel.apiStatus.observe(viewLifecycleOwner, Observer<QueroAjudarApiStatus>{status ->
-//            Log.i("QueroAjudar", "ApiStatus changed")
-//
-//            if(status == QueroAjudarApiStatus.LOADING){
-//                showLoadingOverlay()
-//            }
-//            else {
-//                hideLoadingOverlay()
-//
-//                if(status == QueroAjudarApiStatus.NETWORK_ERROR){
-//                    showNetworkErrorMessage()
-//                }
-//            }
-//        })
     }
 
     private fun setupListeners(){
