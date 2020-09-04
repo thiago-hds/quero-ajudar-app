@@ -78,7 +78,8 @@
     <string name="organizationDetails_tvLabelAbout">Sobre</string>
 
     <!-- SelectCategoriesFragment -->
-    <string name="selectCategories_tvHint">Selecione suas causas</string>
+    <string name="selectCategories_tvHintCauses">Selecione suas causas</string>
+    <string name="selectCategories_tvHintSkills">Selecione suas habilidades</string>
     <string name="selectCategories_btnConfirm"> Confirmar </string>
 
 

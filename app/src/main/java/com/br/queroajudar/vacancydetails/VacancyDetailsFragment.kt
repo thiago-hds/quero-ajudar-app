@@ -151,7 +151,7 @@ class VacancyDetailsFragment : Fragment() {
                     binding.tvFrequency.visibility = View.GONE
                 }
 
-                if(vacancy.favourited){
+                if(vacancy.favorite){
                     menu.findItem(R.id.favorite_vacancy).setIcon(R.drawable.ic_favorite_24dp)
                 }
                 menu.findItem(R.id.favorite_vacancy).isVisible = true

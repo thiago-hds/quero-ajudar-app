@@ -8,26 +8,26 @@ import androidx.navigation.ui.NavigationUI
 import com.br.queroajudar.QueroAjudarApplication
 import com.br.queroajudar.R
 import com.br.queroajudar.databinding.ActivityAuthenticationBinding
-import com.br.queroajudar.di.MainComponent
+import com.br.queroajudar.di.AuthenticationComponent
 
-class AthenticationActivity : AppCompatActivity() {
+class AuthenticationActivity : AppCompatActivity() {
 
-    lateinit var mainComponent: MainComponent
+    lateinit var authenticationComponent: AuthenticationComponent
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        mainComponent = (application as QueroAjudarApplication).appComponent.mainComponent().create()
+        authenticationComponent = (application as QueroAjudarApplication).appComponent.mainComponent().create()
         super.onCreate(savedInstanceState)
         val binding = DataBindingUtil.setContentView<ActivityAuthenticationBinding>(this,
             R.layout.activity_authentication
         )
-        val navController = this.findNavController(R.id.activity_main_navhost)
+        val navController = this.findNavController(R.id.activity_authentication_navhost)
         NavigationUI.setupActionBarWithNavController(this, navController)
         supportActionBar?.hide()
 
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        val navController = this.findNavController(R.id.activity_main_navhost)
+        val navController = this.findNavController(R.id.activity_authentication_navhost)
         return navController.navigateUp()
     }
 }

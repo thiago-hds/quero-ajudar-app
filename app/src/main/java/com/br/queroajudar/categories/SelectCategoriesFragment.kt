@@ -16,10 +16,10 @@ import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
 
 import com.br.queroajudar.R
-import com.br.queroajudar.categories.SelectCategoriesFragmentArgs
-import com.br.queroajudar.categories.SelectCategoriesFragmentDirections
 import com.br.queroajudar.databinding.FragmentSelectCategoriesBinding
 import com.br.queroajudar.network.ResultWrapper
+import com.br.queroajudar.register.AuthenticationActivity
+import com.br.queroajudar.util.Constants.CAUSE_TYPE
 import com.br.queroajudar.util.Constants.SKILL_TYPE
 import com.br.queroajudar.util.enable
 import com.br.queroajudar.util.showNetworkErrorMessage
@@ -42,7 +42,8 @@ class SelectCategoriesFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (activity as HomeActivity).homeComponent.inject(this)
+        if(activity is AuthenticationActivity) (activity as AuthenticationActivity).authenticationComponent.inject(this)
+        else if(activity is HomeActivity) (activity as HomeActivity).homeComponent.inject(this)
     }
 
 
@@ -62,6 +63,13 @@ class SelectCategoriesFragment : Fragment() {
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+
+        if(args.categoryType == CAUSE_TYPE){
+            binding.tvHint.text = getString(R.string.selectCategories_tvHintCauses)
+        }
+        else{
+            binding.tvHint.text = getString(R.string.selectCategories_tvHintSkills)
+        }
 
         setupCategoriesList()
         setupObservers()
@@ -116,18 +124,30 @@ class SelectCategoriesFragment : Fragment() {
                     is ResultWrapper.GenericError,ResultWrapper.NetworkError  ->
                         showNetworkErrorMessage(context)
                     is ResultWrapper.Success -> {
-                        goToSelectSkillsActivity()
+
+                        if(viewModel.categoryType == CAUSE_TYPE) {
+                            goToSelectSkillsFragment()
+                        }
+                        else if(viewModel.categoryType == SKILL_TYPE){
+                            goToHomeActivity()
+                        }
                     }
                 }
             })
         }
     }
 
-    private fun goToSelectSkillsActivity(){
+    private fun goToSelectSkillsFragment(){
         findNavController().navigate(
             SelectCategoriesFragmentDirections.actionSelectCategoriesFragmentSelf(
                 SKILL_TYPE
             )
+        )
+    }
+
+    private fun goToHomeActivity(){
+        findNavController().navigate(
+            SelectCategoriesFragmentDirections.actionSelectCategoriesFragmentToHomeActivity()
         )
     }
 

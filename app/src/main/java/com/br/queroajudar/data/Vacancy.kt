@@ -24,5 +24,5 @@ data class Vacancy(
     @Json(name="formatted_date") val formattedDate: String?,
     @Json(name="formatted_time") val formattedTime: String?,
     @Json(name="formatted_location") val formattedLocation: String?,
-    val favourited: Boolean
+    val favorite: Boolean
 )

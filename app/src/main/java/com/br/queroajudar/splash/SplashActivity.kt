@@ -9,7 +9,7 @@ import com.br.queroajudar.QueroAjudarApplication
 import com.br.queroajudar.di.SplashComponent
 import com.br.queroajudar.network.ResultWrapper
 import com.br.queroajudar.profile.ProfileViewModel
-import com.br.queroajudar.register.AthenticationActivity
+import com.br.queroajudar.register.AuthenticationActivity
 import com.br.queroajudar.vacancies.HomeActivity
 import javax.inject.Inject
 
@@ -54,7 +54,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun goToAuthenticationActivity(){
-        var intent = Intent(this, AthenticationActivity::class.java)
+        var intent = Intent(this, AuthenticationActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(intent)
         this.finish()

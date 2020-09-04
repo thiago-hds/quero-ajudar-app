@@ -63,16 +63,4 @@
             android:id="@+id/action_favoriteOrganizationsFragment_to_organizationDetailsFragment"
             app:destination="@id/organizationDetailsFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/selectCategoriesFragment"
-        android:name="com.br.queroajudar.categories.SelectCategoriesFragment"
-        android:label="SelectCategoriesFragment" >
-        <argument
-            android:name="categoryType"
-            app:argType="integer"
-            android:defaultValue="1" />
-        <action
-            android:id="@+id/action_selectCategoriesFragment_self"
-            app:destination="@id/selectCategoriesFragment" />
-    </fragment>
 </navigation>

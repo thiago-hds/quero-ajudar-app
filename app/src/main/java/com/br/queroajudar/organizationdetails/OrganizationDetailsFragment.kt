@@ -135,7 +135,7 @@ class OrganizationDetailsFragment : Fragment() {
                     binding.rvCauses.visibility = View.GONE
                 }
 
-                if(organization.favourited){
+                if(organization.favorite){
                     menu.findItem(R.id.favorite_vacancy).setIcon(R.drawable.ic_favorite_24dp)
                 }
                 menu.findItem(R.id.favorite_vacancy).isVisible = true

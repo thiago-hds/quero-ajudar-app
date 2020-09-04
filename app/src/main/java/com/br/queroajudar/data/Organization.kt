@@ -14,5 +14,5 @@ data class Organization(
     val email: String,
     val causes: List<Category>,
     @Json(name="formatted_location") val formattedLocation: String?,
-    val favourited: Boolean
+    val favorite: Boolean
 )

@@ -32,7 +32,7 @@ class RegisterFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (activity as AthenticationActivity).mainComponent.inject(this)
+        (activity as AuthenticationActivity).authenticationComponent.inject(this)
     }
 
     override fun onCreateView(

@@ -14,7 +14,7 @@ interface AppComponent {
 
     // Expose HomeComponent factory from the graph
     fun splashComponent(): SplashComponent.Factory
-    fun mainComponent(): MainComponent.Factory
+    fun mainComponent(): AuthenticationComponent.Factory
     fun homeComponent(): HomeComponent.Factory
 
 }

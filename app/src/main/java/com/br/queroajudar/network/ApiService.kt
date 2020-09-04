@@ -12,7 +12,7 @@ import retrofit2.http.*
 interface ApiService {
 
     companion object {
-        const val BASE_URL = "http://192.168.1.17:8000/api/"
+        const val BASE_URL = "http://192.168.1.15:8000/api/"
     }
 
     @GET("causes")

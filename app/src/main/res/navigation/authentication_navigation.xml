@@ -41,7 +41,7 @@
         tools:layout="@layout/fragment_register" >
         <action
             android:id="@+id/action_registerDataFragment_to_selectCategoriesFragment2"
-            app:destination="@id/selectCategoriesFragment2" />
+            app:destination="@id/selectCategoriesFragment" />
     </fragment>
     <activity
         android:id="@+id/homeActivity"
@@ -49,15 +49,15 @@
         android:label="activity_home"
         tools:layout="@layout/activity_home" />
     <fragment
-        android:id="@+id/selectCategoriesFragment2"
+        android:id="@+id/selectCategoriesFragment"
         android:name="com.br.queroajudar.categories.SelectCategoriesFragment"
         android:label="SelectCategoriesFragment" >
         <action
-            android:id="@+id/action_selectCategoriesFragment2_to_homeActivity"
+            android:id="@+id/action_selectCategoriesFragment_to_homeActivity"
             app:destination="@id/homeActivity" />
         <action
-            android:id="@+id/action_selectCategoriesFragment2_self"
-            app:destination="@id/selectCategoriesFragment2" />
+            android:id="@+id/action_selectCategoriesFragment_self"
+            app:destination="@id/selectCategoriesFragment" />
         <argument
             android:name="categoryType"
             app:argType="integer"

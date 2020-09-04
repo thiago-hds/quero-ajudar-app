@@ -15,7 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.br.queroajudar.R
 import com.br.queroajudar.databinding.FragmentLoginBinding
 import com.br.queroajudar.network.ResultWrapper
-import com.br.queroajudar.register.AthenticationActivity
+import com.br.queroajudar.register.AuthenticationActivity
 import com.br.queroajudar.util.QueroAjudarPreferences
 import timber.log.Timber
 import javax.inject.Inject
@@ -33,7 +33,7 @@ class LoginFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (activity as AthenticationActivity).mainComponent.inject(this)
+        (activity as AuthenticationActivity).authenticationComponent.inject(this)
     }
 
     override fun onCreateView(
