@@ -117,7 +117,7 @@
     <string name="tools_vacancyItem_name">Motorista Solidário</string>
     <string name="tools_vacancyItem_organizationName">CAPEC</string>
     <string name="tools_vacancyItem_location">Belo Horizonte - MG</string>
-    <string name="tools_vacancyItem_type">Recorrente</string>
+    <string name="tools_vacancyItem_frequency">Recorrente</string>
     <string name="tools_causeItem_name">Animais</string>
     <string name="tools_skillItem_name">Artes e Cultura</string>
     <string name="tools_vacanciesFilterLayout_selectedCauses">Animais, Arte e Cultura, Combate à Pobreza</string>

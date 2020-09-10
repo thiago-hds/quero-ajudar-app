@@ -27,7 +27,6 @@
             android:gravity="bottom">
 
 
-
             <Spinner
                 android:id="@+id/vacancies_spinner_orderBy"
                 style="@style/spinner_style"

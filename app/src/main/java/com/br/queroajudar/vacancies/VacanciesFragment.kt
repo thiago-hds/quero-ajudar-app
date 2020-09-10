@@ -94,10 +94,10 @@ class VacanciesFragment : Fragment() {
 //            }
 //        })
 
-//        viewModel.vacanciesSize.observe(viewLifecycleOwner,Observer{ size ->
-//            Timber.i("vacanciesSize change observed: $size")
-//            showEmptyList(size == 0)
-//        })
+        viewModel.vacanciesSize.observe(viewLifecycleOwner,Observer{ size ->
+            Timber.i("vacanciesSize change observed: $size")
+            showEmptyList(size == 0)
+        })
 
         viewModel.vacanciesLoadInitialResultWrapper.observe(viewLifecycleOwner, Observer { result ->
             Timber.i("vacanciesLoadInitialResultWrapper change observed $result")

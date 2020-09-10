@@ -42,7 +42,7 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
             .load(imgUrl)
             .centerCrop()
             .placeholder(R.color.colorBackgroundGrey)
-            .error(R.drawable.ic_launcher_foreground)
+            .error(R.drawable.ic_deal_orange)
             .into(imgView)
     }
 }

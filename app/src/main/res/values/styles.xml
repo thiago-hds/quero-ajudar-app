@@ -14,9 +14,10 @@
     </style>
 
     <style name="AppTheme.Launcher" parent="AppTheme.NoActionBar">
-        <item name="android:background">@drawable/ic_deal_orange</item>
-        <!-- <item name="android:backgroundTint">@color/colorPrimary</item> -->
-        <!-- <item name="colorPrimaryDark">@android:color/white</item> -->
+        <item name="android:windowBackground">@drawable/splash_background</item>
+
+<!--        <item name="android:backgroundTint">@color/colorPrimary</item>-->
+<!--         <item name="colorPrimaryDark">@color/colorPrimary</item>-->
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -163,7 +164,7 @@
 
     <!-- Spinner -->
     <style name="spinner_style">
-        <!--        <item name="android:background">@drawable/white_round_shape</item>-->
+        <!-- <item name="android:background"></item> -->
     </style>
 
     <!-- Bottom Navigation -->

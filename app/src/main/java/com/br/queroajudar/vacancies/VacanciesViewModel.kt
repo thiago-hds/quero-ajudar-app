@@ -37,6 +37,7 @@ class VacanciesViewModel @Inject constructor(
 
     lateinit var pagedVacancies: ItemPagedListing<Vacancy>
     lateinit var vacancies: LiveData<PagedList<Vacancy>>
+    lateinit var vacanciesSize: LiveData<Int>
     lateinit var vacanciesLoadInitialResultWrapper: LiveData<ResultWrapper<Any>>
     lateinit var vacanciesLoadAfterResultWrapper: LiveData<ResultWrapper<Any>>
 
@@ -56,7 +57,7 @@ class VacanciesViewModel @Inject constructor(
         vacancies = pagedVacancies.pagedList
         vacanciesLoadInitialResultWrapper = pagedVacancies.loadInitialResultWrapper
         vacanciesLoadAfterResultWrapper = pagedVacancies.loadAfterResultWrapper
-        //vacanciesSize = pagedVacancies.size
+        vacanciesSize = pagedVacancies.size
     }
 
     private fun loadOrganizations(){
