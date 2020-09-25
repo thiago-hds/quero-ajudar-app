@@ -27,7 +27,8 @@
         <activity
             android:name=".register.AuthenticationActivity" />
 
-        <activity android:name=".vacancies.HomeActivity" />
+        <activity android:name=".vacancies.HomeActivity"
+            android:windowSoftInputMode="adjustPan"/>
     </application>
 
 </manifest>

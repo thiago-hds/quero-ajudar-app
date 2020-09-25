@@ -1,6 +1,7 @@
 package com.br.queroajudar.vacancies
 
 import com.br.queroajudar.data.Vacancy
+import com.br.queroajudar.data.formdata.VacancyApplicationData
 import com.br.queroajudar.network.ApiService
 import com.br.queroajudar.network.ResultWrapper
 import com.br.queroajudar.network.SafeApiCaller
@@ -36,6 +37,12 @@ class VacanciesRemoteDataSource @Inject constructor(
     suspend fun favoriteVacancy(id: Int): ResultWrapper<Boolean> {
         return apiCaller.safeApiCall(Dispatchers.IO){
             service.postFavoriteVacancy(id)
+        }
+    }
+
+    suspend fun applyForVacancy(data: VacancyApplicationData): ResultWrapper<Boolean> {
+        return apiCaller.safeApiCall(Dispatchers.IO){
+            service.postApplication(data)
         }
     }
 }

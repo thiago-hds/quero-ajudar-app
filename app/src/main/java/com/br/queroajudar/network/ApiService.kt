@@ -7,6 +7,7 @@ import com.br.queroajudar.data.Vacancy
 import com.br.queroajudar.network.response.SuccessResponse
 import com.br.queroajudar.data.formdata.LoginData
 import com.br.queroajudar.data.formdata.RegisterData
+import com.br.queroajudar.data.formdata.VacancyApplicationData
 import retrofit2.http.*
 
 interface ApiService {
@@ -57,6 +58,9 @@ interface ApiService {
 
     @GET("vacancies/{id}")
     suspend fun getVacancy(@Path("id") id: Int): SuccessResponse<Vacancy>
+
+    @POST("applications")
+    suspend fun postApplication(@Body data: VacancyApplicationData): SuccessResponse<Boolean>
 
     @POST("favorites/vacancies/{id}/favorite")
     suspend fun postFavoriteVacancy(@Path("id") id: Int): SuccessResponse<Boolean>

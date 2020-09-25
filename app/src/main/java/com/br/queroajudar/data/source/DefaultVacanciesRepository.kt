@@ -3,6 +3,7 @@ package com.br.queroajudar.data.source
 import androidx.lifecycle.Transformations
 import androidx.paging.LivePagedListBuilder
 import com.br.queroajudar.data.Vacancy
+import com.br.queroajudar.data.formdata.VacancyApplicationData
 import com.br.queroajudar.util.ItemPagedListing
 import com.br.queroajudar.util.resultLiveData
 import com.br.queroajudar.vacancies.VacanciesPageDataSourceFactory
@@ -84,5 +85,9 @@ class DefaultVacanciesRepository @Inject constructor(
 
     fun favoriteVacancy(id: Int) = resultLiveData(
         networkCall = {remoteDataSource.favoriteVacancy(id)}
+    )
+
+    fun applyForVacancy(data: VacancyApplicationData) = resultLiveData(
+        networkCall = {remoteDataSource.applyForVacancy(data)}
     )
 }

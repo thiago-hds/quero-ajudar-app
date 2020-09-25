@@ -162,6 +162,12 @@ class VacancyDetailsFragment : Fragment() {
                     findNavController().navigate(action)
                 }
 
+                binding.btnConfirm.setOnClickListener {
+                    val action =
+                        VacancyDetailsFragmentDirections.actionVacancyDetailsFragmentToVacancyApplicationFragment(vacancy.id)
+                    findNavController().navigate(action)
+                }
+
             }
         })
     }

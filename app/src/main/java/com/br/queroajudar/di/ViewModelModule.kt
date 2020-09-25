@@ -11,6 +11,7 @@ import com.br.queroajudar.profile.ProfileViewModel
 import com.br.queroajudar.register.RegisterViewModel
 import com.br.queroajudar.vacancies.VacanciesViewModel
 import com.br.queroajudar.util.ViewModelFactory
+import com.br.queroajudar.vacancyapplication.VacancyApplicationViewModel
 import com.br.queroajudar.vacancydetails.VacancyDetailsViewModel
 import dagger.Binds
 import dagger.Module
@@ -47,6 +48,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(VacancyDetailsViewModel::class)
     internal abstract fun vacancyDetailsViewModel(viewModel: VacancyDetailsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(VacancyApplicationViewModel::class)
+    internal abstract fun vacancyApplicationViewModel(viewModel: VacancyApplicationViewModel): ViewModel
 
     @Binds
     @IntoMap

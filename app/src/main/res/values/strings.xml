@@ -82,6 +82,16 @@
     <string name="selectCategories_tvHintSkills">Selecione suas habilidades</string>
     <string name="selectCategories_btnConfirm"> Confirmar </string>
 
+    <!-- VacancyApplicationFragment -->
+    <string name="fragment_vacancy_application_label">Inscrição</string>
+    <string name="vacancyApplication_tvTitle">Confirmação de Inscrição</string>
+    <string name="vacancyApplication_tvInstructions">Ao confirmar sua inscrição a instituição responsável será notificada e receberá seus dados de contato. Insira-os nos campos abaixo. </string>
+    <string name="vacancyApplication_tvPhone">Telefone</string>
+    <string name="vacancyApplication_tvEmail">E-mail</string>
+    <string name="vacancyApplication_tvMessage">Mensagem para a instituição</string>
+    <string name="vacancyApplication_btnConfirm">Confirmar inscrição</string>
+    <string name="vacancyApplication_btnCancel">Voltar</string>
+    <string name="vacancyApplication_applicationSent">Sua inscrição foi enviada com sucesso</string>
 
     <!-- vacancy_item.xml -->
     <string name="item_vacancy_by">por</string>
