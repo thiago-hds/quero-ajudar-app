@@ -2,6 +2,7 @@ package com.br.queroajudar.vacancyapplication
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import com.br.queroajudar.data.Vacancy
 import com.br.queroajudar.data.formdata.RegisterData
 import com.br.queroajudar.data.formdata.VacancyApplicationData
 import com.br.queroajudar.data.source.DefaultVacanciesRepository
@@ -14,12 +15,16 @@ class VacancyApplicationViewModel @Inject constructor(
     val vacancyApplicationData: VacancyApplicationData
 ) : ViewModel(){
 
-    var id by Delegates.notNull<Int>()
 
-    val vacancy by lazy { repository.getVacancy(id) }
+    lateinit var vacancy: Vacancy
 
-    fun applyForVacancy(): LiveData<ResultWrapper<Boolean>> {
-        vacancyApplicationData.vacancyId = id
-        return repository.applyForVacancy(vacancyApplicationData)
+    fun applyForVacancyOrCancelApplication(): LiveData<ResultWrapper<Boolean>> {
+        vacancyApplicationData.vacancyId = vacancy.id
+
+        return if(vacancy.application != null && vacancy.application?.status == 1){
+            repository.cancelApplicationForVacancy(vacancy.application!!.id)
+        } else {
+            repository.applyForVacancy(vacancyApplicationData)
+        }
     }
 }

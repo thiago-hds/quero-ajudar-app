@@ -90,4 +90,8 @@ class DefaultVacanciesRepository @Inject constructor(
     fun applyForVacancy(data: VacancyApplicationData) = resultLiveData(
         networkCall = {remoteDataSource.applyForVacancy(data)}
     )
+
+    fun cancelApplicationForVacancy(applicationId: Int) = resultLiveData(
+        networkCall = {remoteDataSource.cancelApplicationForVacancy(applicationId)}
+    )
 }

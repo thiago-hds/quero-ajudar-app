@@ -45,4 +45,10 @@ class VacanciesRemoteDataSource @Inject constructor(
             service.postApplication(data)
         }
     }
+
+    suspend fun cancelApplicationForVacancy(applicationId: Int): ResultWrapper<Boolean> {
+        return apiCaller.safeApiCall(Dispatchers.IO){
+            service.deleteApplication(applicationId)
+        }
+    }
 }

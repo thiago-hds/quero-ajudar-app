@@ -1,9 +1,12 @@
 package com.br.queroajudar.data
 
+import android.os.Parcelable
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import kotlinx.android.parcel.Parcelize
 
 @JsonClass(generateAdapter = true)
+@Parcelize
 data class User(
     val id : Int,
     val first_name : String,
@@ -12,4 +15,4 @@ data class User(
     @Json(name="date_of_birth") val dateOfBirth : String,
     val status : Int,
     val token : String?
-)
+): Parcelable

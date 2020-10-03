@@ -1,9 +1,13 @@
 package com.br.queroajudar.data
 
+import android.os.Parcelable
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import kotlinx.android.parcel.Parcelize
+import kotlinx.android.parcel.RawValue
 
 @JsonClass(generateAdapter = true)
+@Parcelize
 data class Vacancy(
     val id : Int,
     val name : String,
@@ -24,5 +28,6 @@ data class Vacancy(
     @Json(name="formatted_date") val formattedDate: String?,
     @Json(name="formatted_time") val formattedTime: String?,
     @Json(name="formatted_location") val formattedLocation: String?,
-    val favorite: Boolean
-)
+    val favorite: Boolean,
+    val application: Application?
+) : Parcelable

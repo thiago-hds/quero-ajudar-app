@@ -70,11 +70,11 @@
         android:id="@+id/vacancyApplicationFragment"
         android:name="com.br.queroajudar.vacancyapplication.VacancyApplicationFragment"
         android:label="@string/fragment_vacancy_application_label">
-        <argument
-            android:name="id"
-            app:argType="integer" />
         <action
             android:id="@+id/action_vacancyApplicationFragment_to_vacancyDetailsFragment"
             app:destination="@id/vacancyDetailsFragment" />
+        <argument
+            android:name="vacancy"
+            app:argType="com.br.queroajudar.data.Vacancy" />
     </fragment>
 </navigation>

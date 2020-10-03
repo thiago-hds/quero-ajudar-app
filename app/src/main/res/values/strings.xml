@@ -58,7 +58,8 @@
     <string name="vacancyDetails_tvLabelTimetable">Horário</string>
     <string name="vacancyDetails_tvLabelLocation">Local</string>
     <string name="vacancyDetails_tvLabelContact">Contato</string>
-    <string name="vacancyDetails_btnEnroll"> Inscrever-se </string>
+    <string name="vacancyDetails_btnApply"> Inscrever-se </string>
+    <string name="vacancyDetails_btnApplyCancel"> Cancelar Inscrição </string>
     <string name="vacancyDetails_favorite_success">
         A vaga foi incluída em seus favoritos
     </string>
@@ -85,11 +86,14 @@
     <!-- VacancyApplicationFragment -->
     <string name="fragment_vacancy_application_label">Inscrição</string>
     <string name="vacancyApplication_tvTitle">Confirmação de Inscrição</string>
+    <string name="vacancyApplication_tvTitleCancel">Cancelamento</string>
     <string name="vacancyApplication_tvInstructions">Ao confirmar sua inscrição a instituição responsável será notificada e receberá seus dados de contato. Insira-os nos campos abaixo. </string>
+    <string name="vacancyApplication_tvInstructionsCancel">Você tem certeza de que deseja cancelar sua inscrição nessa vaga? A instituição responsável será notificada de seu cancelamento. </string>
     <string name="vacancyApplication_tvPhone">Telefone</string>
     <string name="vacancyApplication_tvEmail">E-mail</string>
     <string name="vacancyApplication_tvMessage">Mensagem para a instituição</string>
-    <string name="vacancyApplication_btnConfirm">Confirmar inscrição</string>
+    <string name="vacancyApplication_btnConfirm">Confirmar</string>
+    <string name="vacancyApplication_btnConfirmCancel">Confirmar Cancelamento</string>
     <string name="vacancyApplication_btnCancel">Voltar</string>
     <string name="vacancyApplication_applicationSent">Sua inscrição foi enviada com sucesso</string>
 

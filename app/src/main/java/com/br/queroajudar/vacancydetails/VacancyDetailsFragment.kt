@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -23,6 +24,7 @@ import com.br.queroajudar.vacancies.VacanciesFragmentDirections
 import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber
 import javax.inject.Inject
+
 
 class VacancyDetailsFragment : Fragment() {
     @Inject
@@ -156,18 +158,35 @@ class VacancyDetailsFragment : Fragment() {
                 }
                 menu.findItem(R.id.favorite_vacancy).isVisible = true
 
+                if(vacancy.application != null && vacancy.application.status == 1){
+                    binding.btnApply.backgroundTintList = context?.let {
+                        ContextCompat.getColorStateList(
+                            it, R.color.colorRed
+                        )
+                    }
+                    binding.btnApply.text = getString(R.string.vacancyDetails_btnApplyCancel)
+                }
+                else if (vacancy.application != null){
+                    binding.btnApply.isEnabled = false
+                }
+
                 binding.btnOrganization.setOnClickListener {
                     val action =
-                        VacancyDetailsFragmentDirections.actionVacancyDetailsFragmentToOrganizationDetailsFragment(vacancy.organization.id)
+                        VacancyDetailsFragmentDirections
+                            .actionVacancyDetailsFragmentToOrganizationDetailsFragment(
+                                vacancy.organization.id
+                            )
                     findNavController().navigate(action)
                 }
 
-                binding.btnConfirm.setOnClickListener {
+                binding.btnApply.setOnClickListener {
                     val action =
-                        VacancyDetailsFragmentDirections.actionVacancyDetailsFragmentToVacancyApplicationFragment(vacancy.id)
+                        VacancyDetailsFragmentDirections
+                            .actionVacancyDetailsFragmentToVacancyApplicationFragment(
+                                vacancy
+                            )
                     findNavController().navigate(action)
                 }
-
             }
         })
     }
@@ -176,9 +195,5 @@ class VacancyDetailsFragment : Fragment() {
         binding.overlayNetworkStatus.btnTryAgain.setOnClickListener {
             // TODO
         }
-
-
     }
-
-
 }

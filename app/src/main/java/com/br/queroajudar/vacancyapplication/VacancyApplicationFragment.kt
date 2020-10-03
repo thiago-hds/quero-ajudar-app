@@ -16,7 +16,6 @@ import com.br.queroajudar.databinding.FragmentVacancyApplicationBinding
 import com.br.queroajudar.network.ResultWrapper
 import com.br.queroajudar.util.showNetworkErrorMessage
 import com.br.queroajudar.vacancies.HomeActivity
-import com.br.queroajudar.vacancydetails.VacancyDetailsFragmentDirections
 import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber
 import javax.inject.Inject
@@ -42,7 +41,7 @@ class VacancyApplicationFragment: Fragment(){
     ): View? {
 
         viewModel = ViewModelProvider(this, viewModelFactory)[VacancyApplicationViewModel::class.java]
-        viewModel.id = args.id
+        viewModel.vacancy = args.vacancy
 
         binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_vacancy_application, container, false
@@ -50,7 +49,7 @@ class VacancyApplicationFragment: Fragment(){
 
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-
+        binding.applicationActive = viewModel.vacancy.application != null
 
         setupListeners()
 
@@ -61,7 +60,7 @@ class VacancyApplicationFragment: Fragment(){
         binding.btnConfirm.setOnClickListener{
             Timber.i("btnRegister click event")
 
-            val result = viewModel.applyForVacancy()
+            val result = viewModel.applyForVacancyOrCancelApplication()
             result.observe(viewLifecycleOwner, Observer { result ->
                 Timber.i("user change observed $result")
                 binding.overlayNetworkStatus.isUserAction = true
@@ -87,7 +86,7 @@ class VacancyApplicationFragment: Fragment(){
 
     private fun goToVacancyDetailsFragment(){
         val action =
-            VacancyApplicationFragmentDirections.actionVacancyApplicationFragmentToVacancyDetailsFragment(viewModel.id)
+            VacancyApplicationFragmentDirections.actionVacancyApplicationFragmentToVacancyDetailsFragment(viewModel.vacancy.id)
         findNavController().navigate(action)
     }
 }

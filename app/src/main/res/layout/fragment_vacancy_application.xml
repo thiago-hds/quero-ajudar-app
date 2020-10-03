@@ -4,11 +4,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="com.br.queroajudar.vacancyapplication.VacancyApplicationViewModel"/>
-    </data>
 
+        <variable
+            name="applicationActive"
+            type="boolean" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -21,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:text="@string/vacancyApplication_tvTitle"
+            android:text="@{applicationActive ? @string/vacancyApplication_tvTitleCancel : @string/vacancyApplication_tvTitle}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -34,7 +38,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
-            android:text="@string/vacancyApplication_tvInstructions"
+            android:text="@{applicationActive? @string/vacancyApplication_tvInstructionsCancel : @string/vacancyApplication_tvInstructions}"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -50,6 +54,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:hint="@string/vacancyApplication_tvPhone"
+            android:visibility="@{applicationActive? View.GONE : View.VISIBLE}"
             app:errorEnabled="true"
             app:layout_constraintTop_toBottomOf="@id/tvInstructions"
             app:layout_constraintStart_toStartOf="parent"
@@ -72,6 +77,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:hint="@string/vacancyApplication_tvEmail"
+            android:visibility="@{applicationActive ? View.GONE : View.VISIBLE}"
             app:errorEnabled="true"
             app:layout_constraintTop_toBottomOf="@id/tilPhone"
             app:layout_constraintStart_toStartOf="parent"
@@ -95,9 +101,9 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:hint="@string/vacancyApplication_tvMessage"
+            android:visibility="@{applicationActive ? View.GONE : View.VISIBLE}"
             app:errorEnabled="true"
             app:layout_constraintTop_toBottomOf="@id/tilEmail"
-            app:layout_constraintBottom_toTopOf="@id/btnConfirm"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
@@ -119,10 +125,10 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
-            android:text="@string/register_btn_register"
+            android:text="@string/vacancyApplication_btnConfirm"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/btnCancel" />
+            app:layout_constraintTop_toBottomOf="@+id/tilMessage" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnCancel"
@@ -135,7 +141,7 @@
             android:text="@string/vacancyApplication_btnCancel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"   
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/btnConfirm" />
 
         <include
             layout="@layout/network_status_overlay"

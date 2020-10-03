@@ -21,7 +21,7 @@
             android:id="@+id/scrollView2"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/btnConfirm"
+            app:layout_constraintBottom_toTopOf="@+id/btnApply"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -360,11 +360,11 @@
 
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnConfirm"
+            android:id="@+id/btnApply"
             style="@style/cut_contained_button_style"
             android:layout_width="0dp"
             android:layout_height="@dimen/btn_height_60dp"
-            android:text="@string/vacancyDetails_btnEnroll"
+            android:text="@string/vacancyDetails_btnApply"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

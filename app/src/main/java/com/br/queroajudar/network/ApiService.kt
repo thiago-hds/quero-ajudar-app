@@ -62,6 +62,9 @@ interface ApiService {
     @POST("applications")
     suspend fun postApplication(@Body data: VacancyApplicationData): SuccessResponse<Boolean>
 
+    @DELETE("applications/{id}")
+    suspend fun deleteApplication(@Path("id")id: Int): SuccessResponse<Boolean>
+
     @POST("favorites/vacancies/{id}/favorite")
     suspend fun postFavoriteVacancy(@Path("id") id: Int): SuccessResponse<Boolean>
 
