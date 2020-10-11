@@ -47,6 +47,11 @@
 
     <!-- ProfileFragment -->
     <string name="fragment_profile_label">Perfil</string>
+    <string name="profile_btnEditProfile">Editar Perfil</string>
+    <string name="profile_tvLabelApplications">Inscrições</string>
+    <string name="profile_tvLabelCauses">Minhas Causas</string>
+    <string name="profile_tvLabelSkills">Minhas Habilidades</string>
+
 
     <!-- VacancyDetailsFragment -->
     <string name="fragment_vacancy_details_label">Vaga</string>
@@ -136,6 +141,8 @@
     <string name="tools_skillItem_name">Artes e Cultura</string>
     <string name="tools_vacanciesFilterLayout_selectedCauses">Animais, Arte e Cultura, Combate à Pobreza</string>
     <string name="tools_loremIpsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et massa vestibulum magna tempus porta. Ut in sollicitudin nunc, vitae consequat velit. Etiam sodales, eros vitae aliquam pulvinar, mauris nulla lobortis leo, in fringilla massa sem convallis tellus. Nunc aliquet feugiat pulvinar. Sed faucibus odio orci, et luctus dolor volutpat ut. Maecenas sit amet urna feugiat, accumsan mi finibus, pulvinar velit. Fusce finibus eros a justo mattis porta in vitae ligula. Phasellus malesuada tellus in orci iaculis dapibus. Maecenas non ornare turpis.</string>
+    <string name="tools_15">15</string>
+    <string name="tools_user_name">Maria da Silva</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

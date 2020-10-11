@@ -119,6 +119,10 @@
         <item name="android:textSize">18sp</item>
     </style>
 
+    <style name="primaryColor_textView_style_24sp" parent="primaryColor_textView_style">
+        <item name="android:textSize">24sp</item>
+    </style>
+
     <style name="grey_textView_style">
         <item name="android:fontFamily">@font/raleway</item>
         <item name="android:textColor">@color/colorGrey</item>
@@ -134,6 +138,11 @@
 
     <style name="grey_textView_style_16sp" parent="grey_textView_style">
         <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="grey_textView_style_bold_32sp" parent="grey_textView_style">
+        <item name="android:textSize">32sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="grey_textView_style_roboto">
