@@ -48,9 +48,13 @@
     <!-- ProfileFragment -->
     <string name="fragment_profile_label">Perfil</string>
     <string name="profile_btnEditProfile">Editar Perfil</string>
+    <string name="profile_btnLogout">Sair</string>
     <string name="profile_tvLabelApplications">Inscrições</string>
+    <string name="profile_tvLabelApplication">Inscrição</string>
     <string name="profile_tvLabelCauses">Minhas Causas</string>
     <string name="profile_tvLabelSkills">Minhas Habilidades</string>
+    <string name="profile_tvCausesEmpty">Nenhuma causa adicionada</string>
+    <string name="profile_tvSkillsEmpty">Nenhuma habilidade adicionada</string>
 
 
     <!-- VacancyDetailsFragment -->

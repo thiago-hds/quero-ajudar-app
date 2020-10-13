@@ -27,7 +27,8 @@ class HomeActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        homeComponent = (application as QueroAjudarApplication).appComponent.homeComponent().create()
+        homeComponent = (application as QueroAjudarApplication)
+            .appComponent.homeComponent().create()
         super.onCreate(savedInstanceState)
 
         binding = ActivityHomeBinding.inflate(layoutInflater)
@@ -65,7 +66,9 @@ class HomeActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        val navController = this.findNavController(R.id.activity_authentication_navhost)
+        val navController = this.findNavController(
+            R.id.activity_authentication_navhost
+        )
         return navController.navigateUp()
     }
 }

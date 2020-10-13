@@ -14,5 +14,9 @@ data class User(
     val email : String,
     @Json(name="date_of_birth") val dateOfBirth : String,
     val status : Int,
-    val token : String?
+    val token : String?,
+    val causes: List<Category>,
+    val skills: List<Category>,
+    @Json(name="applications_count")
+    val applicationsCount: Int
 ): Parcelable
