@@ -69,7 +69,9 @@ class VacancyApplicationFragment: Fragment(){
 
                 when (result){
                     is ResultWrapper.GenericError ->
-                        result.error?.let {viewModel.vacancyApplicationData.setApiValidationErrors(it.errors)}
+                        result.error?.let {
+                            viewModel.vacancyApplicationData.setApiValidationErrors(it.errors)
+                        }
                     is ResultWrapper.NetworkError ->
                         showNetworkErrorMessage(context)
                     is ResultWrapper.Success -> {

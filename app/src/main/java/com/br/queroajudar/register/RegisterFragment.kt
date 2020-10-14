@@ -11,11 +11,17 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 
 import com.br.queroajudar.R
 import com.br.queroajudar.databinding.FragmentRegisterBinding
 import com.br.queroajudar.network.ResultWrapper
+import com.br.queroajudar.util.Constants.EDIT_MODE
+import com.br.queroajudar.util.Constants.REGISTER_MODE
 import com.br.queroajudar.util.showNetworkErrorMessage
+import com.br.queroajudar.vacancies.HomeActivity
+import com.br.queroajudar.vacancydetails.VacancyDetailsFragmentArgs
+import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -30,9 +36,17 @@ class RegisterFragment : Fragment() {
     lateinit var viewModel : RegisterViewModel
     lateinit var binding : FragmentRegisterBinding
 
+    private val args: RegisterFragmentArgs by navArgs()
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (activity as AuthenticationActivity).authenticationComponent.inject(this)
+        val act = activity
+        if(act is AuthenticationActivity){
+            act.authenticationComponent.inject(this)
+        }
+        else if(act is HomeActivity){
+            act.homeComponent.inject(this)
+        }
     }
 
     override fun onCreateView(
@@ -41,6 +55,11 @@ class RegisterFragment : Fragment() {
     ): View? {
 
         viewModel = ViewModelProvider(this, viewModelFactory)[RegisterViewModel::class.java]
+
+        args.user?.let{
+            viewModel.mode = EDIT_MODE
+            viewModel.setUserData(it)
+        }
 
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(
@@ -58,7 +77,7 @@ class RegisterFragment : Fragment() {
         binding.btnRegister.setOnClickListener{
             Timber.i("btnRegister click event")
 
-            val userResult = viewModel.register()
+            val userResult = viewModel.sendData()
             userResult.observe(viewLifecycleOwner, Observer { result ->
                 Timber.i("user change observed $result")
                 binding.overlayNetworkStatus.isUserAction = true
@@ -71,8 +90,17 @@ class RegisterFragment : Fragment() {
                     is ResultWrapper.NetworkError ->
                         showNetworkErrorMessage(context)
                     is ResultWrapper.Success -> {
-                        result.value.token?.let { it1 -> viewModel.saveApiToken(it1) }
-                        goToSelectCausesFragment()
+                        if(viewModel.mode == REGISTER_MODE) {
+                            result.value.token?.let { it1 -> viewModel.saveApiToken(it1) }
+                            goToSelectCausesFragment()
+                        }
+                        else if(viewModel.mode == EDIT_MODE){
+                            Snackbar.make(
+                                binding.root, R.string.register_profile_edit_success,
+                                Snackbar.LENGTH_SHORT
+                            ).show()
+                            goToProfileFragment()
+                        }
                     }
                 }
             })
@@ -81,6 +109,10 @@ class RegisterFragment : Fragment() {
 
     private fun goToSelectCausesFragment(){
         findNavController().navigate(R.id.action_registerDataFragment_to_selectCategoriesFragment2)
+    }
+
+    private fun goToProfileFragment(){
+        findNavController().navigate(R.id.action_registerFragment_to_profileFragment)
     }
 
 }

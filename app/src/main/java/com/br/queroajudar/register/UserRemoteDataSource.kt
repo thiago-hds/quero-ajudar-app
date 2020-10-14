@@ -26,4 +26,10 @@ class UserRemoteDataSource @Inject constructor(
             service.postLogin(data)
         }
     }
+
+    suspend fun editProfile(data: RegisterData): ResultWrapper<User> {
+        return apiCaller.safeApiCall(Dispatchers.IO) {
+            service.postEditProfile(data)
+        }
+    }
 }

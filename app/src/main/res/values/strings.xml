@@ -20,7 +20,8 @@
     <string name="register_et_email">E-mail</string>
     <string name="register_et_password">Senha</string>
     <string name="register_et_passwordConfirm">Confime a senha</string>
-    <string name="register_btn_register">Avançar</string>
+    <string name="register_btn_register">Confirmar</string>
+    <string name="register_profile_edit_success">Suas informações foram alteradas com sucesso</string>
 
     <!-- VacanciesFragment -->
     <string name="fragment_vacancies_label">Vagas</string>

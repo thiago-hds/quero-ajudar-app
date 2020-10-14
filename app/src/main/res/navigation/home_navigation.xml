@@ -26,7 +26,11 @@
         android:id="@+id/profileFragment"
         android:name="com.br.queroajudar.profile.ProfileFragment"
         android:label="@string/fragment_profile_label"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
     <fragment
         android:id="@+id/vacancyDetailsFragment"
         android:name="com.br.queroajudar.vacancydetails.VacancyDetailsFragment"
@@ -76,5 +80,18 @@
         <argument
             android:name="vacancy"
             app:argType="com.br.queroajudar.data.Vacancy" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.br.queroajudar.register.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" >
+        <argument
+            android:name="user"
+            app:argType="com.br.queroajudar.data.User"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_registerFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
 </navigation>

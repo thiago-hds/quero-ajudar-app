@@ -73,4 +73,7 @@ interface ApiService {
 
     @GET("profile")
     suspend fun getProfile(): SuccessResponse<User>
+
+    @POST("profile/edit")
+    suspend fun postEditProfile(@Body data: RegisterData): SuccessResponse<User>
 }

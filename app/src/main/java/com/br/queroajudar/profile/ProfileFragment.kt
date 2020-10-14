@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 
 import com.br.queroajudar.R
@@ -32,8 +33,9 @@ class ProfileFragment : Fragment() {
 
     private lateinit var viewModel : ProfileViewModel
     lateinit var binding : FragmentProfileBinding
-
     lateinit var menu: Menu
+
+    lateinit var user: User
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -64,6 +66,7 @@ class ProfileFragment : Fragment() {
 
         setHasOptionsMenu(true)
         setupObservers()
+        setupListeners()
 
         return binding.root
     }
@@ -72,22 +75,34 @@ class ProfileFragment : Fragment() {
         viewModel.profile.observe(viewLifecycleOwner, Observer { result ->
             binding.overlayNetworkStatus.result = result
             if(result is ResultWrapper.Success){
-                val user = result.value
+                user = result.value
                 binding.user = user
-                user.causes?.let { causeAdapter.submitList(it) }
-                user.skills?.let { skillAdapter.submitList(it) }
-
-                if(user.causes.isEmpty()){
-                    binding.rvCauses.visibility = View.GONE
-                    binding.tvCausesEmpty.visibility = View.VISIBLE
+                user.causes?.let {
+                    causeAdapter.submitList(it)
+                    if(it.isEmpty()){
+                        binding.rvCauses.visibility = View.GONE
+                        binding.tvCausesEmpty.visibility = View.VISIBLE
+                    }
                 }
-
-                if(user.skills.isEmpty()){
-                    binding.rvSkills.visibility = View.GONE
-                    binding.tvSkillsEmpty.visibility = View.VISIBLE
+                user.skills?.let {
+                    skillAdapter.submitList(it)
+                    if(it.isEmpty()){
+                        binding.rvSkills.visibility = View.GONE
+                        binding.tvSkillsEmpty.visibility = View.VISIBLE
+                    }
                 }
             }
         })
+    }
+
+    private fun setupListeners(){
+        binding.btnEditProfile.setOnClickListener { goToRegisterFragment() }
+    }
+
+    private fun goToRegisterFragment(){
+        val action =
+            ProfileFragmentDirections.actionProfileFragmentToRegisterFragment(user)
+        findNavController().navigate(action)
     }
 
 }

@@ -11,7 +11,7 @@ class RegisterData @Inject constructor() : BaseFormData() {
     @Json(name="last_name")
     var lastName: String = ""
     var email: String = ""
-    var password: String = ""
+    var password: String? = ""
 
     @Transient
     var firstNameError = ObservableField<String>()

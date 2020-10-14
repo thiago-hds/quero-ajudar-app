@@ -41,6 +41,10 @@ object Constants {
     //category_type
     const val CAUSE_TYPE = 1
     const val SKILL_TYPE = 2
+
+    //register viewmodel
+    const val REGISTER_MODE = 1
+    const val EDIT_MODE = 2
 }
 
     fun convertOrganizationNameToFormatted(name: String): String {

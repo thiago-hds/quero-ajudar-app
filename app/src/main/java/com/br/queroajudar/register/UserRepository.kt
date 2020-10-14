@@ -24,4 +24,8 @@ class UserRepository @Inject constructor(
     fun postLogin(data : LoginData) = resultLiveData(
         networkCall = {remoteDataSource.login(data)}
     )
+
+    fun postEditProfile(data : RegisterData) = resultLiveData(
+        networkCall = {remoteDataSource.editProfile(data)}
+    )
 }
