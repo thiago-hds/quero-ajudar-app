@@ -47,7 +47,7 @@ class VacanciesFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (activity as HomeActivity).homeComponent.inject(this)
+        (activity as MainActivity).mainComponent.inject(this)
     }
 
     override fun onCreateView(

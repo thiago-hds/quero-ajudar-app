@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
@@ -19,8 +18,7 @@ import com.br.queroajudar.categories.CategoryAdapter
 import com.br.queroajudar.databinding.FragmentVacancyDetailsBinding
 import com.br.queroajudar.network.ResultWrapper
 import com.br.queroajudar.util.Constants.RECURRENT
-import com.br.queroajudar.vacancies.HomeActivity
-import com.br.queroajudar.vacancies.VacanciesFragmentDirections
+import com.br.queroajudar.vacancies.MainActivity
 import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber
 import javax.inject.Inject
@@ -45,7 +43,7 @@ class VacancyDetailsFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (activity as HomeActivity).homeComponent.inject(this)
+        (activity as MainActivity).mainComponent.inject(this)
     }
 
     override fun onCreateView(

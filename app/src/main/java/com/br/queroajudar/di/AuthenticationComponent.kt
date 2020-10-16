@@ -14,7 +14,6 @@ interface AuthenticationComponent{
         fun create(): AuthenticationComponent
     }
 
-
     fun inject(fragment: StartFragment)
     fun inject(fragment: RegisterFragment)
     fun inject(fragment: LoginFragment)

@@ -39,10 +39,6 @@ class RegisterViewModel @Inject constructor(
         return userRepository.postEditProfile(registerData)
     }
 
-    fun saveApiToken(token: String){
-        QueroAjudarPreferences.apiToken = token
-    }
-
     fun setUserData(user: User){
         registerData.firstName = user.first_name
         registerData.lastName = user.last_name

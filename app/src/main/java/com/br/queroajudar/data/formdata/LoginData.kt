@@ -4,8 +4,9 @@ package com.br.queroajudar.data.formdata
 
 import androidx.databinding.Bindable
 import androidx.databinding.ObservableField
+import javax.inject.Inject
 
-class LoginData () : BaseFormData(){
+class LoginData @Inject constructor() : BaseFormData(){
     var email : String = ""
     var password : String = ""
     @Transient

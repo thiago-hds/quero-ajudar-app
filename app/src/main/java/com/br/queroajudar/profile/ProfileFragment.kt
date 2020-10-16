@@ -14,10 +14,9 @@ import com.br.queroajudar.R
 import com.br.queroajudar.categories.CategoryAdapter
 import com.br.queroajudar.data.User
 import com.br.queroajudar.databinding.FragmentProfileBinding
-import com.br.queroajudar.databinding.FragmentVacancyDetailsBinding
 import com.br.queroajudar.network.ResultWrapper
-import com.br.queroajudar.vacancies.HomeActivity
-import com.br.queroajudar.vacancydetails.VacancyDetailsViewModel
+import com.br.queroajudar.util.clearApiToken
+import com.br.queroajudar.vacancies.MainActivity
 import javax.inject.Inject
 
 /**
@@ -39,7 +38,7 @@ class ProfileFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (activity as HomeActivity).homeComponent.inject(this)
+        (activity as MainActivity).mainComponent.inject(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -71,6 +70,19 @@ class ProfileFragment : Fragment() {
         return binding.root
     }
 
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean  = when (item.itemId) {
+        R.id.logout -> {
+            logout()
+            true
+        }
+        else -> {
+            // If we got here, the user's action was not recognized.
+            // Invoke the superclass to handle it.
+            super.onOptionsItemSelected(item)
+        }
+    }
+
     private fun setupObservers(){
         viewModel.profile.observe(viewLifecycleOwner, Observer { result ->
             binding.overlayNetworkStatus.result = result
@@ -100,9 +112,20 @@ class ProfileFragment : Fragment() {
     }
 
     private fun goToRegisterFragment(){
-        val action =
+        findNavController().navigate(
             ProfileFragmentDirections.actionProfileFragmentToRegisterFragment(user)
-        findNavController().navigate(action)
+        )
+    }
+
+    private fun goToAuthenticationActivity(){
+        findNavController().navigate(
+            R.id.action_profileFragment_to_authenticationActivity
+        )
+    }
+
+    private fun logout(){
+        clearApiToken()
+        goToAuthenticationActivity()
     }
 
 }

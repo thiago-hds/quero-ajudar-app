@@ -17,6 +17,7 @@ import com.br.queroajudar.databinding.FragmentLoginBinding
 import com.br.queroajudar.network.ResultWrapper
 import com.br.queroajudar.register.AuthenticationActivity
 import com.br.queroajudar.util.QueroAjudarPreferences
+import com.br.queroajudar.util.saveApiToken
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -43,8 +44,9 @@ class LoginFragment : Fragment() {
 
         viewModel = ViewModelProvider(this, viewModelFactory)[LoginViewModel::class.java]
 
-        // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
+        binding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_login, container, false
+        )
 
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
@@ -55,25 +57,30 @@ class LoginFragment : Fragment() {
     }
 
     private fun setupListeners(){
-        binding.loginBtnEnter.setOnClickListener {
+        binding.btnEnter.setOnClickListener {
             val user = viewModel.doLogin()
-            user?.observe(viewLifecycleOwner, Observer{ status ->
-                if (status is ResultWrapper.GenericError){
-                    status.error?.errors?.let { viewModel.showErrors(it) }
+            user?.observe(viewLifecycleOwner, Observer{ result ->
+                binding.overlayNetworkStatus.isUserAction = true
+                binding.overlayNetworkStatus.result = result
+
+                if (result is ResultWrapper.GenericError){
+                    result.error?.errors?.let { viewModel.showErrors(it) }
                 }
-                else if(status is ResultWrapper.Success){
-                    status.value.token?.let { token ->
-                        viewModel.saveToken(token)
+                else if(result is ResultWrapper.Success){
+                    result.value.token?.let { token ->
+                        saveApiToken(token)
                         Timber.i("token: ${QueroAjudarPreferences.apiToken}")
 
-                        val action
-                                = LoginFragmentDirections.actionLoginFragmentToHomeActivity()
-                        findNavController().navigate(action)
+                        goToMainActivity()
                     }
                 }
             })
         }
-
     }
 
+    private fun goToMainActivity(){
+        findNavController().navigate(
+            R.id.action_loginFragment_to_mainActivity
+        )
+    }
 }

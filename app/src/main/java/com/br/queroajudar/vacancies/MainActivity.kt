@@ -5,33 +5,26 @@ import android.os.Bundle
 import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.br.queroajudar.QueroAjudarApplication
 import com.br.queroajudar.R
-import com.br.queroajudar.databinding.ActivityHomeBinding
-import com.br.queroajudar.di.HomeComponent
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.android.synthetic.main.activity_home.*
+import com.br.queroajudar.databinding.ActivityMainBinding
+import com.br.queroajudar.di.MainComponent
 
-class HomeActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
-    lateinit var homeComponent: HomeComponent
-
-    private lateinit var binding : ActivityHomeBinding
+    lateinit var mainComponent: MainComponent
+    private lateinit var binding : ActivityMainBinding
     private lateinit var navController: NavController
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
-        homeComponent = (application as QueroAjudarApplication)
-            .appComponent.homeComponent().create()
+        mainComponent = (application as QueroAjudarApplication)
+            .appComponent.mainComponent().create()
         super.onCreate(savedInstanceState)
 
-        binding = ActivityHomeBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setupNav()
     }

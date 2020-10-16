@@ -15,7 +15,7 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/login_tv_hint"
+            android:id="@+id/tvHint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/login_tv_hint"
@@ -24,7 +24,7 @@
             style="@style/primaryColor_textView_style_20sp" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/login_til_email"
+            android:id="@+id/tilEmail"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,10 +37,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/login_tv_hint">
+            app:layout_constraintTop_toBottomOf="@+id/tvHint">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/login_et_email"
+                android:id="@+id/etEmail"
                 android:text="@={viewModel.login.email}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:id="@+id/login_til_password"
+            android:id="@+id/tilPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -64,11 +64,11 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/login_til_email"
+            app:layout_constraintTop_toBottomOf="@id/tilEmail"
             >
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/login_et_password"
+                android:id="@+id/etPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
@@ -77,7 +77,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/login_btn_enter"
+            android:id="@+id/btnEnter"
             style="@style/rounded_contained_button_style"
             android:layout_width="0dp"
             android:layout_height="@dimen/btn_height_60dp"
@@ -87,23 +87,24 @@
             android:text="@string/login_btn_enter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/login_til_password" />
+            app:layout_constraintTop_toBottomOf="@+id/tilPassword" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/login_btn_forgotPassword"
+            android:id="@+id/btnForgotPassword"
             style="@style/text_button_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:text="@string/login_btn_forgotPassword"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/login_btn_enter" />
+            app:layout_constraintTop_toBottomOf="@+id/btnEnter" />
 
-<!--        <include-->
-<!--            android:id="@+id/login_overlay_loading"-->
-<!--            android:visibility="gone"-->
-<!--            layout="@layout/network_status_overlay"/>-->
+        <include
+            layout="@layout/network_status_overlay"
+            android:id="@+id/overlay_networkStatus"
+            android:visibility="gone" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

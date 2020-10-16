@@ -21,59 +21,21 @@ import javax.inject.Inject
 
 class LoginViewModel @Inject constructor(
     private val userRepository: UserRepository,
+    private val loginData : LoginData,
     @CoroutineScopeIO private val coroutineScope: CoroutineScope
 ) : ViewModel(){
-
-
-    private val loginData : LoginData = LoginData()
-
 
     fun getLogin(): LoginData? {
         return loginData
     }
 
-    fun onButtonEnterClick() {
-        Log.i("QueroAjudar", "Clicou")
-        if (loginData.isValid()) {
-            Log.i("QueroAjudar", "Login is valid")
-            doLogin()
-        }
-        else{
-            Log.i("QueroAjudar", "Login is not valid")
-        }
-    }
-
-
     fun doLogin(): LiveData<ResultWrapper<User>> {
         return userRepository.postLogin(loginData)
-    }
-
-//    private fun showNetworkError( ){
-//        Log.i("QueroAjudar", "Network Error")
-//        _apiStatus.value = ApiStatus.NETWORK_ERROR
-//    }
-//
-//    private fun showGenericError(loginResponse: ResultWrapper.GenericError) {
-//        Log.i("QueroAjudar", "Error! $loginResponse")
-//        _apiStatus.value = ApiStatus.GENERIC_ERROR
-//        if(loginResponse.error != null) {
-//            loginData.setApiValidationErrors(loginResponse.error.errors)
-//        }
-//    }
-
-    fun saveToken(token: String){
-        QueroAjudarPreferences.apiToken = token
     }
 
     fun showErrors(errorsMap : Map<String,List<String>>){
         loginData.setApiValidationErrors(errorsMap)
     }
-//
-//    private fun showSuccess(value: SuccessResponse<String>) {
-//        Log.i("QueroAjudar", "Success! $value")
-//        _apiStatus.value = ApiStatus.DONE
-//    }
-
 
     override fun onCleared() {
         super.onCleared()

@@ -124,3 +124,11 @@ object Constants {
     fun showNetworkErrorMessage(context: Context?){
         Toast.makeText(context, R.string.error_connection, Toast.LENGTH_LONG).show()
     }
+
+    fun saveApiToken(token: String){
+        QueroAjudarPreferences.apiToken = token
+    }
+
+    fun clearApiToken(){
+        QueroAjudarPreferences.apiToken = null
+    }

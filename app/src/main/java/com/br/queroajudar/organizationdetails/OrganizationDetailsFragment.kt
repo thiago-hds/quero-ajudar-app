@@ -15,7 +15,7 @@ import com.br.queroajudar.R
 import com.br.queroajudar.categories.CategoryAdapter
 import com.br.queroajudar.databinding.FragmentOrganizationDetailsBinding
 import com.br.queroajudar.network.ResultWrapper
-import com.br.queroajudar.vacancies.HomeActivity
+import com.br.queroajudar.vacancies.MainActivity
 import com.br.queroajudar.vacancies.VacanciesFragmentDirections
 import com.br.queroajudar.vacancies.VacancyAdapter
 import com.br.queroajudar.vacancies.VacancyClickListener
@@ -41,7 +41,7 @@ class OrganizationDetailsFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (activity as HomeActivity).homeComponent.inject(this)
+        (activity as MainActivity).mainComponent.inject(this)
     }
 
     override fun onCreateView(

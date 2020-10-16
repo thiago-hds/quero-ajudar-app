@@ -9,15 +9,11 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import com.br.queroajudar.R
 import com.br.queroajudar.databinding.FragmentFavoriteOrganizationsBinding
 import com.br.queroajudar.organizations.OrganizationClickListener
 import com.br.queroajudar.organizations.OrganizationsAdapter
-import com.br.queroajudar.vacancies.HomeActivity
-import com.br.queroajudar.vacancies.VacanciesViewModel
-import com.br.queroajudar.vacancies.VacancyAdapter
-import com.br.queroajudar.vacancies.VacancyClickListener
+import com.br.queroajudar.vacancies.MainActivity
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -31,7 +27,7 @@ class FavoriteOrganizationsFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (activity as HomeActivity).homeComponent.inject(this)
+        (activity as MainActivity).mainComponent.inject(this)
     }
 
     override fun onCreateView(

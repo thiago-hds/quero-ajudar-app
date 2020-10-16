@@ -23,7 +23,7 @@ import com.br.queroajudar.util.Constants.CAUSE_TYPE
 import com.br.queroajudar.util.Constants.SKILL_TYPE
 import com.br.queroajudar.util.enable
 import com.br.queroajudar.util.showNetworkErrorMessage
-import com.br.queroajudar.vacancies.HomeActivity
+import com.br.queroajudar.vacancies.MainActivity
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -43,7 +43,7 @@ class SelectCategoriesFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if(activity is AuthenticationActivity) (activity as AuthenticationActivity).authenticationComponent.inject(this)
-        else if(activity is HomeActivity) (activity as HomeActivity).homeComponent.inject(this)
+        else if(activity is MainActivity) (activity as MainActivity).mainComponent.inject(this)
     }
 
 

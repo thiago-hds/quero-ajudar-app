@@ -12,13 +12,12 @@ import com.br.queroajudar.vacancydetails.VacancyDetailsFragment
 import dagger.Subcomponent
 
 @Subcomponent
-interface HomeComponent{
+interface MainComponent {
 
     @Subcomponent.Factory
     interface Factory {
-        fun create(): HomeComponent
+        fun create(): MainComponent
     }
-
 
     fun inject(fragment: SelectCategoriesFragment)
     fun inject(fragment: VacanciesFragment)

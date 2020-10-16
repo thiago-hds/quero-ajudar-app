@@ -15,7 +15,7 @@ import com.br.queroajudar.R
 import com.br.queroajudar.databinding.FragmentVacancyApplicationBinding
 import com.br.queroajudar.network.ResultWrapper
 import com.br.queroajudar.util.showNetworkErrorMessage
-import com.br.queroajudar.vacancies.HomeActivity
+import com.br.queroajudar.vacancies.MainActivity
 import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber
 import javax.inject.Inject
@@ -33,7 +33,7 @@ class VacancyApplicationFragment: Fragment(){
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (activity as HomeActivity).homeComponent.inject(this)
+        (activity as MainActivity).mainComponent.inject(this)
     }
 
     override fun onCreateView(

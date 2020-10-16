@@ -22,58 +22,77 @@ import dagger.multibindings.IntoMap
 abstract class ViewModelModule {
 
     @Binds
-    internal abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
+    internal abstract fun bindViewModelFactory(
+        factory: ViewModelFactory
+    ): ViewModelProvider.Factory
 
     @Binds
     @IntoMap
     @ViewModelKey(RegisterViewModel::class)
-    internal abstract fun registerViewModel(viewModel: RegisterViewModel): ViewModel
+    internal abstract fun registerViewModel(
+        viewModel: RegisterViewModel
+    ): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(LoginViewModel::class)
-    internal abstract fun loginViewModel(viewModel: LoginViewModel): ViewModel
+    internal abstract fun loginViewModel(
+        viewModel: LoginViewModel
+    ): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(SelectCategoriesViewModel::class)
-    internal abstract fun selectCategoriesViewModel(viewModel: SelectCategoriesViewModel): ViewModel
+    internal abstract fun selectCategoriesViewModel(
+        viewModel: SelectCategoriesViewModel
+    ): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(VacanciesViewModel::class)
-    internal abstract fun vacanciesViewModel(viewModel: VacanciesViewModel): ViewModel
+    internal abstract fun vacanciesViewModel(
+        viewModel: VacanciesViewModel
+    ): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(VacancyDetailsViewModel::class)
-    internal abstract fun vacancyDetailsViewModel(viewModel: VacancyDetailsViewModel): ViewModel
+    internal abstract fun vacancyDetailsViewModel(
+        viewModel: VacancyDetailsViewModel
+    ): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(VacancyApplicationViewModel::class)
-    internal abstract fun vacancyApplicationViewModel(viewModel: VacancyApplicationViewModel): ViewModel
+    internal abstract fun vacancyApplicationViewModel(
+        viewModel: VacancyApplicationViewModel
+    ): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(OrganizationDetailsViewModel::class)
-    internal abstract fun organizationDetailsViewModel(viewModel: OrganizationDetailsViewModel): ViewModel
+    internal abstract fun organizationDetailsViewModel(
+        viewModel: OrganizationDetailsViewModel
+    ): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(FavoriteVacanciesViewModel::class)
-    internal abstract fun favoriteVacanciesViewModel(viewModel: FavoriteVacanciesViewModel): ViewModel
-
+    internal abstract fun favoriteVacanciesViewModel(
+        viewModel: FavoriteVacanciesViewModel
+    ): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(FavoriteOrganizationsViewModel::class)
-    internal abstract fun favoriteOrganizationsViewModel(viewModel: FavoriteOrganizationsViewModel): ViewModel
+    internal abstract fun favoriteOrganizationsViewModel(
+        viewModel: FavoriteOrganizationsViewModel
+    ): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(ProfileViewModel::class)
-    internal abstract fun profileViewModel(viewModel: ProfileViewModel): ViewModel
-
-
+    internal abstract fun profileViewModel(
+        viewModel: ProfileViewModel
+    ): ViewModel
 }
