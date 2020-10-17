@@ -17,6 +17,7 @@ import com.br.queroajudar.databinding.FragmentLoginBinding
 import com.br.queroajudar.network.ResultWrapper
 import com.br.queroajudar.register.AuthenticationActivity
 import com.br.queroajudar.util.QueroAjudarPreferences
+import com.br.queroajudar.util.hideKeyboard
 import com.br.queroajudar.util.saveApiToken
 import timber.log.Timber
 import javax.inject.Inject
@@ -58,6 +59,7 @@ class LoginFragment : Fragment() {
 
     private fun setupListeners(){
         binding.btnEnter.setOnClickListener {
+            hideKeyboard()
             val user = viewModel.doLogin()
             user?.observe(viewLifecycleOwner, Observer{ result ->
                 binding.overlayNetworkStatus.isUserAction = true
@@ -71,16 +73,10 @@ class LoginFragment : Fragment() {
                         saveApiToken(token)
                         Timber.i("token: ${QueroAjudarPreferences.apiToken}")
 
-                        goToMainActivity()
+                        (activity as AuthenticationActivity).goToHomeActivity()
                     }
                 }
             })
         }
-    }
-
-    private fun goToMainActivity(){
-        findNavController().navigate(
-            R.id.action_loginFragment_to_mainActivity
-        )
     }
 }

@@ -14,6 +14,7 @@ interface ApiService {
 
     companion object {
         const val BASE_URL = "http://192.168.1.109:8000/api/"
+        //const val BASE_URL = "https://quero-ajudar-292717.rj.r.appspot.com/api/"
     }
 
     @GET("causes")

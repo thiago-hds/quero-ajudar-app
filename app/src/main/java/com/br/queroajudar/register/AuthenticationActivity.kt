@@ -1,5 +1,6 @@
 package com.br.queroajudar.register
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
@@ -10,6 +11,7 @@ import com.br.queroajudar.R
 import com.br.queroajudar.databinding.ActivityAuthenticationBinding
 import com.br.queroajudar.databinding.ActivityMainBinding
 import com.br.queroajudar.di.AuthenticationComponent
+import com.br.queroajudar.vacancies.MainActivity
 
 class AuthenticationActivity : AppCompatActivity() {
 
@@ -39,5 +41,12 @@ class AuthenticationActivity : AppCompatActivity() {
         )
         NavigationUI.setupActionBarWithNavController(this, navController)
         supportActionBar?.hide()
+    }
+
+    fun goToHomeActivity(){
+        var intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        startActivity(intent)
+        this.finish()
     }
 }

@@ -38,6 +38,7 @@ class StartFragment : Fragment() {
             Navigation.createNavigateOnClickListener(
                 R.id.action_startFragment_to_loginFragment
             )
+
         )
         return binding.root
     }

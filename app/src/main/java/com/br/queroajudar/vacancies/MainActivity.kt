@@ -1,5 +1,6 @@
 package com.br.queroajudar.vacancies
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -12,6 +13,7 @@ import com.br.queroajudar.QueroAjudarApplication
 import com.br.queroajudar.R
 import com.br.queroajudar.databinding.ActivityMainBinding
 import com.br.queroajudar.di.MainComponent
+import com.br.queroajudar.register.AuthenticationActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -63,5 +65,12 @@ class MainActivity : AppCompatActivity() {
             R.id.activity_authentication_navhost
         )
         return navController.navigateUp()
+    }
+
+    fun goToAuthenticationActivity(){
+        var intent = Intent(this, AuthenticationActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        startActivity(intent)
+        this.finish()
     }
 }

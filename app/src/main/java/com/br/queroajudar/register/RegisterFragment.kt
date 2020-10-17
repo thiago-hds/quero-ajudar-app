@@ -1,6 +1,5 @@
 package com.br.queroajudar.register
 
-
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -22,6 +21,7 @@ import com.br.queroajudar.util.Constants.REGISTER_MODE
 import com.br.queroajudar.util.saveApiToken
 import com.br.queroajudar.util.showNetworkErrorMessage
 import com.br.queroajudar.vacancies.MainActivity
+import com.br.queroajudar.util.hideKeyboard
 import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber
 import javax.inject.Inject
@@ -72,6 +72,7 @@ class RegisterFragment : Fragment() {
 
     private fun setupListeners(){
         binding.btnRegister.setOnClickListener{
+            hideKeyboard()
             Timber.i("btnRegister click event")
 
             val userResult = viewModel.sendData()
@@ -126,5 +127,4 @@ class RegisterFragment : Fragment() {
             R.id.action_registerFragment_to_profileFragment
         )
     }
-
 }

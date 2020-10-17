@@ -14,7 +14,9 @@ import com.br.queroajudar.data.Vacancy
 import com.br.queroajudar.network.ResultWrapper
 
 
-class VacancyAdapter(private val clickListener : VacancyClickListener) : PagedListAdapter<
+class VacancyAdapter(
+    private val clickListener : VacancyClickListener,
+    private val organizationClickListener: VacancyOrganizationClickListener) : PagedListAdapter<
         Vacancy, RecyclerView.ViewHolder>(VacancyDiffCallback()) {
 
     private val VIEW_TYPE_ITEM = 0
@@ -77,7 +79,7 @@ class VacancyAdapter(private val clickListener : VacancyClickListener) : PagedLi
         when(holder){
             is ItemViewHolder -> {
                 val item = getItem(position)!!
-                holder.bind(clickListener, item)
+                holder.bind(clickListener, organizationClickListener, item)
             }
             is OrganizationListViewHolder -> {
                 holder.bind(organizations)
@@ -154,9 +156,14 @@ class VacancyAdapter(private val clickListener : VacancyClickListener) : PagedLi
     class ItemViewHolder private constructor(private val binding: VacancyItemBinding)
         : RecyclerView.ViewHolder(binding.root){
 
-        fun bind(clickListener: VacancyClickListener, item: Vacancy) {
+        fun bind(
+            clickListener: VacancyClickListener,
+            organizationClickListener: VacancyOrganizationClickListener,
+            item: Vacancy) {
             binding.vacancy = item
             binding.clickListener = clickListener
+            binding.organizationClickListener = organizationClickListener
+
             binding.executePendingBindings()
         }
 
@@ -229,4 +236,8 @@ class VacancyDiffCallback : DiffUtil.ItemCallback<Vacancy>() {
 
 class VacancyClickListener(val clickListener: (vacancyId: Int) -> Unit) {
     fun onClick(vacancy: Vacancy) = clickListener(vacancy.id)
+}
+
+class VacancyOrganizationClickListener(val clickListener: (vacancyId: Int) -> Unit) {
+    fun onClick(vacancy: Vacancy) = clickListener(vacancy.organization.id)
 }

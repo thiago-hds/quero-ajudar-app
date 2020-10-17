@@ -73,13 +73,6 @@ class VacanciesViewModel @Inject constructor(
         pagedVacancies?.refresh?.invoke(_selectedCausesId, _selectedSkillsId, null)
     }
 
-    /*
-     *  Eventos da UI
-     */
-
-    fun onVacancyClicked(){
-        //TODO
-    }
 
     fun onTryAgainClicked(){
         refresh()

@@ -76,7 +76,12 @@ class VacanciesFragment : Fragment() {
         val adapter =
             VacancyAdapter(VacancyClickListener { vacancyId ->
                 val action
-                    = VacanciesFragmentDirections.actionVacanciesFragmentToVacancyDetailsFragment(vacancyId)
+                    = VacanciesFragmentDirections
+                    .actionVacanciesFragmentToVacancyDetailsFragment(vacancyId)
+                findNavController().navigate(action)
+            }, VacancyOrganizationClickListener{ organizationId ->
+                val action = VacanciesFragmentDirections.
+                    actionVacanciesFragmentToOrganizationDetailsFragment(organizationId)
                 findNavController().navigate(action)
             })
 

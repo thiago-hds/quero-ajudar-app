@@ -32,11 +32,7 @@
         android:id="@+id/loginFragment"
         android:name="com.br.queroajudar.login.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
-        <action
-            android:id="@+id/action_loginFragment_to_mainActivity"
-            app:destination="@id/mainActivity" />
-    </fragment>
+        tools:layout="@layout/fragment_login" />
     <fragment
         android:id="@+id/registerDataFragment"
         android:name="com.br.queroajudar.register.RegisterFragment"
@@ -52,19 +48,11 @@
             app:popUpTo="@id/authentication_navigation"
             app:popUpToInclusive="true" />
     </fragment>
-    <activity
-        android:id="@+id/mainActivity"
-        android:name="com.br.queroajudar.vacancies.MainActivity"
-        android:label="activity_home"
-        tools:layout="@layout/activity_main" />
     <fragment
         android:id="@+id/selectCategoriesFragment"
         android:name="com.br.queroajudar.categories.SelectCategoriesFragment"
         android:label="SelectCategoriesFragment"
         tools:layout="@layout/fragment_select_categories" >
-        <action
-            android:id="@+id/action_selectCategoriesFragment_to_homeActivity"
-            app:destination="@id/mainActivity" />
         <action
             android:id="@+id/action_selectCategoriesFragment_self"
             app:destination="@id/selectCategoriesFragment"
@@ -79,4 +67,5 @@
             app:argType="integer"
             android:defaultValue="1" />
     </fragment>
+
 </navigation>

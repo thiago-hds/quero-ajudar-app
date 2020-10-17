@@ -54,6 +54,11 @@ class FavoriteVacanciesFragment : Fragment() {
                 val action= FavoriteVacanciesFragmentDirections
                     .actionFavoriteVacanciesFragmentToVacancyDetailsFragment(vacancyId)
                 findNavController().navigate(action)
+            },
+            VacancyOrganizationClickListener { organizationId ->
+                val action= FavoriteVacanciesFragmentDirections
+                    .actionFavoriteVacanciesFragmentToOrganizationDetailsFragment(organizationId)
+                findNavController().navigate(action)
             })
 
         binding.rvVacancies.adapter = adapter

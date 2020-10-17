@@ -129,7 +129,7 @@ class SelectCategoriesFragment : Fragment() {
                             goToSelectSkillsFragment()
                         }
                         else if(viewModel.categoryType == SKILL_TYPE){
-                            goToHomeActivity()
+                            (activity as AuthenticationActivity).goToHomeActivity()
                         }
                     }
                 }
@@ -142,12 +142,6 @@ class SelectCategoriesFragment : Fragment() {
             SelectCategoriesFragmentDirections.actionSelectCategoriesFragmentSelf(
                 SKILL_TYPE
             )
-        )
-    }
-
-    private fun goToHomeActivity(){
-        findNavController().navigate(
-            SelectCategoriesFragmentDirections.actionSelectCategoriesFragmentToHomeActivity()
         )
     }
 

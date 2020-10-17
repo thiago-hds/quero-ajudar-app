@@ -15,10 +15,7 @@ import com.br.queroajudar.R
 import com.br.queroajudar.categories.CategoryAdapter
 import com.br.queroajudar.databinding.FragmentOrganizationDetailsBinding
 import com.br.queroajudar.network.ResultWrapper
-import com.br.queroajudar.vacancies.MainActivity
-import com.br.queroajudar.vacancies.VacanciesFragmentDirections
-import com.br.queroajudar.vacancies.VacancyAdapter
-import com.br.queroajudar.vacancies.VacancyClickListener
+import com.br.queroajudar.vacancies.*
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import timber.log.Timber
@@ -148,10 +145,12 @@ class OrganizationDetailsFragment : Fragment() {
 
         val adapter =
             VacancyAdapter(VacancyClickListener { vacancyId ->
-                val action
-                        = VacanciesFragmentDirections.actionVacanciesFragmentToVacancyDetailsFragment(vacancyId)
+                val action = VacanciesFragmentDirections
+                    .actionVacanciesFragmentToVacancyDetailsFragment(vacancyId)
                 findNavController().navigate(action)
-            })
+            },
+                VacancyOrganizationClickListener {  }
+            )
 
         binding.rvVacancies.adapter = adapter
 

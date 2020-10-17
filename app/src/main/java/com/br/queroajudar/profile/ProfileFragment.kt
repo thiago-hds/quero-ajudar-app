@@ -15,6 +15,7 @@ import com.br.queroajudar.categories.CategoryAdapter
 import com.br.queroajudar.data.User
 import com.br.queroajudar.databinding.FragmentProfileBinding
 import com.br.queroajudar.network.ResultWrapper
+import com.br.queroajudar.register.AuthenticationActivity
 import com.br.queroajudar.util.clearApiToken
 import com.br.queroajudar.vacancies.MainActivity
 import javax.inject.Inject
@@ -117,15 +118,9 @@ class ProfileFragment : Fragment() {
         )
     }
 
-    private fun goToAuthenticationActivity(){
-        findNavController().navigate(
-            R.id.action_profileFragment_to_authenticationActivity
-        )
-    }
-
     private fun logout(){
         clearApiToken()
-        goToAuthenticationActivity()
+        (activity as MainActivity).goToAuthenticationActivity()
     }
 
 }
