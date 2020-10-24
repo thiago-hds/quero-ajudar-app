@@ -13,6 +13,7 @@
     <string name="login_btn_forgotPassword">Esqueci minha senha</string>
 
     <!-- RegisterFragment -->
+    <string name="fragment_register_edit_profile_label">Editar Perfil</string>
     <string name="register_tv_hint">Insira seus dados</string>
     <string name="register_et_name">Nome</string>
     <string name="register_et_lastName">Sobrenome</string>
@@ -88,6 +89,12 @@
     <string name="organizationDetails_tvLabelCauses">Causas</string>
     <string name="organizationDetails_tvLabelContact">Contato</string>
     <string name="organizationDetails_tvLabelAbout">Sobre</string>
+    <string name="organizationDetails_favorite_success">
+        A instituição foi incluída em seus favoritos
+    </string>
+    <string name="organizationDetails_unfavorite_success">
+        A instituição foi removida de seus favoritos
+    </string>
 
     <!-- SelectCategoriesFragment -->
     <string name="selectCategories_tvHintCauses">Selecione suas causas</string>
@@ -139,7 +146,7 @@
     <string name="error_connection">Não foi possível conectar-se com o servidor. Por favor, verifique sua conexão ou tente novamente mais tarde.</string>
 
     <!-- Tools Text -->
-    <string name="tools_vacancyItem_name">Motorista Solidário</string>
+    <string name="tools_vacancyItem_name">Motorista Solidário para Um mundo melhor e sem problemassd as dsadas dasd sa das dasd sa das das das das das  dasd </string>
     <string name="tools_vacancyItem_organizationName">CAPEC</string>
     <string name="tools_vacancyItem_location">Belo Horizonte - MG</string>
     <string name="tools_vacancyItem_frequency">Recorrente</string>

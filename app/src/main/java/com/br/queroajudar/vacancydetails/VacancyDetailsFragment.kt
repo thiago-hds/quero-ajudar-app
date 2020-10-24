@@ -17,9 +17,8 @@ import com.br.queroajudar.R
 import com.br.queroajudar.categories.CategoryAdapter
 import com.br.queroajudar.databinding.FragmentVacancyDetailsBinding
 import com.br.queroajudar.network.ResultWrapper
-import com.br.queroajudar.util.Constants.RECURRENT
+import com.br.queroajudar.util.showToast
 import com.br.queroajudar.vacancies.MainActivity
-import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -70,8 +69,9 @@ class VacancyDetailsFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater?.inflate(R.menu.menu_vacancy_details,menu)
+        inflater.inflate(R.menu.menu_vacancy_details,menu)
         this.menu = menu
+        Timber.i("OnCreateOptionsMenu called")
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean  = when (item.itemId) {
@@ -92,11 +92,7 @@ class VacancyDetailsFragment : Fragment() {
                         iconId = R.drawable.ic_baseline_favorite_border_24
                     }
                     item.setIcon(iconId)
-
-                    Snackbar.make(
-                        binding.root, strId,
-                        Snackbar.LENGTH_SHORT
-                    ).show()
+                    showToast(strId, context)
                 }
                 else if(result is ResultWrapper.NetworkError || result is ResultWrapper.GenericError){
                     Toast.makeText(
@@ -130,31 +126,25 @@ class VacancyDetailsFragment : Fragment() {
                 val vacancy = vacancyResult.value
                 binding.vacancy = vacancy
 
-                vacancy.causes?.let { causeAdapter.submitList(it) }
-                vacancy.skills?.let { skillAdapter.submitList(it) }
+                causeAdapter.submitList(vacancy.causes)
+                skillAdapter.submitList(vacancy.skills)
 
-                if(vacancy.causes?.size > 0){
+                if(vacancy.causes.isEmpty()){
                     binding.tvLabelCauses.visibility = View.GONE
                     binding.rvCauses.visibility = View.GONE
                 }
 
-                if(vacancy.skills?.size > 0){
+                if(vacancy.skills.isEmpty()){
                     binding.tvLabelSkills.visibility = View.GONE
                     binding.rvSkills.visibility = View.GONE
                 }
 
-                if(vacancy.type == RECURRENT){
-                    binding.ivDate.visibility = View.GONE
-                    binding.tvDate.visibility = View.GONE
+                menu.findItem(R.id.favorite_vacancy)?.let{
+                    if(vacancy.favorite){
+                        it.setIcon(R.drawable.ic_favorite_24dp)
+                    }
+                    it.isVisible = true
                 }
-                else{
-                    binding.tvFrequency.visibility = View.GONE
-                }
-
-                if(vacancy.favorite){
-                    menu.findItem(R.id.favorite_vacancy).setIcon(R.drawable.ic_favorite_24dp)
-                }
-                menu.findItem(R.id.favorite_vacancy).isVisible = true
 
                 if(vacancy.application != null && vacancy.application.status == 1){
                     binding.btnApply.backgroundTintList = context?.let {

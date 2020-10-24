@@ -24,10 +24,14 @@ interface ApiService {
     suspend fun getSkills(): SuccessResponse<List<Category>>
 
     @POST("causes/update-user-causes")
-    suspend fun postUpdateUserCauses(@Query("causes_ids[]") causes_ids: List<Int>): SuccessResponse<Boolean>
+    suspend fun postUpdateUserCauses(
+        @Query("causes_ids[]") causes_ids: List<Int>
+    ): SuccessResponse<Boolean>
 
     @POST("skills/update-user-skills")
-    suspend fun postUpdateUserSkills(@Query("skills_ids[]") skills_ids: List<Int>): SuccessResponse<Boolean>
+    suspend fun postUpdateUserSkills(
+        @Query("skills_ids[]") skills_ids: List<Int>
+    ): SuccessResponse<Boolean>
 
     @POST("login")
     suspend fun postLogin(@Body data: LoginData): SuccessResponse<User>
@@ -47,7 +51,9 @@ interface ApiService {
     suspend fun postFavoriteOrganization(@Path("id") id: Int): SuccessResponse<Boolean>
 
     @GET("favorites/organizations")
-    suspend fun getFavoriteOrganizations(@Query("page") page : Int?): SuccessResponse<List<Organization>>
+    suspend fun getFavoriteOrganizations(
+        @Query("page") page : Int?
+    ): SuccessResponse<List<Organization>>
 
     @GET("vacancies")
     suspend fun getVacancies(
@@ -70,7 +76,9 @@ interface ApiService {
     suspend fun postFavoriteVacancy(@Path("id") id: Int): SuccessResponse<Boolean>
 
     @GET("favorites/vacancies")
-    suspend fun getFavoriteVacancies(@Query("page") page : Int?): SuccessResponse<List<Vacancy>>
+    suspend fun getFavoriteVacancies(
+        @Query("page") page : Int?
+    ): SuccessResponse<List<Vacancy>>
 
     @GET("profile")
     suspend fun getProfile(): SuccessResponse<User>

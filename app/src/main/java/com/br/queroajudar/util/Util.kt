@@ -23,8 +23,9 @@ object Constants {
     const val VIEW_TYPE_LOADING = 2
     const val PAGE_SIZE = 10
 
+    /*
     //vacancy_type
-    const val RECURRENT = "recurrent"
+    const val RECURRENT = "0"
     const val UNIQUE_EVENT = "unique_event"
 
     //periodicity
@@ -41,6 +42,7 @@ object Constants {
     const val SPECIFIC_ADDRESS = "specific_address"
     const val REMOTE = "remote"
     const val NEGOTIABLE = "negotiable"
+    */
 
     //category_type
     const val CAUSE_TYPE = 1
@@ -51,10 +53,6 @@ object Constants {
     const val EDIT_MODE = 2
 }
 
-    fun convertOrganizationNameToFormatted(name: String): String {
-        //TODO implementar funcao
-        return name
-    }
 
     fun formatPhoneNumber(phone: String): String{
         return "(${phone.substring(0,2)}) ${phone.substring(2)}"
@@ -126,8 +124,17 @@ object Constants {
 
 
     fun showNetworkErrorMessage(context: Context?){
-        Toast.makeText(context, R.string.error_connection, Toast.LENGTH_LONG).show()
+        Toast.makeText(
+            context, R.string.error_connection, Toast.LENGTH_LONG
+        ).show()
     }
+
+    fun showToast(stringResource: Int, context: Context?){
+        Toast.makeText(
+            context, stringResource, Toast.LENGTH_LONG
+        ).show()
+    }
+
 
     fun saveApiToken(token: String){
         QueroAjudarPreferences.apiToken = token

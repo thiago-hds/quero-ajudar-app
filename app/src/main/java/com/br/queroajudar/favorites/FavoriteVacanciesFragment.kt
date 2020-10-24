@@ -68,25 +68,14 @@ class FavoriteVacanciesFragment : Fragment() {
             adapter.submitList(vacanciesPagedList)
         })
 
-//        viewModel.organizations.observe(viewLifecycleOwner, Observer { result ->
-//            Timber.i("organizations change observed $result")
-//            if(result is ResultWrapper.Success) {
-//                adapter.setOrganizations(result.value)
-//            }
-//        })
-
-//        viewModel.vacanciesSize.observe(viewLifecycleOwner,Observer{ size ->
-//            Timber.i("vacanciesSize change observed: $size")
-//            showEmptyList(size == 0)
-//        })
+        viewModel.vacanciesLoadAfterResultWrapper.observe(viewLifecycleOwner, Observer { result ->
+            Timber.i("vacanciesLoadAfterResultWrapper change observed $result")
+            adapter.setResultWrapper(result)
+        })
 
         viewModel.vacanciesLoadInitialResultWrapper.observe(viewLifecycleOwner, Observer { result ->
             Timber.i("vacanciesLoadInitialResultWrapper change observed $result")
             //binding.overlayNetworkStatus.result = result
-        })
-
-        viewModel.vacanciesLoadAfterResultWrapper.observe(viewLifecycleOwner, Observer { result ->
-            Timber.i("vacanciesLoadAfterResultWrapper change observed $result")
             adapter.setResultWrapper(result)
         })
     }

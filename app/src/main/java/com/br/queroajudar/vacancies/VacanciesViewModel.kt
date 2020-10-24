@@ -52,7 +52,7 @@ class VacanciesViewModel @Inject constructor(
         loadCategories()
     }
 
-    fun loadVacancies() {
+    private fun loadVacancies() {
         pagedVacancies = vacanciesRepository.getPagedVacancies(coroutineScope, null)
         vacancies = pagedVacancies.pagedList
         vacanciesLoadInitialResultWrapper = pagedVacancies.loadInitialResultWrapper

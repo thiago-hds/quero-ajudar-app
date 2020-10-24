@@ -15,8 +15,8 @@ import com.br.queroajudar.R
 import com.br.queroajudar.databinding.FragmentVacancyApplicationBinding
 import com.br.queroajudar.network.ResultWrapper
 import com.br.queroajudar.util.showNetworkErrorMessage
+import com.br.queroajudar.util.showToast
 import com.br.queroajudar.vacancies.MainActivity
-import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -75,20 +75,22 @@ class VacancyApplicationFragment: Fragment(){
                     is ResultWrapper.NetworkError ->
                         showNetworkErrorMessage(context)
                     is ResultWrapper.Success -> {
-                        Snackbar.make(
-                            binding.root, R.string.vacancyApplication_applicationSent,
-                            Snackbar.LENGTH_SHORT
-                        ).show()
+                        showToast(R.string.vacancyApplication_applicationSent, context)
                         goToVacancyDetailsFragment()
                     }
                 }
             })
         }
+
+        binding.btnCancel.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     private fun goToVacancyDetailsFragment(){
         val action =
-            VacancyApplicationFragmentDirections.actionVacancyApplicationFragmentToVacancyDetailsFragment(viewModel.vacancy.id)
+            VacancyApplicationFragmentDirections
+                .actionVacancyApplicationFragmentToVacancyDetailsFragment(viewModel.vacancy.id)
         findNavController().navigate(action)
     }
 }

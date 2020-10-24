@@ -61,9 +61,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        val navController = this.findNavController(
-            R.id.activity_authentication_navhost
-        )
         return navController.navigateUp()
     }
 

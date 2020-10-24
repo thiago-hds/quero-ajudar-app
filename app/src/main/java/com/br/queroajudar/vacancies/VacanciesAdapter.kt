@@ -20,14 +20,8 @@ class VacancyAdapter(
         Vacancy, RecyclerView.ViewHolder>(VacancyDiffCallback()) {
 
     private val VIEW_TYPE_ITEM = 0
-    private val VIEW_TYPE_ORGANIZATIONS = 1
-    private val VIEW_TYPE_STATUS = 2
+    private val VIEW_TYPE_STATUS = 1
 
-    private val ORGANIZATIONS_LIST_POSITION = 5
-
-    private var displayOrganizations = false
-
-    private var organizations = listOf<Organization>()
     private var resultWrapper: ResultWrapper<Any?>
 
     private var differ : AsyncPagedListDiffer<Vacancy>
@@ -39,34 +33,20 @@ class VacancyAdapter(
         differ = AsyncPagedListDiffer(
             object : ListUpdateCallback {
                 override fun onChanged(position: Int, count: Int, payload: Any?) {
-                    if(displayOrganizations)
-                        adapterCallback.onChanged(position + 1, count, payload);
-                    else
                         adapterCallback.onChanged(position,count,payload)
                 }
 
                 override fun onMoved(fromPosition: Int, toPosition: Int) {
-                    if(displayOrganizations)
-                        adapterCallback.onMoved(fromPosition + 1, toPosition + 1);
-                    else
                         adapterCallback.onMoved(fromPosition, toPosition);
                 }
 
                 override fun onInserted(position: Int, count: Int) {
-                    if(displayOrganizations)
-                        adapterCallback.onInserted(position + 1, count);
-                    else{
                         adapterCallback.onInserted(position, count);
-                    }
+
                 }
 
                 override fun onRemoved(position: Int, count: Int) {
-                    if(displayOrganizations) {
-                        adapterCallback.onRemoved(position + 1, count);
-                    }
-                    else{
                         adapterCallback.onRemoved(position, count);
-                    }
                 }
             },
             AsyncDifferConfig.Builder(VacancyDiffCallback()).build()
@@ -81,9 +61,6 @@ class VacancyAdapter(
                 val item = getItem(position)!!
                 holder.bind(clickListener, organizationClickListener, item)
             }
-            is OrganizationListViewHolder -> {
-                holder.bind(organizations)
-            }
             is LoadingViewHolder -> {
                 holder.bind(resultWrapper)
             }
@@ -93,9 +70,6 @@ class VacancyAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType){
             VIEW_TYPE_ITEM -> ItemViewHolder.from(
-                parent
-            )
-            VIEW_TYPE_ORGANIZATIONS -> OrganizationListViewHolder.from(
                 parent
             )
             VIEW_TYPE_STATUS -> LoadingViewHolder.from(
@@ -109,26 +83,13 @@ class VacancyAdapter(
         return if(resultWrapper !is ResultWrapper.Success && position == itemCount - 1){
             VIEW_TYPE_STATUS
         }
-        else if(getItem(position) == null){
-            VIEW_TYPE_ORGANIZATIONS
-        }
         else {
             VIEW_TYPE_ITEM
         }
     }
 
     override fun getItem(position: Int): Vacancy? {
-        return if(displayOrganizations && position == ORGANIZATIONS_LIST_POSITION){
-            null
-        }
-        else{
-            differ.getItem(toRealPosition(position))
-        }
-    }
-
-    private fun toRealPosition(position: Int): Int {
-        return if (displayOrganizations && position > ORGANIZATIONS_LIST_POSITION) position - 1
-        else position
+        return differ.getItem(position)
     }
 
     override fun submitList(pagedList: PagedList<Vacancy>?) {
@@ -140,18 +101,12 @@ class VacancyAdapter(
     }
 
     override fun getItemCount(): Int {
-        return if(displayOrganizations) differ.itemCount + 1 else differ.itemCount
-    }
-
-    fun setOrganizations(organizations : List<Organization>){
-        this.organizations = organizations
+        return differ.itemCount
     }
 
     fun setResultWrapper(resultWrapper: ResultWrapper<Any?>){
         this.resultWrapper = resultWrapper
     }
-
-
 
     class ItemViewHolder private constructor(private val binding: VacancyItemBinding)
         : RecyclerView.ViewHolder(binding.root){

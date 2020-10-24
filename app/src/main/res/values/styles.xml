@@ -108,6 +108,10 @@
         <item name="android:textSize">12sp</item>
     </style>
 
+    <style name="primaryColor_textView_style_14sp" parent="primaryColor_textView_style">
+        <item name="android:textSize">14sp</item>
+    </style>
+
     <style name="primaryColor_textView_style_16sp" parent="primaryColor_textView_style">
         <item name="android:textSize">16sp</item>
     </style>

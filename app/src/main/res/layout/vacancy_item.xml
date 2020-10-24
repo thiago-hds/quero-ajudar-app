@@ -41,6 +41,7 @@
                 android:layout_width="100dp"
                 android:layout_height="0dp"
                 android:cropToPadding="true"
+                android:visibility="visible"
                 app:imageUrl="@{vacancy.image}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -50,12 +51,17 @@
 
             <TextView
                 android:id="@+id/vacancyItem_tv_name"
-                android:layout_width="wrap_content"
+                style="@style/primaryColor_textView_style_14sp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="4dp"
                 android:layout_marginTop="4dp"
+                android:layout_marginEnd="4dp"
+                android:ellipsize="end"
+                android:textAlignment="viewStart"
                 android:text="@{vacancy.name}"
-                style="@style/primaryColor_textView_style_16sp"
+                android:singleLine="true"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/vacancyItem_iv_image"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="@string/tools_vacancyItem_name" />
@@ -69,10 +75,10 @@
                 android:layout_marginEnd="8dp"
                 android:gravity="start"
                 android:onClick="@{() -> organizationClickListener.onClick(vacancy)}"
+                android:text="@{vacancy.organization.name}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tvBy"
                 app:layout_constraintTop_toBottomOf="@+id/vacancyItem_tv_name"
-                app:organizationNameFormatted="@{vacancy.organization.name}"
                 tools:text="@string/tools_vacancyItem_organizationName" />
 
             <TextView

@@ -22,7 +22,7 @@ import com.br.queroajudar.util.saveApiToken
 import com.br.queroajudar.util.showNetworkErrorMessage
 import com.br.queroajudar.vacancies.MainActivity
 import com.br.queroajudar.util.hideKeyboard
-import com.google.android.material.snackbar.Snackbar
+import com.br.queroajudar.util.showToast
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -96,10 +96,8 @@ class RegisterFragment : Fragment() {
                             R.string.register_profile_edit_success
                         }
 
-                        Snackbar.make(
-                            binding.root, message,
-                            Snackbar.LENGTH_SHORT
-                        ).show()
+
+                        showToast(message, context)
 
                         if(viewModel.mode == REGISTER_MODE) {
                             result.value.token?.let { token -> saveApiToken(token) }

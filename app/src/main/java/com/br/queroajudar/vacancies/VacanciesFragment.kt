@@ -92,17 +92,10 @@ class VacanciesFragment : Fragment() {
             adapter.submitList(vacanciesPagedList)
         })
 
-//        viewModel.organizations.observe(viewLifecycleOwner, Observer { result ->
-//            Timber.i("organizations change observed $result")
-//            if(result is ResultWrapper.Success) {
-//                adapter.setOrganizations(result.value)
-//            }
+//        viewModel.vacanciesSize.observe(viewLifecycleOwner,Observer{ size ->
+//            Timber.i("vacanciesSize change observed: $size")
+//            showEmptyList(size == 0)
 //        })
-
-        viewModel.vacanciesSize.observe(viewLifecycleOwner,Observer{ size ->
-            Timber.i("vacanciesSize change observed: $size")
-            showEmptyList(size == 0)
-        })
 
         viewModel.vacanciesLoadInitialResultWrapper.observe(viewLifecycleOwner, Observer { result ->
             Timber.i("vacanciesLoadInitialResultWrapper change observed $result")

@@ -15,8 +15,8 @@ import com.br.queroajudar.R
 import com.br.queroajudar.categories.CategoryAdapter
 import com.br.queroajudar.databinding.FragmentOrganizationDetailsBinding
 import com.br.queroajudar.network.ResultWrapper
+import com.br.queroajudar.util.showToast
 import com.br.queroajudar.vacancies.*
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import timber.log.Timber
 import javax.inject.Inject
@@ -66,7 +66,7 @@ class OrganizationDetailsFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater?.inflate(R.menu.menu_vacancy_details,menu)
+        inflater.inflate(R.menu.menu_vacancy_details,menu)
         this.menu = menu
     }
 
@@ -80,19 +80,16 @@ class OrganizationDetailsFragment : Fragment() {
                     val strId: Int
                     val iconId: Int
                     if (result.value){
-                        strId = R.string.vacancyDetails_favorite_success
+                        strId = R.string.organizationDetails_favorite_success
                         iconId = R.drawable.ic_favorite_24dp
                     }
                     else{
-                        strId = R.string.vacancyDetails_unfavorite_success
+                        strId = R.string.organizationDetails_unfavorite_success
                         iconId = R.drawable.ic_baseline_favorite_border_24
                     }
                     item.setIcon(iconId)
 
-                    Snackbar.make(
-                        binding.root, strId,
-                        Snackbar.LENGTH_SHORT
-                    ).show()
+                    showToast(strId, context)
                 }
                 else if(result is ResultWrapper.NetworkError || result is ResultWrapper.GenericError){
                     Toast.makeText(
@@ -125,9 +122,9 @@ class OrganizationDetailsFragment : Fragment() {
                 val organization = organizationResult.value
                 binding.organization = organization
 
-                organization.causes?.let { causeAdapter.submitList(it) }
+                organization.causes.let { causeAdapter.submitList(it) }
 
-                if(organization.causes?.size == 0){
+                if(organization.causes.isEmpty()){
                     binding.tvLabelCauses.visibility = View.GONE
                     binding.rvCauses.visibility = View.GONE
                 }
@@ -159,27 +156,6 @@ class OrganizationDetailsFragment : Fragment() {
             adapter.submitList(vacanciesPagedList)
         })
 
-//        viewModel.organizations.observe(viewLifecycleOwner, Observer { result ->
-//            Timber.i("organizations change observed $result")
-//            if(result is ResultWrapper.Success) {
-//                adapter.setOrganizations(result.value)
-//            }
-//        })
-
-//        viewModel.vacanciesSize.observe(viewLifecycleOwner,Observer{ size ->
-//            Timber.i("vacanciesSize change observed: $size")
-//            showEmptyList(size == 0)
-//        })
-
-//        viewModel.vacanciesLoadInitialResultWrapper.observe(viewLifecycleOwner, Observer { result ->
-//            Timber.i("vacanciesLoadInitialResultWrapper change observed $result")
-//            binding.overlayNetworkStatus.result = result
-//        })
-//
-//        viewModel.vacanciesLoadAfterResultWrapper.observe(viewLifecycleOwner, Observer { result ->
-//            Timber.i("vacanciesLoadAfterResultWrapper change observed $result")
-//            adapter.setResultWrapper(result)
-//        })
     }
 
     private fun setupListeners(){

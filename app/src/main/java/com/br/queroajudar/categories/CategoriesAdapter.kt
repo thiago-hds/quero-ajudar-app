@@ -60,7 +60,9 @@ class CategoryAdapter @Inject constructor() : ListAdapter<Category, CategoryAdap
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = CategoryItemBinding.inflate(layoutInflater, parent, false)
+                val binding = CategoryItemBinding.inflate(
+                    layoutInflater, parent, false
+                )
                 return ViewHolder(
                     binding
                 )

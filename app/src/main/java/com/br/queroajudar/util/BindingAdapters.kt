@@ -1,18 +1,14 @@
 package com.br.queroajudar.util
 
-//import com.br.queroajudar.R
-
 import android.os.Build
 import android.text.Html
 import android.text.Spanned
 import android.view.View
 import android.widget.ImageView
-import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat.getColor
 import androidx.databinding.BindingAdapter
 import com.br.queroajudar.R
-import com.br.queroajudar.data.Vacancy
 import com.br.queroajudar.network.ResultWrapper
 import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputLayout
@@ -28,23 +24,15 @@ fun setError(textLayout: TextInputLayout, strOrResId: Any?) {
     }
 }
 
-@BindingAdapter("organizationNameFormatted")
-fun TextView.setOrganizationNameFormatted(name : String?){
-    name?.let {
-        text = convertOrganizationNameToFormatted(name)
-    }
-}
 
 @BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, imgUrl: String?) {
-    imgUrl?.let {
-        Glide.with(imgView.context)
-            .load(imgUrl)
-            .centerCrop()
-            .placeholder(R.color.colorBackgroundGrey)
-            .error(R.drawable.ic_deal_orange)
-            .into(imgView)
-    }
+    Glide.with(imgView.context)
+        .load(imgUrl)
+        .centerCrop()
+        .placeholder(R.color.colorBackgroundGrey)
+        .error(R.drawable.ic_deal_orange)
+        .into(imgView)
 }
 
 @BindingAdapter("phones")
@@ -57,32 +45,6 @@ fun bindPhones(txtView: TextView, phones: List<String>?){
         txtView.text = text
     }
 }
-//@BindingAdapter("ivApiStatus")
-//fun bindApiStatusImageView(statusImageView: ImageView, status: QueroAjudarApiStatus?) {
-//    when (status) {
-//        QueroAjudarApiStatus.LOADING -> {
-//            statusImageView.visibility = View.VISIBLE
-//            statusImageView.setImageResource(R.drawable.ic_navigate_next_black_24dp)
-//        }
-//        QueroAjudarApiStatus.NETWORK_ERROR -> {
-//            statusImageView.visibility = View.VISIBLE
-//            statusImageView.setImageResource(R.drawable.ic_person_black_24dp)
-//        }
-//        QueroAjudarApiStatus.DONE -> {
-//            statusImageView.visibility = View.GONE
-//        }
-//    }
-//}
-
-//@BindingAdapter("pbApiStatus")
-//fun bindApiStatusProgressBar(progressBar : ProgressBar, status:ApiStatus?){
-//    if(status == ApiStatus.LOADING){
-//        progressBar.visibility = View.VISIBLE
-//    }
-//    else{
-//        progressBar.visibility = View.GONE
-//    }
-//}
 
 @BindingAdapter("resultWrapperLoading")
 fun bindResultWrapperLoading(view : View, wrapper: ResultWrapper<Any>?){
@@ -134,53 +96,6 @@ fun bindResultWrapperSizeZero(tv : TextView, wrapper: ResultWrapper<Any>?){
         }
     }
 }
-
-
-//@BindingAdapter("apiStatusLoading")
-//fun bindApiStatusLoading(view : View, status:ApiStatus?){
-//    Timber.i("bindApiStatusLoading $status")
-//    status.let {
-//        if (it == ApiStatus.LOADING) {
-//            view.visibility = View.VISIBLE
-//        } else {
-//            view.visibility = View.GONE
-//        }
-//    }
-//}
-//
-//@BindingAdapter("apiStatusNetworkError")
-//fun bindApiStatusNetworkError(view : View, status:ApiStatus?){
-//    Timber.i("bindApiStatusNetworkError $status")
-//    status?.let {
-//        if (it == ApiStatus.NETWORK_ERROR) {
-//            view.visibility = View.VISIBLE
-//        } else {
-//            view.visibility = View.GONE
-//        }
-//    }
-//}
-
-//@BindingAdapter("apiStatusNetworkOverlay")
-//fun bindApiStatusNetworkOverlay(view : View, status:ApiStatus?){
-//    Timber.i("bindApiStatusNetworkOverlay $status")
-//    status?.let {
-//        if (it == ApiStatus.NETWORK_ERROR || it ==ApiStatus.LOADING) {
-//            view.visibility = View.VISIBLE
-//        } else {
-//            view.visibility = View.GONE
-//        }
-//    }
-//}
-
-//@BindingAdapter("loadingViewApiStatus")
-//fun bindApiStatusViewGroup(view: FrameLayout, status: QueroAjudarApiStatus){
-//    if(status == QueroAjudarApiStatus.LOADING){
-//        view.visibility = View.VISIBLE
-//    }
-//    else{
-//        view.visibility = View.GONE
-//    }
-//}
 
 @Suppress("DEPRECATION")
 @BindingAdapter("htmlText")
