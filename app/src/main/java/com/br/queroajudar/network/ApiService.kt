@@ -63,6 +63,14 @@ interface ApiService {
         @Query("organization_id") organizationId: Int?
     ): SuccessResponse<List<Vacancy>>
 
+    @GET("vacancies/recommendations")
+    suspend fun getVacanciesRecommendations(
+        @Query("page") page : Int?,
+        @Query("causes_id") causes: String?,
+        @Query("skills_id") skills : String?,
+        @Query("organization_id") organizationId: Int?
+    ): SuccessResponse<List<Vacancy>>
+
     @GET("vacancies/{id}")
     suspend fun getVacancy(@Path("id") id: Int): SuccessResponse<Vacancy>
 

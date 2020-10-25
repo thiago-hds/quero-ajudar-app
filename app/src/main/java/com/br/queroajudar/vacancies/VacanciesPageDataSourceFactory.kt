@@ -14,7 +14,8 @@ class VacanciesPageDataSourceFactory @Inject constructor(
     private val scope: CoroutineScope,
     private val dataSource: VacanciesRemoteDataSource,
     private val organizationId: Int? = null,
-    private val getFavorites: Boolean? = false)
+    private val getFavorites: Boolean? = false,
+    private val getRecommended: Boolean? = false)
     : DataSource.Factory<Int, Vacancy>() {
 
     var causes: List<Int> = listOf()
@@ -34,13 +35,14 @@ class VacanciesPageDataSourceFactory @Inject constructor(
         if (getFavorites != null) {
             vacanciesPageDataSource.getFavorites = getFavorites
         }
+        if (getRecommended != null) {
+            vacanciesPageDataSource.getRecommended = getRecommended
+        }
         mutableLiveData.postValue(vacanciesPageDataSource)
         return vacanciesPageDataSource
     }
 
     companion object {
-
-
         fun pagedListConfig() = PagedList.Config.Builder()
             .setEnablePlaceholders(false)
             .setPageSize(PAGE_SIZE)

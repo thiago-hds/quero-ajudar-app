@@ -50,6 +50,40 @@ class DefaultVacanciesRepository @Inject constructor(
         )
     }
 
+    fun getPagedRecommendedVacancies(
+        coroutineScope: CoroutineScope
+    ): ItemPagedListing<Vacancy> {
+        val dataSourceFactory =
+            VacanciesPageDataSourceFactory(
+                coroutineScope,
+                remoteDataSource,
+                getRecommended = true
+            )
+
+        val livePagedList = LivePagedListBuilder(dataSourceFactory,
+            VacanciesPageDataSourceFactory.pagedListConfig()
+        ).build()
+
+        return ItemPagedListing(
+            pagedList = livePagedList,
+            loadInitialResultWrapper = Transformations.switchMap(dataSourceFactory.mutableLiveData) {
+                    dataSource -> dataSource.loadInitialResultWrapper
+            },
+            loadAfterResultWrapper = Transformations.switchMap(dataSourceFactory.mutableLiveData) {
+                    dataSource -> dataSource.loadAfterResultWrapper
+            },
+            size = Transformations.switchMap(dataSourceFactory.mutableLiveData){
+                    dataSource -> dataSource.vacanciesSize
+            },
+            refresh = { causesIds: List<Int>?, skillsIds: List<Int>?, organizationId: Int? ->
+                causesIds?.let { dataSourceFactory.causes = it }
+                skillsIds?.let{ dataSourceFactory.skills = it }
+                dataSourceFactory.mutableLiveData.value?.invalidate()
+            }
+        )
+    }
+
+
     fun getPagedFavoriteVacancies(coroutineScope: CoroutineScope): ItemPagedListing<Vacancy> {
         val dataSourceFactory =
             VacanciesPageDataSourceFactory(

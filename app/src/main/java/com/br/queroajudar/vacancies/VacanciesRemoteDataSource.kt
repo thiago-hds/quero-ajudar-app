@@ -22,6 +22,16 @@ class VacanciesRemoteDataSource @Inject constructor(
         }
     }
 
+    suspend fun fetchRecommendedVacancies(page:Int,
+                                          causes: List<Int>? = null, skills: List<Int>? = null,
+                                          organizationId: Int?): ResultWrapper<List<Vacancy>>{
+        return apiCaller.safeApiCall(Dispatchers.IO){
+            service.getVacanciesRecommendations(
+                page,causes?.joinToString(),skills?.joinToString(), organizationId
+            )
+        }
+    }
+
     suspend fun fetchFavoriteVacancies(page:Int): ResultWrapper<List<Vacancy>>{
         return apiCaller.safeApiCall(Dispatchers.IO){
             service.getFavoriteVacancies(page)

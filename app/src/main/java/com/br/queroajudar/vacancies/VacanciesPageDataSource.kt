@@ -22,6 +22,7 @@ class VacanciesPageDataSource @Inject constructor(
     val vacanciesSize = MutableLiveData<Int>()
 
     var getFavorites = false
+    var getRecommended = false
 
 
     override fun loadInitial(
@@ -49,6 +50,9 @@ class VacanciesPageDataSource @Inject constructor(
             resultWrapperLiveData.postValue(ResultWrapper.Loading)
             val getVacanciesResponse = if (getFavorites){
                 remoteDataSource.fetchFavoriteVacancies(page)
+            }
+            else if(getRecommended){
+                remoteDataSource.fetchRecommendedVacancies(page,  causes, skills, organizationId)
             }
             else {
                 remoteDataSource.fetchVacancies(page, causes, skills, organizationId)
